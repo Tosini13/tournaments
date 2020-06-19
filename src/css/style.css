@@ -1,0 +1,99 @@
+.App {
+  background-color: darkslategrey;
+  min-height: 100vh;
+}
+
+a {
+  color: white;
+}
+
+.dashboard-container .dashboard-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.tournaments-list .tournament-card {
+  background-color: grey;
+  color: white;
+  text-align: center;
+}
+
+.tournament-details .title {
+  color: white;
+  text-align: center;
+}
+
+.tournament-details > .tournament-description {
+  margin: 10px 0px;
+}
+
+.tournament-details > .tournament-description .title {
+  font-size: 20px;
+}
+
+.tournament-details > .tournament-description .tournament-date {
+  color: grey;
+  font-size: 15px;
+  text-align: center;
+}
+
+.tournament-details .tournament-dashboard {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+}
+
+.tournament-details .tournament-dashboard .title {
+  font-size: 15px;
+}
+
+.tournament-details .tournament-dashboard .tournament-stages {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tournament-details .tournament-dashboard .tournament-stages > div {
+  margin: 5px 0px;
+}
+
+.tournament-details .tournament-dashboard .team-list {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-column: 1/4;
+}
+
+.group-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.group-list > .btn {
+  margin: 5px 0px;
+}
+
+.matches-list .match-result {
+  margin-left: 5px;
+  color: grey;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './css/style.css'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Navbar from './components/nav/Navbar'
+import Dashboard from './components/dashboard/Dashboard'
+import TournamentDetails from './components/tournament/TournamentDetails';
+import CreateTournament from './components/tournament/create/CreateTournament';
+// import ProjectDetails from './components/projects/ProjectDetails'
+import SignIn from './components/auth/SignIn'
+import SignUp from './components/auth/SignUp'
+import Group from './components/tournament/groups/Group';
+// import CreateProject from './components/projects/CreateProject'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route exact path='/' component={Dashboard} />
+          <Route path='/tournament/:id/group/:groupId' component={Group} />
+          <Route path='/tournament/:id' component={TournamentDetails} />
+          <Route path='/create' component={CreateTournament} />
+          {/* <Route path='/signin' component={SignIn} />
+          <Route path='/signup' component={SignUp} /> */}
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -1,0 +1,77 @@
+@import "_constants.scss";
+
+.App {
+    background-color: $firstBackgroundColor;
+    min-height: 100vh;
+}
+
+a {
+    color: $firstFontColor;
+}
+
+.dashboard-container {
+    .dashboard-nav {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+.tournaments-list {
+    .tournament-card {
+        background-color: $secondBackgroundColor;
+        color: $firstFontColor;
+        text-align: center;
+    }
+}
+
+.tournament-details {
+    .title {
+        color: $firstFontColor;
+        text-align: center;
+    }
+    > .tournament-description {
+        margin: 10px 0px;
+        .title {
+            font-size: 20px;
+        }
+        .tournament-date {
+            color: $secondFontColor;
+            font-size: 15px;
+            text-align: center;
+        }
+    }
+    .tournament-dashboard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        .title {
+            font-size: 15px;
+        }
+        .tournament-stages {
+            grid-column: 1/4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            > div {
+                margin: 5px 0px;
+            }
+        }
+        .team-list {
+            grid-column: 1/4;
+        }
+    }
+}
+
+.group-list {
+    display: flex;
+    flex-direction: column;
+    > .btn {
+        margin: 5px 0px;
+    }
+}
+
+.matches-list {
+    .match-result {
+        margin-left: 5px;
+        color: grey;
+    }
+}
