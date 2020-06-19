@@ -9,7 +9,7 @@ class Group extends Component {
         const { group, matches } = this.props;
         if(group && matches){
             return (
-                <div>
+                <div className='group'>
                     <p className='title'>{group.name}</p>
                     <MatchesList matches={matches} />
                 </div>

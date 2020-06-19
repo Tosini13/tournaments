@@ -7,6 +7,11 @@ a {
   color: white;
 }
 
+.title {
+  color: white;
+  text-align: center;
+}
+
 .dashboard-container .dashboard-nav {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -18,11 +23,6 @@ a {
 
 .tournaments-list .tournament-card {
   background-color: grey;
-  color: white;
-  text-align: center;
-}
-
-.tournament-details .title {
   color: white;
   text-align: center;
 }
@@ -92,8 +92,32 @@ a {
   margin: 5px 0px;
 }
 
-.matches-list .match-result {
-  margin-left: 5px;
+.matches-list .match {
+  display: -ms-grid;
+  display: grid;
+}
+
+.matches-list .match .match-teams {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 5;
+  grid-column: 1/6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.matches-list .match .match-teams > p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.matches-list .match .match-result {
+  -ms-grid-column: 6;
+  -ms-grid-column-span: 1;
+  grid-column: 6/7;
   color: grey;
 }
 /*# sourceMappingURL=style.css.map */

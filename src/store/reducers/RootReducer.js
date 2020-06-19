@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     tournament: tournamentReducer,
     auth: authReducer,
     firestore: firestoreReducer,
-    firesbase: firebaseReducer,
+    firebase: firebaseReducer,
 });
 
 export default rootReducer;

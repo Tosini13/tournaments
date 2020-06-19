@@ -25,7 +25,7 @@ class SignIn extends Component {
         if (auth.uid) return <Redirect to='/' />
         return (
             <div className='container'>
-                <form onSubmit={this.handleSubmit} className="white">
+                <form onSubmit={this.handleSubmit}>
                     <h5 className="grey-text text-darken-3">Sign In</h5>
                     <div className="input-field">
                         <label htmlFor="email">Email:</label>

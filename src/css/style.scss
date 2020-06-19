@@ -9,6 +9,11 @@ a {
     color: $firstFontColor;
 }
 
+.title {
+    color: $firstFontColor;
+    text-align: center;
+}
+
 .dashboard-container {
     .dashboard-nav {
         display: flex;
@@ -25,10 +30,6 @@ a {
 }
 
 .tournament-details {
-    .title {
-        color: $firstFontColor;
-        text-align: center;
-    }
     > .tournament-description {
         margin: 10px 0px;
         .title {
@@ -70,8 +71,20 @@ a {
 }
 
 .matches-list {
-    .match-result {
-        margin-left: 5px;
-        color: grey;
+    .match {
+        display: grid;
+        .match-teams {
+            grid-column: 1/6;
+            display: flex;
+            justify-content: space-evenly;
+            > p {
+                margin: 0px;
+                padding: 0px;
+            }
+        }
+        .match-result {
+            grid-column: 6/7;
+            color: grey;
+        }
     }
 }
