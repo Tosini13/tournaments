@@ -3,15 +3,19 @@ import MatchesList from '../matches/MatchesList';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import TeamList from '../teams/TeamList';
 
 class Group extends Component {
     render() {
         const { group, matches } = this.props;
+        console.log(group);
+        console.log(matches);
         if(group && matches){
             return (
                 <div className='group'>
                     <p className='title'>{group.name}</p>
                     <MatchesList matches={matches} />
+                    {/* <TeamList matches={matches} /> */}
                 </div>
             )
         }else{

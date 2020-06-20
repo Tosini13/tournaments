@@ -7,7 +7,6 @@ import { firestoreConnect } from "react-redux-firebase";
 class Dashboard extends Component {
     render() {
         const { tournaments } = this.props;
-        console.log(tournaments);
         return (
             <div className='dashboard-container container'>
                 <ul className='dashboard-nav'>
@@ -29,7 +28,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
     return {
         tournamentsMy: state.tournament.tournaments,
         tournaments: state.firestore.ordered.tournaments

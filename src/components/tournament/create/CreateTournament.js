@@ -7,8 +7,7 @@ import { createTournament } from '../../../store/actions/TournamentActions'
 class CreateTournament extends Component {
 
     state = {
-        id: Math.random(), 
-        title: '',
+        name: '',
         date: new Date()
     }
 
@@ -29,12 +28,11 @@ class CreateTournament extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <form onSubmit={this.handleSubmit} className='create-tournament container'>
                 <p>Create Tournament:</p>
                 <label>Name:</label>
-                <input name='title' id='title' value={this.state.title} onChange={this.handleChange} />
+                <input name='name' id='name' value={this.state.name} onChange={this.handleChange} />
                 <DatePicker id='date' className='center'
                     selected={this.state.date}
                     onChange={this.handleChangeDate}

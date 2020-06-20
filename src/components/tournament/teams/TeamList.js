@@ -1,11 +1,11 @@
 import React from 'react'
-import AddTeam from './create/AddTeam'
+import AddTeam from '../create/AddTeam'
 
 
 const TeamList = (props) => {
     return (
-        <div className='team-list'>
-            <p className='title'>Teams:</p>
+        <div className='team-list z-depth-1'>
+            <p className='title'>Teams</p>
             {props.teams && props.teams.map(team => {
                 return (
                     <div key={team.name}>
@@ -14,7 +14,7 @@ const TeamList = (props) => {
                 )
             })}
             {/* if admin */}
-            <AddTeam tournamentId={props.tournamentId} />
+            {/* <AddTeam tournamentId={props.tournamentId} /> */}
         </div>
     )
 }

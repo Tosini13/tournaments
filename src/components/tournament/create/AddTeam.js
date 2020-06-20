@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addTeamToTournament } from "../../../store/actions/Team.Actions";
+import { addTeamToTournament } from "../../../store/actions/TeamActions";
 
 class AddTeam extends Component {
 
@@ -15,6 +15,7 @@ class AddTeam extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.addTeamToTournament(this.props.tournamentId, this.state);
+        this.setState({ name: '' });
     }
 
     render() {
@@ -28,7 +29,7 @@ class AddTeam extends Component {
                     <div></div>
                     <div></div>
                 </button>
-                <input name='name' onChange={this.handleChange}/>
+                <input name='name' onChange={this.handleChange} value={this.state.name} />
             </form>
         )
     }

@@ -2,13 +2,14 @@ import React from 'react';
 import Match from './Match.js'
 
 const MatchesList = (props) => {
-    const { matches } = props;
-    console.log(props);
+    const { matches, teams } = props;
+    console.log(teams);
+    let i = 0;
     return (
         <div className='matches-list'>
             {matches && matches.map(match => {
                 return (
-                    <Match key={match.id} match={match} />
+                    <Match key={match.id ? match.id : i++} match={match} teams={teams} />
                 )
             })}
         </div>

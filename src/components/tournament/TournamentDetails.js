@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from 'moment'
-import TeamList from './TeamList'
+import TeamList from './teams/TeamList'
 import Groups from './groups/Groups'
 import Bracket from './bracket/Bracket'
 import { compose } from "redux";
@@ -15,7 +15,7 @@ class TournamentDetails extends Component {
                 <div className='container tournament-details'>
                     <section className='tournament-description'>
                         <div className='title'>{tournament.name}</div>
-                        <div className='tournament-date'>{moment(tournament.date.toDate()).fromNow()}</div>
+                        <div className='tournament-date'>{moment(tournament.date.toDate()).format('yyyy MMMM DD')}</div>
                     </section>
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
@@ -37,8 +37,6 @@ class TournamentDetails extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(ownProps);
-    console.log(state);
     const id = ownProps.match.params.id;
     const tournaments = state.firestore.data.tournaments;
     let tournament = tournaments ? tournaments[id] : null;

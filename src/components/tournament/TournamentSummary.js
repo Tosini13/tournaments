@@ -3,7 +3,6 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const TournamentSummary = (props) => {
-    console.log(props);
     return (
         <Link to={'tournament/' + props.tournament.id}>
             <div className='tournament-card card z-depth-1'>

@@ -35,33 +35,16 @@ const tournamentReducer = (state = initState, action) => {
     switch (action.type) {
         case 'CREATE_TOURNAMENT':
             console.log('tournament created');
-            // return state;
-            let tournaments = [...state.tournaments, action.tournament];
-            return {
-                ...state,
-                tournaments
-            };
+            return state;
         case 'CREATE_TOURNAMENT_ERROR':
-            console.log('tournament creation error');
+            console.log('tournament creation error', action.err);
             return state;
         case 'ADD_TEAM_TO_TOURNAMENT':
             console.log('team added to tournament');
-            console.log(action);
-            console.log(state);
-            state.tournaments.forEach(tournament => {
-                if (tournament.id === action.tournamentId) {
-                    console.log(tournament);
-                    if (tournament.teams) {
-                        tournament.teams = [...tournament.teams, action.team];
-                    } else {
-                        tournament.teams = [action.team];
-                    }
-                }
-            });
-            console.log(state);
-            return {
-                ...state
-            };
+            return state;
+        case 'ADD_TEAM_TO_TOURNAMENT_ERROR':
+            console.log('team addition to tournament error', action.err);
+            return state;
         default:
             return state;
     }

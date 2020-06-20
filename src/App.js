@@ -8,6 +8,7 @@ import CreateTournament from './components/tournament/create/CreateTournament';
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Group from './components/tournament/groups/Group';
+import CreateGroups from './components/tournament/create/CreateGroups'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path='/' component={Dashboard} />
+          <Route path='/tournament/:id/groups/create' component={CreateGroups} />
           <Route path='/tournament/:id/group/:groupId' component={Group} />
           <Route path='/tournament/:id' component={TournamentDetails} />
           <Route path='/create' component={CreateTournament} />
