@@ -10,7 +10,6 @@ const Navbar = (props) => {
     return (
         <nav className='nav-warpper grey darken-3'>
             <div className='container'>
-                <Link to={'/'} className='brand-logo'>L</Link>
                 {links}
             </div>
         </nav>

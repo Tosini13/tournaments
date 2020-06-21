@@ -18,9 +18,9 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          <Route path='/tournament/:id/groups/create' component={CreateGroups} />
-          <Route path='/tournament/:id/group/:groupId' component={Group} />
-          <Route path='/tournament/:id' component={TournamentDetails} />
+          <Route path='/tournaments/:id/group/create' component={CreateGroups} />
+          <Route path='/tournaments/:id/groups/:groupId' component={Group} />
+          <Route path='/tournaments/:id' component={TournamentDetails} />
           <Route path='/create' component={CreateTournament} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />

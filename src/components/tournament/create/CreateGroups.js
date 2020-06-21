@@ -6,6 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import TeamList from '../teams/TeamList';
 import { createGroups, createRandomGroups } from '../../../structures/Groups'
 import GroupDetails from '../groups/GroupDetails';
+import { createGroupsToTournament } from '../../../store/actions/GroupActions'
 
 
 class CreateGroup extends Component {
@@ -13,6 +14,15 @@ class CreateGroup extends Component {
     state = {
         groupQtt: 0,
         groups: null
+    }
+
+    handleDecline = () => {
+        this.props.history.push('/tournaments/' + this.props.match.params.id);
+    }
+
+    handleAccept = () => {
+        this.props.createGroupsToTournament(this.props.match.params.id, this.state.groups);
+        this.props.history.push('/tournaments/' + this.props.match.params.id);
     }
 
     handleDraw = (teams) => {
@@ -51,14 +61,20 @@ class CreateGroup extends Component {
         if (teams) {
             return (
                 <div className='groups'>
-                    <div className='btns'>
-                        <div className='btn' onClick={() => { this.handleAddGroup(teams) }}>add group</div>
-                        <div className='btn' onClick={() => { this.handleRemoveGroup(teams) }}>remove group</div>
-                        <div className='btn' onClick={() => { this.handleDraw(teams) }}>Draw teams</div>
+                    <div className='control-panel'>
+                        <div className='btns'>
+                            <div className='btns-main'>
+                                <div className='btn btn-decline' onClick={this.handleDecline}>Decline</div>
+                                <div className='btn btn-accept' onClick={this.handleAccept}>Accept</div>
+                            </div>
+                            <div className='btn' onClick={() => { this.handleAddGroup(teams) }}>add</div>
+                            <div className='btn' onClick={() => { this.handleRemoveGroup(teams) }}>remove</div>
+                            <div className='btn' onClick={() => { this.handleDraw(teams) }}>Draw</div>
+                        </div>
                     </div>
                     <div className='group-list'>
                         {this.state.groups && this.state.groups.map(group => {
-                            return <GroupDetails key={group.name} group={group} />
+                            return <GroupDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} />
                         })}
                     </div>
                 </div>
@@ -74,16 +90,21 @@ class CreateGroup extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    // let id = ownProps.match.params.groupId;
     let teams = state.firestore.ordered.teams;
-    // let group = groups ? groups[id] : null;
     return {
         teams,
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createGroupsToTournament: (tournamentId, groups) => dispatch(createGroupsToTournament(tournamentId, groups))
+    }
+}
+
+
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => {
         return [{
             collection: 'tournaments',

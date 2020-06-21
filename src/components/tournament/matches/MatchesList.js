@@ -3,7 +3,6 @@ import Match from './Match.js'
 
 const MatchesList = (props) => {
     const { matches, teams } = props;
-    console.log(teams);
     let i = 0;
     return (
         <div className='matches-list'>

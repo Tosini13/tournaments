@@ -1,4 +1,39 @@
-const initState = {
+const initState = {};
+const tournamentReducer = (state = initState, action) => {
+    switch (action.type) {
+        case 'CREATE_TOURNAMENT':
+            console.log('tournament created');
+            return state;
+        case 'CREATE_TOURNAMENT_ERROR':
+            console.log('tournament creation error', action.err);
+            return state;
+        case 'ADD_TEAM_TO_TOURNAMENT':
+            console.log('team added to tournament');
+            return state;
+        case 'ADD_TEAM_TO_TOURNAMENT_ERROR':
+            console.log('team addition to tournament error', action.err);
+            return state;
+        case 'CREATE_GROUP':
+            console.log('group created');
+            return state;
+        case 'CREATE_GROUP_ERROR':
+            console.log('group creation error', action.err);
+            return state;
+        case 'CREATE_MATCHES_TO_GROUP':
+            console.log('matches to group created');
+            return state;
+        case 'CREATE_MATCHES_TO_GROUP_ERROR':
+            console.log('matches to group creation error', action.err);
+            return state;
+        default:
+            return state;
+    }
+}
+
+export default tournamentReducer;
+
+
+/*const initState = {
     tournaments: [
         {
             id: '1xd', title: 'Champions League', date: new Date(),
@@ -29,25 +64,4 @@ const initState = {
             },
         }
     ]
-}
-
-const tournamentReducer = (state = initState, action) => {
-    switch (action.type) {
-        case 'CREATE_TOURNAMENT':
-            console.log('tournament created');
-            return state;
-        case 'CREATE_TOURNAMENT_ERROR':
-            console.log('tournament creation error', action.err);
-            return state;
-        case 'ADD_TEAM_TO_TOURNAMENT':
-            console.log('team added to tournament');
-            return state;
-        case 'ADD_TEAM_TO_TOURNAMENT_ERROR':
-            console.log('team addition to tournament error', action.err);
-            return state;
-        default:
-            return state;
-    }
-}
-
-export default tournamentReducer;
+} */

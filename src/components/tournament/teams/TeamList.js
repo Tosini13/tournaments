@@ -1,5 +1,4 @@
 import React from 'react'
-import AddTeam from '../create/AddTeam'
 
 
 const TeamList = (props) => {
@@ -13,8 +12,6 @@ const TeamList = (props) => {
                     </div>
                 )
             })}
-            {/* if admin */}
-            {/* <AddTeam tournamentId={props.tournamentId} /> */}
         </div>
     )
 }

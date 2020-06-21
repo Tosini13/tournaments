@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 const GroupsList = (props) => {
     const { groups } = props;
     return (
-        <div className='group-list'>
+        <div className='btns'>
             {groups && groups.map(group => {
-                return <Link to={'/tournament/' + props.tournamentId + '/group/' + group.id}
+                return <Link to={'/tournaments/' + props.tournamentId + '/groups/' + group.id}
                     className='btn'
                     key={group.id}>{group.name}</Link>
             })}

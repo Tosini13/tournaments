@@ -17,16 +17,17 @@ export const createRandomGroups = (teams, groupQtt) => {
 }
 
 export const createGroups = (teams, groupQtt) => {
-    if (Math.ceil(teams.length / 2) < groupQtt || groupQtt < 1) {
+    const teamsId = teams.map(team => team.id);
+    if (Math.ceil(teamsId.length / 2) < groupQtt || groupQtt < 1) {
         return false;
     }
-    const teamsInGroup = Math.ceil(teams.length / groupQtt);
+    const teamsInGroup = Math.ceil(teamsId.length / groupQtt);
     let groups = [];
     for (let i = 0; i < groupQtt; i++) {
         groups.push(
             {
                 name: 'Group ' + String.fromCharCode(65 + i),
-                teams: teams.slice(teamsInGroup * i, teamsInGroup * (i + 1))
+                teams: teamsId.slice(teamsInGroup * i, teamsInGroup * (i + 1))
             }
         );
     }
