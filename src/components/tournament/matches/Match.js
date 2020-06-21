@@ -29,9 +29,7 @@ const Match = (props) => {
             </div>
         )
     } else {
-        return (
-            <div></div>
-        )
+        return null;
     }
 }
 

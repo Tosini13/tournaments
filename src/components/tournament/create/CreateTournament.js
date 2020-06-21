@@ -23,8 +23,12 @@ class CreateTournament extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createTournament(this.state);
-        this.props.history.push('/');
+        if (/[\S]/.test(this.state.name)) {
+            this.props.createTournament(this.state);
+            this.props.history.push('/');
+        } else {
+            console.log('wrong string');
+        }
     }
 
     render() {
@@ -32,7 +36,7 @@ class CreateTournament extends Component {
             <form onSubmit={this.handleSubmit} className='create-tournament container'>
                 <p>Create Tournament:</p>
                 <label>Name:</label>
-                <input name='name' id='name' value={this.state.name} onChange={this.handleChange} />
+                <input name='name' id='name' value={this.state.name} onChange={this.handleChange} required />
                 <DatePicker id='date' className='center'
                     selected={this.state.date}
                     onChange={this.handleChangeDate}
@@ -40,7 +44,9 @@ class CreateTournament extends Component {
                     showYearDropdown
                     showMonthDropdown
                 />
-                <button className="btn pink lighten-1 z-depth-0">Create</button>
+                <button className="btn btn-icon pink lighten-1 z-depth-0">
+                    <i className='icon-ok'></i>
+                </button>
             </form>
         )
     }

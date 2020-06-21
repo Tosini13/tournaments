@@ -26,12 +26,16 @@ a {
   padding: 5px 0px;
 }
 
-.btn.btn-accept {
-  background-color: green;
+.btn.btn-green {
+  background-color: #0f7300;
 }
 
-.btn.btn-decline {
-  background-color: red;
+.btn.btn-red {
+  background-color: #9c0303;
+}
+
+.btn.btn-icon {
+  padding: 0px 5px;
 }
 
 .brand-logo {
@@ -93,8 +97,8 @@ a {
   margin: 5px 0px;
 }
 
-.tournament-details .tournament-dashboard .teams-dashboard > div {
-  margin: 10px 0px;
+.tournament-details .tournament-dashboard .teams-dashboard {
+  padding: 5px 0px;
 }
 
 .groups .btns {
@@ -253,12 +257,23 @@ a {
 .team-list {
   text-align: center;
   padding: 2px 10px;
+  margin: 5px 0px;
   min-width: 100px;
+  width: 100%;
 }
 
-.team-list > div {
+.team-list > .team {
   border-top: rgba(255, 255, 255, 0.2) solid 0.1px;
   padding: 2px 0px;
+  position: relative;
+}
+
+.team-list > .team .btns {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 0;
 }
 
 .team-add {

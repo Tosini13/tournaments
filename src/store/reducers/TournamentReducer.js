@@ -25,6 +25,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'CREATE_MATCHES_TO_GROUP_ERROR':
             console.log('matches to group creation error', action.err);
             return state;
+        case 'DELETE_TEAM_FROM_TOURNAMENT':
+            console.log('team deleted from tournament', action.err);
+            return state;
+        case 'DELETE_TEAM_FROM_TOURNAMENT_ERROR':
+            console.log('team deletion from tournament error', action.err);
+            return state;
         default:
             return state;
     }

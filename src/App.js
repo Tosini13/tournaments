@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/style.css'
+import './css/fontello/css/fontello.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Navbar from './components/nav/Navbar'
 import Dashboard from './components/dashboard/Dashboard'

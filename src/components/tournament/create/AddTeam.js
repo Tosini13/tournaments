@@ -14,8 +14,12 @@ class AddTeam extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.addTeamToTournament(this.props.tournamentId, this.state);
-        this.setState({ name: '' });
+        if (/[\S]/.test(this.state.name)) {
+            this.props.addTeamToTournament(this.props.tournamentId, this.state);
+            this.setState({ name: '' });
+        } else {
+            console.log('wrong string');
+        }
     }
 
     render() {
@@ -24,12 +28,10 @@ class AddTeam extends Component {
         }
         return (
             <form onSubmit={this.handleSubmit} className='team-add' style={styleForm}>
-                <button className='btn'>
-                    +
-                    <div></div>
-                    <div></div>
-                </button>
                 <input name='name' onChange={this.handleChange} value={this.state.name} />
+                <button className='btn btn-icon'>
+                    <i className='icon-ok'></i>
+                </button>
             </form>
         )
     }

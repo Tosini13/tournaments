@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 class Group extends Component {
     render() {
         const { group, matches, teams } = this.props;
-        console.log(this.props);
         if (group && matches && teams) {
             return (
                 <div className='group container'>

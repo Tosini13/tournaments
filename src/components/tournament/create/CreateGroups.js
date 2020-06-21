@@ -60,16 +60,22 @@ class CreateGroup extends Component {
 
         if (teams) {
             return (
-                <div className='groups'>
+                <div className='groups container'>
                     <div className='control-panel'>
                         <div className='btns'>
                             <div className='btns-main'>
-                                <div className='btn btn-decline' onClick={this.handleDecline}>Decline</div>
-                                <div className='btn btn-accept' onClick={this.handleAccept}>Accept</div>
+                                <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
+                                <div className='btn btn-green btn-icon' onClick={this.handleAccept}><i className='icon-ok'></i></div>
                             </div>
-                            <div className='btn' onClick={() => { this.handleAddGroup(teams) }}>add</div>
-                            <div className='btn' onClick={() => { this.handleRemoveGroup(teams) }}>remove</div>
-                            <div className='btn' onClick={() => { this.handleDraw(teams) }}>Draw</div>
+                            <div className='btn btn-icon' onClick={() => { this.handleAddGroup(teams) }}>
+                                <i className='icon-plus'></i>
+                            </div>
+                            <div className='btn btn-icon' onClick={() => { this.handleRemoveGroup(teams) }}>
+                                <i className='icon-minus'></i>
+                            </div>
+                            <div className='btn btn-icon' onClick={() => { this.handleDraw(teams) }}>
+                                <i className='icon-arrows-cw'></i>
+                            </div>
                         </div>
                     </div>
                     <div className='group-list'>

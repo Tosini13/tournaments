@@ -10,3 +10,15 @@ export const addTeamToTournament = (tournamentId, team) => {
         })
     }
 }
+
+export const deleteTeamFromTournament = (tournamentId, teamId) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        firestore.collection('tournaments').doc(tournamentId).collection('teams').doc(teamId).delete()
+            .then(() => {
+                dispatch({ type: 'DELETE_TEAM_FROM_TOURNAMENT' });
+            }).catch((err) => {
+                dispatch({ type: 'DELETE_TEAM_FROM_TOURNAMENT_ERROR', err });
+            })
+    }
+}
