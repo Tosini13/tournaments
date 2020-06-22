@@ -34,6 +34,10 @@ a {
   background-color: #9c0303;
 }
 
+.btn.btn-blue {
+  background-color: #052093;
+}
+
 .btn.btn-icon {
   padding: 0px 5px;
 }
@@ -266,14 +270,42 @@ a {
   border-top: rgba(255, 255, 255, 0.2) solid 0.1px;
   padding: 2px 0px;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 50px;
 }
 
-.team-list > .team .btns {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: 0;
+.team-list > .team .team-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  margin: 0px 10px;
+}
+
+.team-list > .team .team-name-form {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.team-list > .team .btn {
+  margin: 0px 1px;
 }
 
 .team-add {

@@ -24,7 +24,7 @@ class TournamentDetails extends Component {
                             {/* <Bracket bracket={bracket} /> */}
                         </div>
                         <div className='teams-dashboard'>
-                            <TeamList tournamentId={id} teams={teams} control={(auth && (Boolean(groups) && !groups.length)) ? true : false} />
+                            <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length)} control={Boolean(auth)} />
                             {(auth && groups.length == 0) ? <AddTeam tournamentId={id} /> : null}
                         </div>
                     </section>

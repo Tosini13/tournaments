@@ -29,6 +29,9 @@ a {
     &.btn-red {
         background-color: $red;
     }
+    &.btn-blue {
+        background-color: $blue;
+    }
     &.btn-icon {
         padding: 0px 5px;
     }
@@ -184,11 +187,22 @@ a {
         border-top: rgba(255, 255, 255, 0.2) solid 0.1px;
         padding: 2px 0px;
         position: relative;
-        .btns {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
+        display: flex;
+        min-height: 50px;
+        .team-name {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin: 0px 10px;
+        }
+        .team-name-form {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+        .btn {
+            margin: 0px 1px;
         }
     }
 }

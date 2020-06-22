@@ -22,3 +22,16 @@ export const deleteTeamFromTournament = (tournamentId, teamId) => {
             })
     }
 }
+
+export const editTeamFromTournament = (tournamentId, teamId, team) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        firestore.collection('tournaments').doc(tournamentId).collection('teams').doc(teamId).update({
+            ...team
+        }).then(() => {
+            dispatch({ type: 'EDIT_TEAM' });
+        }).catch((err) => {
+            dispatch({ type: 'EDIT_TEAM_ERROR', err });
+        })
+    }
+}

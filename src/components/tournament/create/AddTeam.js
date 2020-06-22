@@ -30,7 +30,7 @@ class AddTeam extends Component {
             <form onSubmit={this.handleSubmit} className='team-add' style={styleForm}>
                 <input name='name' onChange={this.handleChange} value={this.state.name} />
                 <button className='btn btn-icon'>
-                    <i className='icon-ok'></i>
+                    <i className='icon-plus'></i>
                 </button>
             </form>
         )

@@ -1,13 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { deleteTeamFromTournament } from '../../../store/actions/TeamActions';
-import tournamentReducer from '../../../store/reducers/TournamentReducer';
-
+import { deleteTeamFromTournament, editTeamFromTournament } from '../../../store/actions/TeamActions';
+import TeamSummary from './TeamSummary.js';
 
 const TeamList = (props) => {
+
     const handleDeleteTeam = (teamId) => {
-        console.log(teamId);
         props.deleteTeamFromTournament(props.tournamentId, teamId);
+    }
+
+    const handleEditTeam = (teamId, team) => {
+        props.editTeamFromTournament(props.tournamentId, teamId, team);
     }
 
     return (
@@ -15,20 +18,7 @@ const TeamList = (props) => {
             <p className='title'>Teams</p>
             {props.teams && props.teams.map(team => {
                 return (
-                    <div className='team' key={team.id}>
-                        <p className='team-name'>{team.name}</p>
-                        <div className='btns'>
-                            {props.control ?
-                                <div className='btn btn-red btn-icon' onClick={() => {
-                                    handleDeleteTeam(team.id);
-                                }}>
-                                    <i className='icon-trash-empty'></i>
-                                </div>
-                                :
-                                null
-                            }
-                        </div>
-                    </div>
+                    <TeamSummary key={team.id} team={team} control={props.control} deleteControl={props.deleteControl} handleDeleteTeam={handleDeleteTeam} handleEditTeam={handleEditTeam} />
                 )
             })}
         </div>
@@ -36,7 +26,8 @@ const TeamList = (props) => {
 }
 const mapDispatchToState = (dispatch) => {
     return {
-        deleteTeamFromTournament: (tournamentId, teamId) => dispatch(deleteTeamFromTournament(tournamentId, teamId))
+        deleteTeamFromTournament: (tournamentId, teamId) => dispatch(deleteTeamFromTournament(tournamentId, teamId)),
+        editTeamFromTournament: (tournamentId, teamId, team) => dispatch(editTeamFromTournament(tournamentId, teamId, team))
     }
 }
 
