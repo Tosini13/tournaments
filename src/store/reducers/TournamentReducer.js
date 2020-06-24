@@ -37,6 +37,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'EDIT_TEAM_ERROR':
             console.log('team edition error', action.err);
             return state;
+            case 'EDIT_MATCH':
+                console.log('match edited');
+                return state;
+            case 'EDIT_MATCH_ERROR':
+                console.log('match edition error', action.err);
+                return state;
         default:
             return state;
     }

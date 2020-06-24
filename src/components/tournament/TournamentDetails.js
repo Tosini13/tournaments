@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from 'moment'
 import TeamList from './teams/TeamList'
-import Groups from './groups/GroupsDashboard'
+import GroupsDashboard from './groups/GroupsDashboard'
 // import Bracket from './bracket/Bracket'
 import AddTeam from './create/AddTeam'
 import { compose } from "redux";
@@ -22,7 +22,7 @@ class TournamentDetails extends Component {
                     {/* <TournamentNav /> */}
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
-                            <Groups tournamentId={id} groups={groups} auth={auth} />
+                            <GroupsDashboard tournamentId={id} groups={groups} auth={auth} />
                             {/* <Bracket bracket={bracket} /> */}
                         </div>
                         <div className='teams-dashboard'>
@@ -70,13 +70,13 @@ export default compose(
             {
                 collection: 'tournaments',
                 doc: props.match.params.id,
-                subcollections: [{ collection: 'teams' }],
+                subcollections: [{ collection: 'teams', orderBy: ['name', 'asc'] }],
                 storeAs: 'teams'
             },
             {
                 collection: 'tournaments',
                 doc: props.match.params.id,
-                subcollections: [{ collection: 'groups' }],
+                subcollections: [{ collection: 'groups', orderBy: ['name', 'asc'] }],
                 storeAs: 'groups'
             },
         ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import Match from './Match.js'
+import MatchSummary from './MatchSummary.js'
 
 const MatchesList = (props) => {
     const { matches, teams } = props;
@@ -8,7 +8,7 @@ const MatchesList = (props) => {
         <div className='matches-list'>
             {matches && matches.map(match => {
                 return (
-                    <Match key={match.id ? match.id : i++} match={match} teams={teams} />
+                    <MatchSummary key={match.id ? match.id : i++} match={match} teams={teams} tournamentId={props.tournamentId} groupId={props.groupId} />
                 )
             })}
         </div>

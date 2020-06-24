@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { createGroups, createRandomGroups } from '../../../structures/Groups'
-import GroupsDetails from '../groups/GroupsDetails';
+import GroupDetails from '../groups/GroupDetails';
 import { createGroupsToTournament } from '../../../store/actions/GroupActions'
 
 
@@ -78,7 +78,7 @@ class CreateGroup extends Component {
                     </div>
                     <div className='group-list'>
                         {this.state.groups && this.state.groups.map(group => {
-                            return <GroupsDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
+                            return <GroupDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
                         })}
                     </div>
                 </div>

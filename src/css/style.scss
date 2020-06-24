@@ -158,6 +158,78 @@ a {
     }
 }
 
+.group {
+    .group-table {
+        background-color: rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        > table {
+            background-color: rgba(0, 0, 0, 0.1);
+            text-align: center;
+            > tbody {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}
+
+.match {
+    margin: 2px 0px;
+    .match-teams {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        > p:nth-child(1) {
+            grid-column: 1/4;
+            justify-content: flex-end;
+            text-align: right;
+        }
+        > p:nth-child(2) {
+            grid-column: 4/5;
+        }
+        > p:nth-child(3) {
+            grid-column: 5/8;
+            justify-content: flex-start;
+        }
+        > p {
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .match-result {
+        grid-column: 11/13;
+        color: grey;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > .score {
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 2px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition-property: color, background-color;
+            transition-duration: 0.3s;
+        }
+        &.match-result-not-started {
+            color: grey;
+        }
+    }
+    &.match-live {
+        .match-result {
+            > .score {
+                background-color: $red;
+                color: black;
+            }
+        }
+    }
+}
+
 .matches-list {
     width: 100%;
     .match {
@@ -166,48 +238,26 @@ a {
         margin: 2px 0px;
         .match-teams {
             grid-column: 1/11;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            > p:nth-child(1) {
-                grid-column: 1/4;
-                justify-content: flex-end;
-                text-align: right;
-            }
-            > p:nth-child(2) {
-                grid-column: 4/5;
-            }
-            > p:nth-child(3) {
-                grid-column: 5/8;
-                justify-content: flex-start;
-            }
-            > p {
-                margin: 0px;
-                padding: 0px;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
         }
+    }
+}
+
+.match-details {
+    .match {
         .match-result {
-            grid-column: 11/13;
-            color: grey;
+            max-width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    .match-dashboard {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        .score-dashboard {
+            padding: 5px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            > .score {
-                background-color: rgba(0, 0, 0, 0.4);
-                border-radius: 2px;
-                width: 20px;
-                height: 20px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-            }
-            &.match-result-not-started {
-                color: grey;
-            }
+            justify-content: space-around;
         }
     }
 }

@@ -3,7 +3,7 @@ import MatchesList from '../matches/MatchesList';
 import TeamList from '../teams/TeamList';
 import { craeteGroupMatches } from '../../../structures/Groups'
 
-class GroupsDetails extends Component {
+class GroupDetails extends Component {
 
     state = {
         name: this.props.group.name
@@ -39,4 +39,4 @@ class GroupsDetails extends Component {
     }
 }
 
-export default GroupsDetails;
+export default GroupDetails;

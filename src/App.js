@@ -10,6 +10,7 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Group from './components/tournament/groups/Group';
 import CreateGroups from './components/tournament/create/CreateGroups'
+import MatchDetails from './components/tournament/matches/MatchDetails';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path='/' component={Dashboard} />
+          <Route path='/tournaments/:id/groups/:groupId/matches/:matchId' component={MatchDetails} />
           <Route path='/tournaments/:id/groups/create' component={CreateGroups} />
           <Route path='/tournaments/:id/groups/:groupId' component={Group} />
           <Route path='/tournaments/:id' component={TournamentDetails} />

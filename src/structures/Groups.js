@@ -17,7 +17,7 @@ export const createRandomGroups = (teams, groupsQtt) => {
 }
 
 export const createGroups = (teams, groupsQtt) => {
-    if (groupsQtt > teams.length) {
+    if (teams.length / groupsQtt < 2) {
         return false;
     }
     let teamsId = teams.map(team => team.id);
@@ -86,4 +86,122 @@ export const craeteGroupMatches = (teams, returnGames) => {
         }
     }
     return matches;
+}
+
+// TABLE
+const tableInit = (teams) => {
+    let table = [];
+    teams.forEach(team => {
+        let row = {
+            team: team,
+            points: 0,
+            goalsScored: 0,
+            goalsLost: 0
+        }
+        table.push(row);
+    })
+    return table;
+}
+
+export const createTable = (teams, matches) => {
+    let teamsId = teams.map(team => team.id);
+    let table = tableInit(teamsId);
+
+    return table;
+}
+
+
+//MATCH
+const resetMatch = (match) => {
+    const editMatch = {
+        ...match,
+        result: {
+            home: 0,
+            away: 0,
+        }
+    }
+    return editMatch;
+}
+
+export const changeMatchMode = (match, mode) => {
+    console.log(mode);
+    let tempMatch = match;
+    if (mode === 'NOT_STARTED') {
+        tempMatch = resetMatch();
+    }
+    const editMatch = {
+        ...tempMatch,
+        mode
+    }
+    return editMatch;
+}
+
+export const addGoalMatch = (match, team) => {
+    if (match.mode === 'LIVE') {
+        if (match.home === team) {
+            const editMatch = {
+                ...match,
+                result: {
+                    home: match.result.home + 1,
+                    away: match.result.away,
+                }
+            }
+            return editMatch;
+        } else if (match.away === team) {
+            const editMatch = {
+                ...match,
+                result: {
+                    home: match.result.home,
+                    away: match.result.away + 1,
+                }
+            }
+            return editMatch;
+        } else {
+            console.log('TEAM UNDENTIFIED');
+            return false;
+        }
+    } else {
+        console.log('MATCH IS NOT LIVE');
+        return false;
+    }
+}
+
+export const lessGoalMatch = (match, team) => {
+    if (match.mode === 'LIVE') {
+        if (match.home === team) {
+            if (match.result.home > 0) {
+                const editMatch = {
+                    ...match,
+                    result: {
+                        home: match.result.home - 1,
+                        away: match.result.away,
+                    }
+                }
+                return editMatch;
+            } else {
+                console.log('CANNOT HAVE LESS THAN 0 SCORED');
+                return false;
+            }
+        } else if (match.away === team) {
+            if (match.result.away > 0) {
+                const editMatch = {
+                    ...match,
+                    result: {
+                        home: match.result.home,
+                        away: match.result.away - 1,
+                    }
+                }
+                return editMatch;
+            } else {
+                console.log('CANNOT HAVE LESS THAN 0 SCORED');
+                return false;
+            }
+        } else {
+            console.log('TEAM UNDENTIFIED');
+            return false;
+        }
+    } else {
+        console.log('MATCH IS NOT LIVE');
+        return false;
+    }
 }

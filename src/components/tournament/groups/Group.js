@@ -3,11 +3,13 @@ import MatchesList from '../matches/MatchesList';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import GroupTable from './GroupTable';
 
 class Group extends Component {
     render() {
-        const { group, matches, teams } = this.props;
-        if (group && matches && teams) {
+        const { group, matches, allTeams } = this.props;
+        if (group && matches && allTeams) {
+            const teams = allTeams.filter(team => group.teams.includes(team.id)); //withdraw only group's teams
             return (
                 <div className='group container'>
                     <div className='btns'>
@@ -16,8 +18,8 @@ class Group extends Component {
                         }}>Back to tournament</div>
                     </div>
                     <p className='title'>{group.name}</p>
-                    <MatchesList matches={matches} teams={teams} />
-                    {/* <TeamList matches={matches} /> */}
+                    <MatchesList matches={matches} teams={teams} tournamentId={this.props.match.params.id} groupId={this.props.match.params.groupId} />
+                    <GroupTable matches={matches} teams={teams} />
                 </div>
             )
         } else {
@@ -36,7 +38,7 @@ const mapStateToProps = (state, ownProps) => {
     let group = groups ? groups[id] : null;
     return {
         group,
-        teams: state.firestore.ordered.teams,
+        allTeams: state.firestore.ordered.teams,
         matches: state.firestore.ordered.matches
     }
 }
