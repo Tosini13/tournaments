@@ -44,7 +44,7 @@ class CreateTournament extends Component {
                     showYearDropdown
                     showMonthDropdown
                 />
-                <button className="btn btn-icon pink lighten-1 z-depth-0">
+                <button className="btn btn-icon lighten-1 z-depth-0">
                     <i className='icon-ok'></i>
                 </button>
             </form>

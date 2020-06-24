@@ -19,7 +19,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path='/' component={Dashboard} />
-          <Route path='/tournaments/:id/group/create' component={CreateGroups} />
+          <Route path='/tournaments/:id/groups/create' component={CreateGroups} />
           <Route path='/tournaments/:id/groups/:groupId' component={Group} />
           <Route path='/tournaments/:id' component={TournamentDetails} />
           <Route path='/create' component={CreateTournament} />

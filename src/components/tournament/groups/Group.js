@@ -3,8 +3,6 @@ import MatchesList from '../matches/MatchesList';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import TeamList from '../teams/TeamList';
-import { Link } from 'react-router-dom';
 
 class Group extends Component {
     render() {

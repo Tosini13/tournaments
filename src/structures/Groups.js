@@ -12,22 +12,39 @@ function shuffle(arr) {
     return newArr;
 }
 
-export const createRandomGroups = (teams, groupQtt) => {
-    return createGroups(shuffle(teams), groupQtt);
+export const createRandomGroups = (teams, groupsQtt) => {
+    return createGroups(shuffle(teams), groupsQtt);
 }
 
-export const createGroups = (teams, groupQtt) => {
-    const teamsId = teams.map(team => team.id);
-    if (Math.ceil(teamsId.length / 2) < groupQtt || groupQtt < 1) {
+export const createGroups = (teams, groupsQtt) => {
+    if (groupsQtt > teams.length) {
         return false;
     }
-    const teamsInGroup = Math.ceil(teamsId.length / groupQtt);
+    let teamsId = teams.map(team => team.id);
+    let restTeams = 0; //in one group!
+    let add = 0;
+    const teamsQtt = teams.length;
     let groups = [];
-    for (let i = 0; i < groupQtt; i++) {
+    if (groupsQtt !== 1) {
+        restTeams = teamsQtt % groupsQtt;
+    }
+    for (let i = 0; i < groupsQtt; i++) {
+        //check if it will be the same amount of teams or not
+        if (restTeams !== 0) {
+            add = 1;
+            restTeams--;
+        } else {
+            add = 0;
+        }
+        let teamsInGroup = Math.floor(teamsQtt / groupsQtt) + add;
+        let groupTeams = [];
+        for (let j = 0; j < teamsInGroup; j++) {
+            groupTeams.push(teamsId.shift());
+        }
         groups.push(
             {
                 name: 'Group ' + String.fromCharCode(65 + i),
-                teams: teamsId.slice(teamsInGroup * i, teamsInGroup * (i + 1))
+                teams: groupTeams
             }
         );
     }

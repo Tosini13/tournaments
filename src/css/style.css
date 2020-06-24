@@ -1,6 +1,15 @@
 .App {
   background-color: darkslategrey;
   min-height: 100vh;
+  padding: 5px;
+  padding-top: 56px;
+}
+
+.App nav {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 10;
 }
 
 a {
@@ -24,6 +33,10 @@ a {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   padding: 5px 0px;
+}
+
+.btn {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .btn.btn-green {
@@ -103,6 +116,44 @@ a {
 
 .tournament-details .tournament-dashboard .teams-dashboard {
   padding: 5px 0px;
+}
+
+.tournament-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.tournament-nav .tournament-nav-btn {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.group-dashboard .btns {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.group-dashboard .btns .btn {
+  margin: 5px 10px;
+}
+
+.groups-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.groups-list .group-card {
+  background-color: grey;
+  padding: 10px 0px;
 }
 
 .groups .btns {

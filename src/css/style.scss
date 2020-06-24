@@ -3,6 +3,14 @@
 .App {
     background-color: $firstBackgroundColor;
     min-height: 100vh;
+    padding: 5px;
+    padding-top: 56px;
+    nav {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        z-index: 10;
+    }
 }
 
 a {
@@ -23,6 +31,7 @@ a {
 }
 
 .btn {
+    background-color: rgba(0, 0, 0, 0.3);
     &.btn-green {
         background-color: $green;
     }
@@ -89,6 +98,32 @@ a {
         .teams-dashboard {
             padding: 5px 0px;
         }
+    }
+}
+
+.tournament-nav {
+    display: flex;
+    justify-content: space-around;
+    .tournament-nav-btn {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+.group-dashboard {
+    .btns {
+        flex-direction: column;
+        .btn {
+            margin: 5px 10px;
+        }
+    }
+}
+
+.groups-list {
+    display: flex;
+    flex-direction: column;
+    .group-card {
+        background-color: grey;
+        padding: 10px 0px;
     }
 }
 

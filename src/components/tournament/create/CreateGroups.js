@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import MatchesList from '../matches/MatchesList';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import TeamList from '../teams/TeamList';
 import { createGroups, createRandomGroups } from '../../../structures/Groups'
-import GroupDetails from '../groups/GroupDetails';
+import GroupsDetails from '../groups/GroupsDetails';
 import { createGroupsToTournament } from '../../../store/actions/GroupActions'
 
 
@@ -56,7 +54,7 @@ class CreateGroup extends Component {
     }
 
     render() {
-        const { group, matches, teams } = this.props;
+        const { teams } = this.props;
 
         if (teams) {
             return (
@@ -80,7 +78,7 @@ class CreateGroup extends Component {
                     </div>
                     <div className='group-list'>
                         {this.state.groups && this.state.groups.map(group => {
-                            return <GroupDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} />
+                            return <GroupsDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
                         })}
                     </div>
                 </div>

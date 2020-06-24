@@ -2,8 +2,8 @@ import React from 'react';
 
 const Match = (props) => {
     const { match, teams } = props;
-    const home = teams.find(team => team.id == match.home);
-    const away = teams.find(team => team.id == match.away);
+    const home = teams.find(team => team.id === match.home);
+    const away = teams.find(team => team.id === match.away);
     if (home && away) {
         return (
             <div className='match'>
