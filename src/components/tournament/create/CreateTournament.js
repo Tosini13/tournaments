@@ -33,7 +33,7 @@ class CreateTournament extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} className='create-tournament container'>
+            <form onSubmit={this.handleSubmit} className='create-tournament'>
                 <p>Create Tournament:</p>
                 <label>Name:</label>
                 <input name='name' id='name' value={this.state.name} onChange={this.handleChange} required />

@@ -1,8 +1,6 @@
 .App {
-  background-color: darkslategrey;
+  background-color: #57370D;
   min-height: 100vh;
-  padding: 5px;
-  padding-top: 56px;
 }
 
 .App nav {
@@ -12,8 +10,13 @@
   z-index: 10;
 }
 
+.App main {
+  padding: 5px;
+  padding-top: 56px;
+}
+
 a {
-  color: white;
+  color: #FFE998;
 }
 
 .btns-main {
@@ -63,7 +66,7 @@ a {
 }
 
 .title {
-  color: white;
+  color: #FFE998;
   text-align: center;
 }
 
@@ -77,8 +80,8 @@ a {
 }
 
 .tournaments-list .tournament-card {
-  background-color: grey;
-  color: white;
+  background-color: #423E3E;
+  color: #FFE998;
   text-align: center;
 }
 
@@ -210,18 +213,26 @@ a {
   margin: 5px 0px;
 }
 
-.group .group-table {
+.group-table {
   background-color: rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 }
 
-.group .group-table > table {
+.group-table > table {
   background-color: rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.group .group-table > table > tbody {
+.group-table > table > tbody {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.group-table > table > tbody .group-table-promoted {
+  background-color: rgba(0, 255, 0, 0.15);
+}
+
+.group-table > table > tbody .group-table-live {
+  color: #9c0303;
 }
 
 .match {
@@ -339,6 +350,20 @@ a {
   grid-column: 1/11;
 }
 
+.match-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.match-details .match .match-teams {
+  font-size: 20px;
+}
+
 .match-details .match .match-result {
   max-width: 100px;
   margin-left: auto;
@@ -358,6 +383,7 @@ a {
 
 .match-details .match-dashboard .score-dashboard {
   padding: 5px;
+  margin: 50px 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

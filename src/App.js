@@ -18,16 +18,18 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Navbar />
-        <Switch>
-          <Route exact path='/' component={Dashboard} />
-          <Route path='/tournaments/:id/groups/:groupId/matches/:matchId' component={MatchDetails} />
-          <Route path='/tournaments/:id/groups/create' component={CreateGroups} />
-          <Route path='/tournaments/:id/groups/:groupId' component={Group} />
-          <Route path='/tournaments/:id' component={TournamentDetails} />
-          <Route path='/create' component={CreateTournament} />
-          <Route path='/signin' component={SignIn} />
-          <Route path='/signup' component={SignUp} />
-        </Switch>
+        <main className='container'>
+          <Switch>
+            <Route exact path='/' component={Dashboard} />
+            <Route path='/tournaments/:id/groups/:groupId/matches/:matchId' component={MatchDetails} />
+            <Route path='/tournaments/:id/groups/create' component={CreateGroups} />
+            <Route path='/tournaments/:id/groups/:groupId' component={Group} />
+            <Route path='/tournaments/:id' component={TournamentDetails} />
+            <Route path='/create' component={CreateTournament} />
+            <Route path='/signin' component={SignIn} />
+            <Route path='/signup' component={SignUp} />
+          </Switch>
+        </main>
       </div>
     </BrowserRouter>
   );

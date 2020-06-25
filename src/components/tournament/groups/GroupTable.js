@@ -10,13 +10,16 @@ class GroupTable extends Component {
         let promotedQtt = 1;
         let promotionCounter = 0;
         this.table = table.map(row => {
-            this.tablePromoted = '';
+            let rowClass = '';
             if (promotionCounter < promotedQtt) {
-                this.tablePromoted += ' tablePromoted';
+                rowClass += ' group-table-promoted';
+            }
+            if (row.live) {
+                rowClass += ' group-table-live';
             }
             promotionCounter++;
             const team = teams.find(team => team.id === row.team);
-            return <tr key={team.id} className={this.tablePromoted}><td>{team.name}</td><td>{row.points}</td><td>{row.goalsScored}</td><td>{row.goalsLost}</td></tr>
+            return <tr key={team.id} className={rowClass}><td>{team.name}</td><td>{row.points}</td><td>{row.goalsScored}</td><td>{row.goalsLost}</td></tr>
         });
         return (
             <div className='group-table'>

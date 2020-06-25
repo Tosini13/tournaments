@@ -58,7 +58,7 @@ class CreateGroup extends Component {
 
         if (teams) {
             return (
-                <div className='groups container'>
+                <div className='groups'>
                     <div className='control-panel'>
                         <div className='btns'>
                             <div className='btns-main'>

@@ -65,6 +65,11 @@ class MatchDetails extends Component {
 
             return (
                 <div className='match-details'>
+                    <div className='btns'>
+                        <div className='btn' onClick={() => {
+                            this.props.history.push('/tournaments/' + this.tournamentId + '/groups/' + this.groupId);
+                        }}>Back to GROUP</div>
+                    </div>
                     <div className={matchClass}>
                         <div className='match-teams'>
                             <p>

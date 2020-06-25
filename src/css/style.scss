@@ -1,15 +1,19 @@
 @import "_constants.scss";
 
+$header: 56px;
+
 .App {
     background-color: $firstBackgroundColor;
     min-height: 100vh;
-    padding: 5px;
-    padding-top: 56px;
     nav {
         position: fixed;
         left: 0px;
         top: 0px;
         z-index: 10;
+    }
+    main {
+        padding: 5px;
+        padding-top: $header;
     }
 }
 
@@ -158,15 +162,19 @@ a {
     }
 }
 
-.group {
-    .group-table {
+.group-table {
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    > table {
         background-color: rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-        > table {
+        text-align: center;
+        > tbody {
             background-color: rgba(0, 0, 0, 0.1);
-            text-align: center;
-            > tbody {
-                background-color: rgba(0, 0, 0, 0.1);
+            .group-table-promoted {
+                background-color: rgba(0, 255, 0, 0.15);
+            }
+            .group-table-live {
+                color: $red;
             }
         }
     }
@@ -243,7 +251,12 @@ a {
 }
 
 .match-details {
+    display: flex;
+    flex-direction: column;
     .match {
+        .match-teams {
+            font-size: 20px;
+        }
         .match-result {
             max-width: 100px;
             margin-left: auto;
@@ -256,6 +269,7 @@ a {
         padding: 5px;
         .score-dashboard {
             padding: 5px;
+            margin: 50px 0px;
             display: flex;
             justify-content: space-around;
         }

@@ -103,10 +103,94 @@ const tableInit = (teams) => {
     return table;
 }
 
+const sortTable = (a, b) => {
+    //POINTS
+    if (a.points === b.points) {
+        //+/-
+        let diffrenceA = a.goalsScored - a.goalsLost;
+        let diffrenceB = b.goalsScored - b.goalsLost;
+        if (diffrenceA === diffrenceB) {
+            //SCORED
+            if (a.goalsScored === b.goalsScored) {
+                //LOST
+                if (a.goalsLost === b.goalsLost) {
+                    //TEAM NAME
+                    // if (a.team.name.localeCompare(b.team.name) === 0) {
+                    //     //ADD DIRECT RESULT!
+                    //     return 0;
+                    // }
+                    // else {
+                    //OR ASK ADMIN!!!
+                    // return (a.team.name.localeCompare(b.team.name) < 0) ? -1 : 1;
+                    // }
+                    return 0;
+                }
+                else {
+                    return (a.goalsLost > b.goalsLost) ? -1 : 1;
+                }
+            }
+            else {
+                return (a.goalsScored > b.goalsScored) ? -1 : 1;
+            }
+        }
+        else {
+            return (diffrenceA > diffrenceB) ? -1 : 1;
+        }
+    }
+    else {
+        return (a.points > b.points) ? -1 : 1;
+    }
+}
+
 export const createTable = (teams, matches) => {
     let teamsId = teams.map(team => team.id);
     let table = tableInit(teamsId);
+    let begunGroup = false; //check if group has begun
 
+
+    for (let match of matches) {
+        if (match.mode !== 'NOT_STARTED') {
+            begunGroup = true;
+            for (let row of table) {
+                if (row.points == null) {
+                    console.log("Matches didn't start!!");
+                }
+                //team is host
+                if (match.home === row.team) {
+                    //add points
+                    if (match.result.home > match.result.away) {
+                        row.points += parseInt(3);
+                    } else if (match.result.home === match.result.away) {
+                        row.points += parseInt(1);
+                    }
+                    //goal balance
+                    row.goalsScored += parseInt(match.result.home);
+                    row.goalsLost += parseInt(match.result.away);
+                    if (match.mode === 'LIVE') {
+                        row.live = true;
+                    }
+                }
+                //team is host
+                if (match.away === row.team) {
+                    //add points
+                    if (match.result.home < match.result.away) {
+                        row.points += parseInt(3);
+                    } else if (match.result.home === match.result.away) {
+                        row.points += parseInt(1);
+                    }
+                    //goal balance
+                    row.goalsScored += parseInt(match.result.away);
+                    row.goalsLost += parseInt(match.result.home);
+                    if (match.mode === 'LIVE') {
+                        row.live = true;
+                    }
+                }
+            }
+        }
+    }
+    if (begunGroup) {
+        table.sort(sortTable);
+    }
     return table;
 }
 

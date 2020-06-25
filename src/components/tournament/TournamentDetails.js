@@ -14,7 +14,7 @@ class TournamentDetails extends Component {
         const { tournament, teams, groups, auth } = this.props;
         if (tournament && groups && teams) {
             return (
-                <div className='container tournament-details'>
+                <div className='tournament-details'>
                     <section className='tournament-description'>
                         <div className='title'>{tournament.name}</div>
                         <div className='tournament-date'>{moment(tournament.date.toDate()).format('yyyy MMMM DD')}</div>

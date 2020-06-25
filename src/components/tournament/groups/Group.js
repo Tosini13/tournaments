@@ -11,7 +11,7 @@ class Group extends Component {
         if (group && matches && allTeams) {
             const teams = allTeams.filter(team => group.teams.includes(team.id)); //withdraw only group's teams
             return (
-                <div className='group container'>
+                <div className='group'>
                     <div className='btns'>
                         <div className='btn' onClick={() => {
                             this.props.history.push('/tournaments/' + this.props.match.params.id);
