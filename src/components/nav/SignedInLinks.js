@@ -7,9 +7,9 @@ const SignedInLinks = (props) => {
     console.log(props);
     return (
         <ul className=''>
-            <li><NavLink to={'/'}>Home</NavLink></li>
-            <li><NavLink to='/create'>New Tournament</NavLink></li>
-            <li><a href='#signout' onClick={props.singOut}>Log out</a></li>
+            <li><NavLink to={'/'}><i className='icon-trophy'></i><span className='desktop'>Home</span></NavLink></li>
+            <li><NavLink to='/create'><i className='icon-plus'></i><span className='desktop'>New Tournament</span></NavLink></li>
+            <li><a href='#signout' onClick={props.singOut}><i className='icon-off'></i><span className='desktop'>Log out</span></a></li>
         </ul>
     )
 }

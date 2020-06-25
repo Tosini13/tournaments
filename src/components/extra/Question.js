@@ -16,8 +16,8 @@ const Question = (props) => {
         zIndex: '3'
     }
     const styleQuestion = {
-        backgroundColor: '#019785',
-        color: 'white',
+        backgroundColor: '#57370D',
+        color: '#FFE998',
         padding: '15px 20px',
         width: 'fit-content',
         height: 'fit-content',

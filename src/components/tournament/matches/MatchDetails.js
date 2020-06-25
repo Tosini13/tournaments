@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { updateMatch } from '../../../store/actions/MatchActions'
 import { changeMatchMode, addGoalMatch, lessGoalMatch } from '../../../structures/Groups';
+import Question from '../../extra/Question';
 
 class MatchDetails extends Component {
 
@@ -11,6 +12,9 @@ class MatchDetails extends Component {
     groupId = this.props.match.params.groupId;
     matchId = this.props.match.params.matchId;
 
+    state = {
+        question: null
+    }
 
     handleUpdateMatchMode = (match, mode) => {
         let editMatch = changeMatchMode(match, mode);
@@ -31,6 +35,27 @@ class MatchDetails extends Component {
         if (editMatch) {
             this.props.updateMatch(this.tournamentId, this.groupId, this.matchId, editMatch);
         }
+    }
+
+    handleRestartMatch = (match, mode) => {
+        this.setState({
+            question: {
+                question: 'Do you want to restart the match?',
+                answer1: {
+                    answer: 'Yes',
+                    feedback: () => {
+                        this.handleUpdateMatchMode(match, mode);
+                        this.setState({ question: null });
+                    }
+                },
+                answer2: {
+                    answer: 'No',
+                    feedback: () => {
+                        this.setState({ question: null });
+                    }
+                }
+            }
+        });
     }
 
     render() {
@@ -97,8 +122,15 @@ class MatchDetails extends Component {
                             <div className='btn' id='away-less' onClick={() => { this.handleLessGoal(match, match.away); }}>-</div>
                             <div className='btn' id='away-add' onClick={() => { this.handleAddGoal(match, match.away); }}>+</div>
                         </div>
-                        <div className='btn' onClick={() => { this.handleUpdateMatchMode(match, updateMode); }}>{modeButton}</div>
+                        <div className='btn' onClick={() => {
+                            if (updateMode === 'NOT_STARTED') {
+                                this.handleRestartMatch(match, updateMode);
+                            } else {
+                                this.handleUpdateMatchMode(match, updateMode);
+                            }
+                        }}>{modeButton}</div>
                     </div>
+                    {this.state.question ? <Question question={this.state.question} /> : null}
                 </div>
             )
         } else {

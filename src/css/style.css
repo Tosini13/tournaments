@@ -10,6 +10,22 @@
   z-index: 10;
 }
 
+.App nav .desktop {
+  display: none;
+}
+
+.App nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.App nav ul a {
+  color: #FFE998;
+}
+
 .App main {
   padding: 5px;
   padding-top: 56px;

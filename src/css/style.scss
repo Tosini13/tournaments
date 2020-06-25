@@ -10,6 +10,16 @@ $header: 56px;
         left: 0px;
         top: 0px;
         z-index: 10;
+        .desktop {
+            display: none;
+        }
+        ul {
+            display: flex;
+            justify-content: space-around;
+            a {
+                color: $firstFontColor;
+            }
+        }
     }
     main {
         padding: 5px;
