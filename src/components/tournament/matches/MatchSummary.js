@@ -5,10 +5,15 @@ const MatchSummary = (props) => {
     const { match, teams } = props;
     const home = teams.find(team => team.id === match.home);
     const away = teams.find(team => team.id === match.away);
+    // console.log(match);
     if (home && away) {
+        let matchClass = 'match';
+        if (match.mode === 'LIVE') {
+            matchClass += ' match-live';
+        }
         return (
             <Link to={'/tournaments/' + props.tournamentId + '/groups/' + props.groupId + '/matches/' + match.id}>
-                <div className='match'>
+                <div className={matchClass}>
                     <div className='match-teams'>
                         <p>
                             {home.name}

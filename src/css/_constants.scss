@@ -5,7 +5,12 @@ $blue: #052093;
 // $secondFontColor: grey;
 // $firstBackgroundColor: darkslategrey;
 // $secondBackgroundColor: grey;
-$firstFontColor: #FFE998;
+$firstFontColor: #ffe998;
 $secondFontColor: grey;
-$firstBackgroundColor: #57370D;
-$secondBackgroundColor: #423E3E;
+$firstBackgroundColor: #57370d;
+$secondBackgroundColor: #423e3e;
+@mixin live {
+    color: $red;
+    text-shadow: 0px 0px 1px black;
+    font-weight: 700;
+}
