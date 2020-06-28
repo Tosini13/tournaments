@@ -5,6 +5,7 @@ $header: 56px;
 .App {
     background-color: $firstBackgroundColor;
     min-height: 100vh;
+    color: white;
     nav {
         position: fixed;
         left: 0px;
@@ -22,7 +23,7 @@ $header: 56px;
         }
     }
     main {
-        padding: 5px;
+        padding-bottom: 5px;
         padding-top: $header;
     }
 }
@@ -192,6 +193,14 @@ a {
 }
 
 .match {
+    .match-round {
+        grid-column: 1/11;
+        text-align: center;
+        font-size: 10px;
+        padding: 0px;
+        margin: 0px;
+        color: black;
+    }
     .match-teams {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
@@ -381,5 +390,23 @@ a {
     justify-content: space-evenly;
     > input {
         max-width: 70%;
+    }
+}
+
+.bracket-teams-list {
+    .bracket-team {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgba(0, 0, 0, 0.3);
+        font-size: 17px;
+        padding: 5px;
+        margin: 5px 0px;
+        border-radius: 3px;
+        .bracket-team-order {
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 25px;
+            text-align: center;
+            border-radius: 2px;
+        }
     }
 }

@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 const GroupsList = (props) => {
     const { groups } = props;
     return (
-        <div className='groups-list'>
+        <div className='btns'>
             {groups && groups.map(group => {
                 return <Link to={'/tournaments/' + props.tournamentId + '/groups/' + group.id} key={group.id}>
-                    <div className='group-card card z-depth-1 grey center'>
+                    <div className='btn'>
                         {group.name}
                     </div>
                 </Link>

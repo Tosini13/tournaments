@@ -24,7 +24,7 @@ const GroupsDashboard = (props) => {
     } else {
         return (
             <div className='groups-dashboard'>
-                <p className='title'>Groups are not available yet</p>
+                <p className='title'>Groups are not available yet for visitors</p>
             </div>
         )
     }

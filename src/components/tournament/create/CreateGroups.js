@@ -113,7 +113,7 @@ export default compose(
         return [{
             collection: 'tournaments',
             doc: props.match.params.id,
-            subcollections: [{ collection: 'teams' }],
+            subcollections: [{ collection: 'teams'}],
             storeAs: 'teams'
         }]
     }

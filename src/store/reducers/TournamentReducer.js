@@ -7,6 +7,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'CREATE_TOURNAMENT_ERROR':
             console.log('tournament creation error', action.err);
             return state;
+        case 'DELETE_TOURNAMENT':
+            console.log('tournament deleted');
+            return state;
+        case 'DELETE_TOURNAMENT_ERROR':
+            console.log('tournament deletion error', action.err);
+            return state;
         case 'ADD_TEAM_TO_TOURNAMENT':
             console.log('team added to tournament');
             return state;
@@ -25,6 +31,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'CREATE_MATCHES_TO_GROUP_ERROR':
             console.log('matches to group creation error', action.err);
             return state;
+        case 'CREATE_BRACKET':
+            console.log('bracket created');
+            return state;
+        case 'CREATE_BRACKET_ERROR':
+            console.log('bracket creation error', action.err);
+            return state;
         case 'DELETE_TEAM_FROM_TOURNAMENT':
             console.log('team deleted from tournament');
             return state;
@@ -37,12 +49,18 @@ const tournamentReducer = (state = initState, action) => {
         case 'EDIT_TEAM_ERROR':
             console.log('team edition error', action.err);
             return state;
-            case 'EDIT_MATCH':
-                console.log('match edited');
-                return state;
-            case 'EDIT_MATCH_ERROR':
-                console.log('match edition error', action.err);
-                return state;
+        case 'EDIT_GROUP_MATCH':
+            console.log('group match edited');
+            return state;
+        case 'EDIT_GROUP_MATCH_ERROR':
+            console.log('group match edition error', action.err);
+            return state;
+        case 'EDIT_BRACKET_MATCH':
+            console.log('bracket match edited');
+            return state;
+        case 'EDIT_BRACKET_MATCH_ERROR':
+            console.log('bracket match edition error', action.err);
+            return state;
         default:
             return state;
     }

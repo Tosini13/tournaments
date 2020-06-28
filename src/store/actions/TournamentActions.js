@@ -16,3 +16,17 @@ export const createTournament = (tournament) => {
         })
     }
 }
+
+export const deleteTournament = (tournamentId) => {
+
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+
+        const firestore = getFirestore();
+        firestore.collection('tournaments').doc(tournamentId).delete()
+            .then(() => {
+                dispatch({ type: 'DELETE_TOURNAMENT' })
+            }).catch(err => {
+                dispatch({ type: 'DELETE_TOURNAMENT_ERROR', err })
+            })
+    }
+}

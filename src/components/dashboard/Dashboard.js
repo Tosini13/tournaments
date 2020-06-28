@@ -39,7 +39,7 @@ firestoreConnect(props => {
     // if (!props.auth.uid) return []
     return [
         {
-            collection: 'tournaments',
+            collection: 'tournaments', orderBy: ['date', 'desc'],
             // where: [['ownerId', '==', props.auth.uid]]
         }
     ]
