@@ -8,7 +8,7 @@ const BracketDashboard = (props) => {
             <div className='bracket-dashboard'>
                 <p className='title'>Play-offs</p>
                 <div className='btns'>
-                    <Link className='btn' to={props.tournamentId + '/bracket'}>play-offs</Link>
+                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>play-offs</Link>
                 </div>
             </div>
         )
@@ -17,7 +17,7 @@ const BracketDashboard = (props) => {
             <div className='bracket-dashboard'>
                 <p className='title'>Play-offs</p>
                 <div className='btns'>
-                    <Link className='btn' to={props.tournamentId + '/bracket/create'}>Add play-offs</Link>
+                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket/create'}>Add play-offs</Link>
                 </div>
             </div>
         )

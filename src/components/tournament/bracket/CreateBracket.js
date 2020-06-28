@@ -19,10 +19,10 @@ class CreateBracket extends Component {
     handleDecline = () => {
         this.props.history.push('/tournaments/' + this.props.match.params.id);
     }
-    
+
     handleAccept = (matches) => {
         this.props.createBracket(this.props.match.params.id, matches);
-        // const matches = createBracketMatches(this.state.chosenTeams);
+        this.props.history.push('/tournaments/' + this.props.match.params.id);
     }
 
     handleChooseTeam = (id) => {
