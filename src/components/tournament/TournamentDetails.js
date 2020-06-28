@@ -9,6 +9,7 @@ import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { deleteTournament } from "../../store/actions/TournamentActions";
 import Question from "../extra/Question";
+import { maxTeamsQtt } from "../../structures/Bracket";
 
 // import TournamentNav from "./TournamentNav";
 class TournamentDetails extends Component {
@@ -52,11 +53,11 @@ class TournamentDetails extends Component {
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
                             <GroupsDashboard tournamentId={id} groups={groups} auth={auth} />
-                            <BracketDashboard tournamentId={id}  bracket={bracket} auth={auth}/>
+                            <BracketDashboard tournamentId={id} bracket={bracket} auth={auth} />
                         </div>
                         <div className='teams-dashboard'>
                             <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length)} control={Boolean(auth)} />
-                            {(auth && groups.length === 0) ? <AddTeam tournamentId={id} /> : null}
+                            {(auth && groups.length === 0 && (teams.length <= maxTeamsQtt())) ? <AddTeam tournamentId={id} /> : null}
                         </div>
                     </section>
                     {/* <div className='btns'>

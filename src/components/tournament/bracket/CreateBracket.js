@@ -6,13 +6,14 @@ import BracketChooseTeams from './BracketChooseTeams';
 import { createBracketMatches } from '../../../structures/Bracket';
 import MatchesList from '../matches/MatchesList'
 import { createBracket } from '../../../store/actions/BracketAction';
+import BracketChooseGroups from './BracketChooseGroups';
 
 class CreateBracket extends Component {
 
     state = {
         bracketOrder: 0,
         matches: null,
-        chosenTeams: [],
+        chosenItems: [],
         step: 'CHOOSE_TEAMS'
     }
 
@@ -26,22 +27,37 @@ class CreateBracket extends Component {
     }
 
     handleChooseTeam = (id) => {
-        if (this.state.chosenTeams.includes(id)) {
-            let chosenTeams = this.state.chosenTeams.filter(team => team !== id);
+        if (this.state.chosenItems.includes(id)) {
+            let chosenItems = this.state.chosenItems.filter(team => team !== id);
             this.setState({
-                chosenTeams
+                chosenItems
             })
         } else {
             this.setState({
-                chosenTeams: [...this.state.chosenTeams, id]
+                chosenItems: [...this.state.chosenItems, id]
+            })
+        }
+    }
+
+    handleChooseGroup = (name) => {
+        console.log(name);
+        console.log(this.state.chosenItems);
+        if (this.state.chosenItems.includes(name)) {
+            let chosenItems = this.state.chosenItems.filter(team => team !== name);
+            this.setState({
+                chosenItems
+            })
+        } else {
+            this.setState({
+                chosenItems: [...this.state.chosenItems, name]
             })
         }
     }
 
     render() {
-        const { teams } = this.props;
+        const { teams, groups } = this.props;
         if (teams) {
-            const matches = createBracketMatches(teams, this.state.chosenTeams, [], false);
+            const matches = createBracketMatches(teams, this.state.chosenItems, [], false);
             return (
                 <div className='bracket'>
                     <div className='control-panel'>
@@ -55,7 +71,11 @@ class CreateBracket extends Component {
                             <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
                         </div>
                     </div>
-                    <BracketChooseTeams teams={teams} chosenTeams={this.state.chosenTeams} handleChooseTeam={this.handleChooseTeam} />
+                    {groups && groups.length ?
+                        <BracketChooseGroups groups={groups} chosenGroups={this.state.chosenItems} handleChooseGroup={this.handleChooseGroup} />
+                        :
+                        <BracketChooseTeams teams={teams} chosenTeams={this.state.chosenItems} handleChooseTeam={this.handleChooseTeam} />
+                    }
                     <MatchesList teams={teams} matches={matches} />
                 </div>
             )
@@ -70,9 +90,9 @@ class CreateBracket extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let teams = state.firestore.ordered.teams;
     return {
-        teams,
+        teams: state.firestore.ordered.teams,
+        groups: state.firestore.ordered.groups,
     }
 }
 
@@ -90,6 +110,12 @@ export default compose(
             doc: props.match.params.id,
             subcollections: [{ collection: 'teams', orderBy: ['name', 'asc'] }],
             storeAs: 'teams'
+        },
+        {
+            collection: 'tournaments',
+            doc: props.match.params.id,
+            subcollections: [{ collection: 'groups', orderBy: ['name', 'asc'] }],
+            storeAs: 'groups'
         }]
     }
     ))(CreateBracket);

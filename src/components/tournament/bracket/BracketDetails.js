@@ -6,9 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 class BracketDetails extends Component {
     render() {
-        console.log(this.props);
         const { groups, allTeams, bracket } = this.props;
-        console.log(groups, allTeams, bracket);
         return (
             <div className='bracket'>
                 <div className='btns'>

@@ -1,11 +1,16 @@
-// const max_teams_amount = 200;
+const max_teams_amount = 64;
 const roundName = {
     1: "Final",
     2: "Semi-final",
     4: "Quater-final",
     8: "1/16",
-    16: "1/32"
+    16: "1/32",
+    32: "1/64"
 };
+
+export const maxTeamsQtt = () => {
+    return max_teams_amount;
+}
 
 const countRoundQtt = (teamsQtt) => {
     let i = 1;
@@ -48,6 +53,7 @@ export const createBracketStageMatches = (teams, returnGames) => {
     return matches;
 }
 
+//BRACKET
 export const createBracketMatches = (teams, chosenTeams, groupsTeams, returnGames) => {
     let lastRoundMatches = []; //array to init matches
     let currentRoundMatches = groupsTeams; //get matches to create whole bracket ! GET FROM GROUPS AS WELL
