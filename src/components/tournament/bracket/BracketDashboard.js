@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BracketDashboard = (props) => {
     const { bracket, auth } = props;
+    console.log(bracket);
     if (Boolean(bracket) && bracket.length) {
         return (
             <div className='bracket-dashboard'>

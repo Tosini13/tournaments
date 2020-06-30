@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 class BracketDetails extends Component {
     render() {
-        const { groups, allTeams, bracket } = this.props;
+        const { allTeams, bracket, groups } = this.props;
         return (
             <div className='bracket'>
                 <div className='btns'>
@@ -14,14 +14,14 @@ class BracketDetails extends Component {
                         this.props.history.push('/tournaments/' + this.props.match.params.id);
                     }}>Back to tournament</div>
                 </div>
-                <MatchesList matches={bracket} teams={allTeams} tournamentId={this.props.match.params.id} bracket />
+                <MatchesList matches={bracket} teams={allTeams} tournamentId={this.props.match.params.id} groups={groups} bracket />
             </div>
         )
     }
 }
 
 const mapStateToProps = (state, ownState) => {
-    let groups = state.firestore.data.groups;
+    let groups = state.firestore.ordered.groups;
     return {
         groups,
         allTeams: state.firestore.ordered.teams,
@@ -46,7 +46,7 @@ export default compose(firestoreConnect(props => {
         {
             collection: 'tournaments',
             doc: props.match.params.id,
-            subcollections: [{ collection: 'bracket' }],
+            subcollections: [{ collection: 'bracket', orderBy: ['name', 'asc'] }],
             storeAs: 'bracket'
         }]
 }), connect(mapStateToProps))(BracketDetails);

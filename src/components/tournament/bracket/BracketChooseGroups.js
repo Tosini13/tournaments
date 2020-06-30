@@ -8,12 +8,18 @@ const BracketChooseGroups = (props) => {
             {groups.map((group) => {
                 const groupPlaces = group.teams.map((team, i) => {
                     let groupPlaceClass = 'bracket-choose-children-places';
-                    let groupPlaceName = group.name + ' ' + (i + 1);
-                    if (chosenGroups.includes(groupPlaceName)) {
-                        groupPlaceClass += ' promoted';
+                    // let groupPlaceName = group.id + ' ' + (i + 1);
+                    let groupPlaceholder = {
+                        lastRound: group.id,
+                        place: i
                     }
+                    chosenGroups.forEach(chosen => {
+                        if (chosen.lastRound === groupPlaceholder.lastRound && chosen.place === groupPlaceholder.place) {
+                            groupPlaceClass += ' promoted';
+                        }
+                    });
                     return (
-                        <div key={team.id} className={groupPlaceClass} onClick={() => { props.handleChooseGroup(groupPlaceName) }}>{(i + 1) + ' place'}</div>
+                        <div key={i} className={groupPlaceClass} onClick={() => { props.handleChooseGroup(groupPlaceholder) }}>{(i + 1) + ' place'}</div>
                     )
                 })
                 return (

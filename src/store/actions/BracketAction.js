@@ -14,7 +14,6 @@ export const createBracket = (tournamentId, bracket) => {
 }
 
 export const updateBracketMatch = (tournamentId, matchId, match) => {
-    console.log('update Match');
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
         firestore.collection('tournaments').doc(tournamentId).collection('bracket').doc(matchId).update({

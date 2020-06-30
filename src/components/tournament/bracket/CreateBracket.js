@@ -39,17 +39,15 @@ class CreateBracket extends Component {
         }
     }
 
-    handleChooseGroup = (name) => {
-        console.log(name);
-        console.log(this.state.chosenItems);
-        if (this.state.chosenItems.includes(name)) {
-            let chosenItems = this.state.chosenItems.filter(team => team !== name);
+    handleChooseGroup = (groupPlaceholder) => {
+        let chosenItems = this.state.chosenItems.filter(chosen => (chosen.lastRound !== groupPlaceholder.lastRound || chosen.place !== groupPlaceholder.place));
+        if (chosenItems && chosenItems.length !== this.state.chosenItems.length) {
             this.setState({
                 chosenItems
             })
         } else {
             this.setState({
-                chosenItems: [...this.state.chosenItems, name]
+                chosenItems: [...this.state.chosenItems, groupPlaceholder]
             })
         }
     }
@@ -57,17 +55,19 @@ class CreateBracket extends Component {
     render() {
         const { teams, groups } = this.props;
         if (teams) {
-            const matches = createBracketMatches(teams, this.state.chosenItems, [], false);
+            let matches = null;
+            if (groups && groups.length) {
+                matches = createBracketMatches(teams, [], this.state.chosenItems, false);
+            } else {
+                matches = createBracketMatches(teams, this.state.chosenItems, [], false);
+            }
+            // console.log(matches);
             return (
                 <div className='bracket'>
                     <div className='control-panel'>
                         <div className='btns'>
                             <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
-                            <div className='btn btn-icon'
-                            // onClick={() => { this.handleDraw(teams) }}
-                            >
-                                <i className='icon-arrows-cw'></i>
-                            </div>
+                            {/* <div className='btn btn-icon' onClick={() => { this.handleDraw(teams) }}><i className='icon-arrows-cw'></i></div> */}
                             <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@ class CreateBracket extends Component {
                         :
                         <BracketChooseTeams teams={teams} chosenTeams={this.state.chosenItems} handleChooseTeam={this.handleChooseTeam} />
                     }
-                    <MatchesList teams={teams} matches={matches} />
+                    <MatchesList teams={teams} matches={matches} groups={groups} />
                 </div>
             )
         } else {

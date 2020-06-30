@@ -30,7 +30,7 @@ class MatchDetails extends Component {
     }
 
     render() {
-        const { allTeams, match } = this.props;
+        const { allTeams, match, groups, matches } = this.props;
         if (match && allTeams) {
             let updateMode = null;
             let modeButton = null;
@@ -53,13 +53,13 @@ class MatchDetails extends Component {
                     console.log('match mode error');
                     break;
             }
-
+            console.log(this.props.handleUpdateMatch);
             return (
                 <div className='match-details'>
                     <div className='btns'>
                         <div className='btn' onClick={this.props.historyPush}>Back</div>
                     </div>
-                    <MatchSummary match={match} teams={allTeams} />
+                    <MatchSummary match={match} teams={allTeams} groups={groups} matches={matches} handleUpdateMatch={this.props.handleUpdateMatch} />
                     <div className='match-dashboard'>
                         <div className='score-dashboard'>
                             <div className='btn' id='home-add' onClick={() => { this.props.handleAddGoal(match, match.home); }}>+</div>

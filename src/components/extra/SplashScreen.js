@@ -24,6 +24,7 @@ const SplashScreen = (props) => {
         display: 'block',
         color: '#FFE998',
         margin: '0',
+        fontSize: '100px'
     }
     return (
         <div className='splashScreen' style={styleScreen}>

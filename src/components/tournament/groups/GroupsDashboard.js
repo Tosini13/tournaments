@@ -4,7 +4,7 @@ import GroupsList from './GroupsList';
 
 const GroupsDashboard = (props) => {
 
-    const { groups, auth } = props;
+    const { groups, bracket, auth } = props;
     if (Boolean(groups) && groups.length) {
         return (
             <div className='groups-dashboard'>
@@ -13,6 +13,13 @@ const GroupsDashboard = (props) => {
             </div>
         )
     } else if (auth) {
+        if (bracket) {
+            return (
+                <div className='groups-dashboard'>
+                    <p className='title'>Groups are not available because bracket is already created!</p>
+                </div>
+            )
+        }
         return (
             <div className='groups-dashboard'>
                 <p className='title'>Groups</p>

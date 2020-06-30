@@ -52,11 +52,11 @@ class TournamentDetails extends Component {
                     {/* <TournamentNav /> */}
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
-                            <GroupsDashboard tournamentId={id} groups={groups} auth={auth} />
+                            <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />
                             <BracketDashboard tournamentId={id} bracket={bracket} auth={auth} />
                         </div>
                         <div className='teams-dashboard'>
-                            <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length)} control={Boolean(auth)} />
+                            <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length) && auth} control={Boolean(auth)} />
                             {(auth && groups.length === 0 && (teams.length <= maxTeamsQtt())) ? <AddTeam tournamentId={id} /> : null}
                         </div>
                     </section>
@@ -85,6 +85,7 @@ const mapStateToProps = (state, ownProps) => {
     const tournaments = state.firestore.data.tournaments;
     const tournament = tournaments ? tournaments[id] : null;
     const auth = state.firebase.auth.uid;
+    console.log(state);
     return {
         tournament: tournament,
         teams: state.firestore.ordered.teams,
@@ -120,7 +121,7 @@ export default compose(
             {
                 collection: 'tournaments',
                 doc: props.match.params.id,
-                subcollections: [{ collection: 'bracket', orderBy: ['round', 'asc'] }],
+                subcollections: [{ collection: 'bracket' }],
                 storeAs: 'bracket'
             },
         ]

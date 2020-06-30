@@ -12,6 +12,16 @@ function shuffle(arr) {
     return newArr;
 }
 
+function initPromoted(groupName, teamsQtt) {
+    let promoted = [];
+    for (let i = 0; i < teamsQtt; i++) {
+        promoted[i] = {
+            name: groupName + ' - ' + (i + 1) + ' place'
+        }
+    }
+    return promoted;
+}
+
 export const createRandomGroups = (teams, groupsQtt) => {
     return createGroups(shuffle(teams), groupsQtt);
 }
@@ -41,10 +51,12 @@ export const createGroups = (teams, groupsQtt) => {
         for (let j = 0; j < teamsInGroup; j++) {
             groupTeams.push(teamsId.shift());
         }
+        const groupName = 'Group ' + String.fromCharCode(65 + i);
         groups.push(
             {
-                name: 'Group ' + String.fromCharCode(65 + i),
-                teams: groupTeams
+                name: groupName,
+                teams: groupTeams,
+                promoted: initPromoted(groupName, teamsInGroup)
             }
         );
     }
@@ -197,27 +209,72 @@ export const createTable = (teams, matches) => {
 
 //MATCH
 const resetMatch = (match) => {
-    const editMatch = {
-        ...match,
-        result: {
-            home: 0,
-            away: 0,
+    console.log(match);
+    if (match.name) { //check if bracket or group!!
+        return {
+            ...match,
+            promoted: [{
+                name: match.name + ' winner'
+            },
+            {
+                name: match.name + ' looser' //promoted to next round
+            }],
+            result: {
+                home: 0,
+                away: 0,
+            }
+        }
+    } else {
+        return {
+            ...match,
+            result: {
+                home: 0,
+                away: 0,
+            }
         }
     }
-    return editMatch;
 }
 
-export const changeMatchMode = (match, mode) => {
-    console.log(mode);
-    let tempMatch = match;
-    if (mode === 'NOT_STARTED') {
-        tempMatch = resetMatch();
+const setPromotedMatch = (match) => {
+    if (match.result.home > match.result.away) {
+        return {
+            ...match,
+            promoted: [
+                match.home ? match.home : match.placeholder.home,
+                match.away ? match.away : match.placeholder.away
+            ]
+        }
+    } else if (match.result.home < match.result.away) {
+        return {
+            ...match,
+            promoted: [
+                match.away ? match.away : match.placeholder.away,
+                match.home ? match.home : match.placeholder.home
+            ]
+        }
     }
-    const editMatch = {
-        ...tempMatch,
-        mode
+    return match;
+}
+
+export const changeMatchMode = (match, mode, matches) => {
+    if (match.home || match.away) {
+        let tempMatch = match;
+        if (mode === 'NOT_STARTED') {
+            tempMatch = resetMatch(tempMatch);
+            
+        }
+        else if (mode === 'FINISHED') {
+            console.log('finish it');
+            tempMatch = setPromotedMatch(tempMatch);
+        }
+        const editMatch = {
+            ...tempMatch,
+            mode
+        }
+        return editMatch;
     }
-    return editMatch;
+    console.log('MATCH IS NOT INITIETD');
+    return false;
 }
 
 export const addGoalMatch = (match, team) => {

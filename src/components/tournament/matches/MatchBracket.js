@@ -32,25 +32,29 @@ class MatchBracket extends Component {
         }
     }
 
+    handleUpdateMatch = (match) => {
+        this.props.updateBracketMatch(this.tournamentId, this.matchId, match);
+    }
+
     render() {
-        console.log(this.props);
-        const { allTeams, theMatch } = this.props;
+        const { allTeams, theMatch, matches, groups } = this.props;
         return (
-            <MatchDetails allTeams={allTeams} match={theMatch} handleUpdateMatchMode={this.handleUpdateMatchMode}
-                handleAddGoal={this.handleAddGoal} handleLessGoal={this.handleLessGoal}
+            <MatchDetails allTeams={allTeams} match={theMatch} handleUpdateMatchMode={this.handleUpdateMatchMode} matches={matches} groups={groups}
+                handleAddGoal={this.handleAddGoal} handleLessGoal={this.handleLessGoal} handleUpdateMatch={this.handleUpdateMatch}
                 historyPush={() => { this.props.history.push('/tournaments/' + this.tournamentId + '/bracket'); }} />
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(ownProps);
     let id = ownProps.match.params.matchId;
     let bracket = state.firestore.data.bracket;
     let theMatch = bracket ? bracket[id] : null;
     return {
         theMatch,
         allTeams: state.firestore.ordered.teams,
+        groups: state.firestore.ordered.groups,
+        matches: state.firestore.ordered.bracket
     }
 }
 
@@ -68,6 +72,12 @@ export default compose(
                 doc: props.match.params.id,
                 subcollections: [{ collection: 'teams' }],
                 storeAs: 'teams'
+            },
+            {
+                collection: 'tournaments',
+                doc: props.match.params.id,
+                subcollections: [{ collection: 'groups' }],
+                storeAs: 'groups'
             },
             {
                 collection: 'tournaments',

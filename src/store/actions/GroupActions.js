@@ -4,7 +4,8 @@ export const createGroupsToTournament = (tournamentId, groups) => {
         groups.forEach(item => {
             const group = {
                 name: item.name,
-                teams: item.teams
+                teams: item.teams,
+                promoted: item.promoted
             };
             const matches = item.matches;
             firestore.collection('tournaments').doc(tournamentId).collection('groups').add({
