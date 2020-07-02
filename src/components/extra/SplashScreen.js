@@ -11,28 +11,24 @@ const SplashScreen = (props) => {
     }
     const styleContainer = {
         position: 'absolute',
-        fontSize: '40px',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '15px 20px',
-    }
-    const styleText = {
-        display: 'block',
+        padding: '15px 0px',
+        fontSize: '20px',
         color: '#FFE998',
-        margin: '0',
-        fontSize: '100px'
     }
     return (
         <div className='splashScreen' style={styleScreen}>
             <div style={styleContainer}>
-                <p style={styleText}>
-                    <i className='icon-trophy'></i>
-                    {/* Tournaments */}
+                <p>
+                    <i className='icon-trophy' style={{ fontSize: '100px' }}></i>
                 </p>
+                <p>Tournaments v1.0</p>
             </div>
         </div>
     )

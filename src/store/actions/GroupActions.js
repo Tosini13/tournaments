@@ -70,3 +70,17 @@ export const updateGroupMatch = (tournamentId, groupId, matchId, match) => {
         })
     }
 }
+
+
+export const updateGroup = (tournamentId, groupId, group) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firestore = getFirestore();
+        firestore.collection('tournaments').doc(tournamentId).collection('groups').doc(groupId).update({
+            ...group
+        }).then(() => {
+            dispatch({ type: 'EDIT_GROUP' });
+        }).catch((err) => {
+            dispatch({ type: 'EDIT_GROUP_ERROR', err });
+        })
+    }
+}

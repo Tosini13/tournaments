@@ -49,6 +49,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'EDIT_TEAM_ERROR':
             console.log('team edition error', action.err);
             return state;
+        case 'EDIT_GROUP':
+            console.log('group edited');
+            return state;
+        case 'EDIT_GROUP_ERROR':
+            console.log('group edition error', action.err);
+            return state;
         case 'EDIT_GROUP_MATCH':
             console.log('group match edited');
             return state;

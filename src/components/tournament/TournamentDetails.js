@@ -85,7 +85,6 @@ const mapStateToProps = (state, ownProps) => {
     const tournaments = state.firestore.data.tournaments;
     const tournament = tournaments ? tournaments[id] : null;
     const auth = state.firebase.auth.uid;
-    console.log(state);
     return {
         tournament: tournament,
         teams: state.firestore.ordered.teams,

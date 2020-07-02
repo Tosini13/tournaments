@@ -13,6 +13,7 @@ class GroupDetails extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+
     render() {
         const { teams, group, creation } = this.props;
         const matches = craeteGroupMatches(teams, false);
@@ -28,7 +29,6 @@ class GroupDetails extends Component {
                         :
                         <p className='title'>{group.name}</p>
                     }
-
                 </div>
                 <div className='group-content'>
                     <TeamList teams={teams} />

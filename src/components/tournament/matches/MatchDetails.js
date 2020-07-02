@@ -36,12 +36,10 @@ class MatchDetails extends Component {
             let modeButton = null;
             switch (match.mode) {
                 case 'NOT_STARTED':
-                    console.log('NOT_STARTED');
                     updateMode = 'LIVE';
                     modeButton = 'START';
                     break;
                 case 'LIVE':
-                    console.log('LIVE');
                     updateMode = 'FINISHED';
                     modeButton = 'FINISH';
                     break;
@@ -53,7 +51,6 @@ class MatchDetails extends Component {
                     console.log('match mode error');
                     break;
             }
-            console.log(this.props.handleUpdateMatch);
             return (
                 <div className='match-details'>
                     <div className='btns'>

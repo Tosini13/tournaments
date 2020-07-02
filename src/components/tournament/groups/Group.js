@@ -4,8 +4,34 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import GroupTable from './GroupTable';
+import { getPromoted, initGroupPromoted } from '../../../structures/Groups'
+import { updateGroup } from '../../../store/actions/GroupActions';
 
 class Group extends Component {
+
+    tournamentId = this.props.match.params.id;
+    groupId = this.props.match.params.groupId;
+
+    handleFinishGroup = (teams, matches) => {
+        const promoted = getPromoted(teams, matches);
+        const group = {
+            ...this.props.group,
+            promoted,
+            finished: true
+        }
+        this.props.updateGroup(this.tournamentId, this.groupId, group);
+    }
+
+    handleContinueGroup = (group) => {
+        const promoted = initGroupPromoted(group);
+        const groupUpdated = {
+            ...this.props.group,
+            promoted,
+            finished: false
+        }
+        this.props.updateGroup(this.tournamentId, this.groupId, groupUpdated);
+    }
+
     render() {
         const { group, matches, allTeams } = this.props;
         if (group && matches && allTeams) {
@@ -16,9 +42,15 @@ class Group extends Component {
                         <div className='btn' onClick={() => {
                             this.props.history.push('/tournaments/' + this.props.match.params.id);
                         }}>Back to tournament</div>
+                        {group.finished ?
+                            <p className='btn btn-blue' onClick={() => { this.handleContinueGroup(group) }}>Continue group</p>
+                            :
+                            <p className='btn btn-green' onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</p>
+                        }
+
                     </div>
                     <p className='title'>{group.name}</p>
-                    <MatchesList matches={matches} teams={teams} tournamentId={this.props.match.params.id} groupId={this.props.match.params.groupId} />
+                    <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
                     <GroupTable matches={matches} teams={teams} />
                 </div>
             )
@@ -43,8 +75,14 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group))
+    }
+}
+
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => {
         return [
             {

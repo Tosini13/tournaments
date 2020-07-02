@@ -206,6 +206,25 @@ export const createTable = (teams, matches) => {
     return table;
 }
 
+export const getPromoted = (teams, matches) => {
+    const table = createTable(teams, matches);
+    let promoted = [];
+    table.forEach(row => {
+        promoted.push(row.team);
+    })
+    return promoted;
+}
+
+export const initGroupPromoted = (group) => {
+    const teamsQtt = group.teams.length;
+    let promoted = [];
+    for (let i = 0; i < teamsQtt; i++) {
+        promoted.push({
+            name: group.name + ' ' + (i + 1) + ' place'
+        });
+    }
+    return promoted;
+}
 
 //MATCH
 const resetMatch = (match) => {
@@ -261,7 +280,7 @@ export const changeMatchMode = (match, mode, matches) => {
         let tempMatch = match;
         if (mode === 'NOT_STARTED') {
             tempMatch = resetMatch(tempMatch);
-            
+
         }
         else if (mode === 'FINISHED') {
             console.log('finish it');
