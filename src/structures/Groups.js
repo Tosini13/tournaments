@@ -33,24 +33,26 @@ export const setMatchesTime = (tournament, groups) => {
     let timeCounter = tournament.date.toDate();
     let matchesQtt = 0;
     groups.forEach(group => {
-        console.log(group.matches.length);
         if (matchesQtt < group.matches.length) {
             matchesQtt = group.matches.length;
         }
     })
 
     let matchCounter = 1;
-    for (let i = 0; i < matchesQtt; i++) {
-        groups.forEach(group => {
-            if (i < group.matches.length) {
-                group.matches[i].date = moment(timeCounter).format('YYYY-MM-DD HH:mm');
+    for (let i = 0; i < (matchesQtt + 1); i++) {
+        for (let j = 0; j < groups.length; j++) {
+            if (i < groups[j].matches.length) {
+                groups[j].matches[i].date = moment(timeCounter).format('YYYY-MM-DD HH:mm');
                 if (!(matchCounter % tournament.fields)) {
                     timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
                 }
                 matchCounter++;
+            } else if (i === groups[j].matches.length) {
+                groups[j].finishAt = moment(groups[j].matches[groups[j].matches.length - 1].date).add(timeUnit, 'minutes').format('YYYY-MM-DD HH:mm');
             }
-        })
+        }
     }
+    return groups;
 }
 
 export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
@@ -84,13 +86,14 @@ export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
                 name: groupName,
                 teams: groupTeams,
                 promoted: initPromoted(groupName, teamsInGroup),
+                finishAt: null
             }
         );
     }
     groups.forEach((group, i) => {
         group.matches = createGroupMatches(teams.filter(team => group.teams.includes(team.id)), returnGames);
     })
-    setMatchesTime(tournament, groups);
+    groups = setMatchesTime(tournament, groups);
     return groups;
 }
 
@@ -259,7 +262,6 @@ export const initGroupPromoted = (group) => {
 
 //MATCH
 const resetMatch = (match) => {
-    console.log(match);
     if (match.name) { //check if bracket or group!!
         return {
             ...match,

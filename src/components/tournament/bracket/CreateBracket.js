@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import BracketChooseTeams from './BracketChooseTeams';
-import { createBracketMatches } from '../../../structures/Bracket';
+import { createBracketMatches, getFirstMatchTimeInBracket } from '../../../structures/Bracket';
 import MatchesList from '../matches/MatchesList'
 import { createBracket } from '../../../store/actions/BracketAction';
 import BracketChooseGroups from './BracketChooseGroups';
@@ -57,11 +57,10 @@ class CreateBracket extends Component {
         if (teams && groups && tournament) {
             let matches = null;
             if (groups && groups.length) {
-                matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, false);
+                matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, getFirstMatchTimeInBracket(groups), false);
             } else {
-                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, false);
+                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, tournament.date.toDate(), false);
             }
-            // console.log(matches);
             return (
                 <div className='bracket'>
                     <div className='control-panel'>
@@ -90,8 +89,6 @@ class CreateBracket extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
-    // const tournament = state.firestore.data.tournaments ? state.firestore.data.tournaments[ownProps.match.params.id] : null;
     const tournament = state.firestore.ordered.tournaments ? state.firestore.ordered.tournaments.find(tournament => tournament.id === ownProps.match.params.id) : null;
     return {
         teams: state.firestore.ordered.teams,

@@ -55,10 +55,19 @@ export const createBracketStageMatches = (teams, returnGames) => {
     return matches;
 }
 
-//BRACKET
-export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament, returnGames) => {
+export const getFirstMatchTimeInBracket = (groups) => {
+    let time = groups[0].finishAt;
+    groups.forEach(group => {
+        if (time < group.finishAt) {
+            time = group.finishAt
+        }
+    })
+    return time;
+}
+
+export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament, firstMatchTime, returnGames) => {
     const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
-    let timeCounter = tournament.date.toDate();
+    let timeCounter = firstMatchTime;
     timeCounter = moment(timeCounter).subtract(timeUnit, 'minutes');
     let lastRoundMatches = []; //array to init matches
     let currentRoundMatches = [...groupsTeams]; //get matches to create whole bracket ! GET FROM GROUPS AS WELL
@@ -128,7 +137,6 @@ export const initNextMatch = (team, matches) => {
         });
         roundQtt /= 2;
     }
-    console.log(matches);
     return matches;
 }
 
@@ -142,22 +150,13 @@ export const placeholderToName = (match, teams, groups, matches) => {
                 group = groups.find(group => group.id === match.placeholder.home.lastRound);
             }
             if (group) {
-                // console.log(group.teams); //temporarily as promotion teams!!!
                 const team = teams.find(item => item.id === group.promoted[match.placeholder.home.place])
-                // console.log(team.name);
                 home = team ? team : group.promoted[match.placeholder.home.place];
             } else {
-                // console.log(matches, match.placeholder.home);
                 const theMatch = matches.find(item => item.name === match.placeholder.home.lastRound);
-                // console.log(theMatch);
                 if (theMatch) {
                     home = theMatch.promoted[match.placeholder.home.place];
                     const team = teams.find(item => item.id === home);
-                    // if (team) {
-                    //     console.log('HERE');
-                    //     console.log(match);
-                    //     console.log(home);
-                    // }
                     home = team ? team : home;
                 } else {
                     home = {
@@ -172,13 +171,10 @@ export const placeholderToName = (match, teams, groups, matches) => {
                 group = groups.find(group => group.id === match.placeholder.away.lastRound);
             }
             if (group) {
-                // console.log(group.teams); //temporarily as promotion teams!!!
                 const team = teams.find(item => item.id === group.promoted[match.placeholder.away.place])
-                // console.log(team.name);
                 away = team ? team : group.promoted[match.placeholder.away.place];
             } else {
                 const theMatch = matches.find(item => item.name === match.placeholder.away.lastRound);
-                // console.log(theMatch);
                 if (theMatch) {
                     away = theMatch.promoted[match.placeholder.away.place];
                     const team = teams.find(item => item.id === away);
@@ -191,7 +187,6 @@ export const placeholderToName = (match, teams, groups, matches) => {
             }
         }
     }
-    // console.log(home, away);
     return {
         home,
         away
