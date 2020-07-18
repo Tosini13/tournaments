@@ -73,13 +73,6 @@ class TournamentDetails extends Component {
                             {(auth && groups.length === 0 && (teams.length <= maxTeamsQtt())) ? <AddTeam tournamentId={id} /> : null}
                         </div>
                     </section>
-                    {/* <div className='btns'>
-                        <div className='btn btn-red' onClick={() => {
-                            this.handleDeleteTournament();
-                        }}>
-                            <i className='icon-trash-empty'></i> Delete Tournament
-                        </div>
-                    </div> */}
                     {this.state.question ? <Question question={this.state.question} /> : null}
                 </div>
             )
