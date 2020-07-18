@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MatchesList from '../matches/MatchesList';
 import TeamList from '../teams/TeamList';
-import { craeteGroupMatches } from '../../../structures/Groups'
 
 class GroupDetails extends Component {
 
@@ -15,9 +14,7 @@ class GroupDetails extends Component {
 
 
     render() {
-        const { teams, group, groupsQtt, groupNum, tournament, creation } = this.props;
-        const matches = craeteGroupMatches(teams, tournament, groupsQtt, groupNum, false);
-        group.matches = matches;
+        const { teams, group, creation } = this.props;
         group.name = this.state.name;
         return (
             <div className='group'>
@@ -32,7 +29,7 @@ class GroupDetails extends Component {
                 </div>
                 <div className='group-content'>
                     <TeamList teams={teams} />
-                    <MatchesList matches={matches} teams={teams} />
+                    <MatchesList matches={group.matches} teams={teams} />
                 </div>
             </div>
         )

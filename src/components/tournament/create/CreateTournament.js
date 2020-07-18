@@ -13,7 +13,8 @@ class CreateTournament extends Component {
         matchTimeInGroup: 10,
         breakTimeInGroup: 2,
         matchTimeInBracket: 12,
-        breakTimeInBracket: 3
+        breakTimeInBracket: 3,
+        fields: 1
     }
 
     handleChangeDate = (date) => {
@@ -67,6 +68,7 @@ class CreateTournament extends Component {
                     <TextField style={this.style.input} name='matchTimeInBracket' id='matchTimeInBracket' label="Match time (mins)" type='number' value={this.state.matchTimeInBracket} onChange={this.handleChange} required />
                     <TextField style={this.style.input} name='breakTimeInBracket' id='breakTimeInBracket' label="Break time (mins)" type='number' value={this.state.breakTimeInBracket} onChange={this.handleChange} required />
                 </div>
+                <TextField style={this.style.input} name='fields' id='fields' label="Fields quantity" type='number' value={this.state.fields} onChange={this.handleChange} required />
                 <div className='btns'>
                     <button className="btn lighten-1 z-depth-0">
                         Create

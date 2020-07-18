@@ -24,11 +24,36 @@ function initPromoted(groupName, teamsQtt) {
     return promoted;
 }
 
-export const createRandomGroups = (teams, groupsQtt) => {
-    return createGroups(shuffle(teams), groupsQtt);
+export const createRandomGroups = (teams, groupsQtt, tournament, returnGames) => {
+    return createGroups(shuffle(teams), groupsQtt, tournament, returnGames);
 }
 
-export const createGroups = (teams, groupsQtt) => {
+export const setMatchesTime = (tournament, groups) => {
+    const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
+    let timeCounter = tournament.date.toDate();
+    let matchesQtt = 0;
+    groups.forEach(group => {
+        console.log(group.matches.length);
+        if (matchesQtt < group.matches.length) {
+            matchesQtt = group.matches.length;
+        }
+    })
+
+    let matchCounter = 1;
+    for (let i = 0; i < matchesQtt; i++) {
+        groups.forEach(group => {
+            if (i < group.matches.length) {
+                group.matches[i].date = moment(timeCounter).format('YYYY-MM-DD HH:mm');
+                if (!(matchCounter % tournament.fields)) {
+                    timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
+                }
+                matchCounter++;
+            }
+        })
+    }
+}
+
+export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
     if (teams.length / groupsQtt < 2) {
         return false;
     }
@@ -62,13 +87,14 @@ export const createGroups = (teams, groupsQtt) => {
             }
         );
     }
+    groups.forEach((group, i) => {
+        group.matches = createGroupMatches(teams.filter(team => group.teams.includes(team.id)), returnGames);
+    })
+    setMatchesTime(tournament, groups);
     return groups;
 }
 
-export const craeteGroupMatches = (teams, tournament, groupsQtt, groupNum, returnGames) => {
-    const matchTime = tournament.matchTimeInGroup;
-    const breakTime = tournament.breakTimeInGroup;
-    let timeCounter = moment(tournament.date.toDate()).add(matchTime * groupNum + breakTime * groupNum, 'minutes');
+export const createGroupMatches = (teams, returnGames) => {
     let matches = [];
     for (let i = 0; i < teams.length - 1; i++) {
         for (let j = i + 1; j < teams.length; j++) {
@@ -77,14 +103,12 @@ export const craeteGroupMatches = (teams, tournament, groupsQtt, groupNum, retur
                 home: teams[i].id,
                 away: teams[j].id,
                 mode: 'NOT_STARTED',
-                date: moment(timeCounter).format('YYYY-MM-DD HH:mm'),
                 result: {
                     home: 0,
                     away: 0
                 }
             }
             matches.push(match);
-            timeCounter = moment(timeCounter).add(matchTime * groupsQtt  + breakTime * groupsQtt , 'minutes');
         }
     }
     if (returnGames) {
@@ -95,14 +119,12 @@ export const craeteGroupMatches = (teams, tournament, groupsQtt, groupNum, retur
                     home: teams[i].id,
                     away: teams[j].id,
                     mode: 'NOT_STARTED',
-                    date: moment(timeCounter).format('YYYY-MM-DD HH:mm'),
                     result: {
                         home: 0,
                         away: 0
                     }
                 }
                 matches.push(match);
-                timeCounter = moment(timeCounter).add(matchTime * groupsQtt + breakTime * groupsQtt, 'minutes');
             }
         }
     }

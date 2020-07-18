@@ -57,9 +57,9 @@ export const createBracketStageMatches = (teams, returnGames) => {
 
 //BRACKET
 export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament, returnGames) => {
-    const matchTime = tournament.matchTimeInBracket;
-    const breakTime = tournament.breakTimeInBracket;
-    let timeCounter = moment(tournament.date.toDate());
+    const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
+    let timeCounter = tournament.date.toDate();
+    timeCounter = moment(timeCounter).subtract(timeUnit, 'minutes');
     let lastRoundMatches = []; //array to init matches
     let currentRoundMatches = [...groupsTeams]; //get matches to create whole bracket ! GET FROM GROUPS AS WELL
     let getChosenTeams = [...chosenTeams];
@@ -71,10 +71,13 @@ export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament
         lastRoundMatches = currentRoundMatches;
         currentRoundMatches = [];
         //DRAW lastRoundMatches if checked
+        let matchCounter = 0;
         for (let i = 0; i < roundQtt; i++) {
-            console.log(getChosenTeams);
-            console.log(lastRoundMatches);
             let roundMatchName = roundQtt === 1 ? round : round + ' ' + (i + 1);
+            if (!(matchCounter % tournament.fields)) {
+                timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
+            }
+            matchCounter++;
             const match = {
                 home: (getChosenTeams && getChosenTeams.length) ? getChosenTeams.shift() : null,
                 away: (getChosenTeams && getChosenTeams.length) ? getChosenTeams.shift() : null,
@@ -103,7 +106,6 @@ export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament
                 place: 0
             });
             matches.push(match);
-            timeCounter = moment(timeCounter).add(matchTime + breakTime, 'minutes');
         }
         roundQtt /= 2;
     }

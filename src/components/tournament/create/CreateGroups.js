@@ -11,7 +11,7 @@ class CreateGroup extends Component {
 
     state = {
         groupQtt: 0,
-        groups: null
+        groups: null,
     }
 
     handleDecline = () => {
@@ -24,7 +24,7 @@ class CreateGroup extends Component {
     }
 
     handleDraw = (teams) => {
-        let groups = createRandomGroups(teams, this.state.groupQtt);
+        let groups = createRandomGroups(teams, this.state.groupQtt, this.props.tournament, false);
         if (groups) {
             this.setState({
                 groups,
@@ -34,7 +34,7 @@ class CreateGroup extends Component {
     }
 
     handleAddGroup = (teams) => {
-        let groups = createGroups(teams, this.state.groupQtt + 1);
+        const groups = createGroups(teams, this.state.groupQtt + 1, this.props.tournament, false);
         if (groups) {
             this.setState({
                 groups,
@@ -44,7 +44,7 @@ class CreateGroup extends Component {
     }
 
     handleRemoveGroup = (teams) => {
-        let groups = createGroups(teams, this.state.groupQtt - 1);
+        const groups = createGroups(teams, this.state.groupQtt - 1, this.props.tournament, false);
         if (groups) {
             this.setState({
                 groups,
@@ -77,7 +77,7 @@ class CreateGroup extends Component {
                     </div>
                     <div className='group-list'>
                         {this.state.groups && this.state.groups.map((group, i) => {
-                            return <GroupDetails key={group.name} tournament={tournament} groupNum={i+1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
+                            return <GroupDetails key={group.name} tournament={tournament} groupNum={i + 1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
                         })}
                     </div>
                 </div>
@@ -93,7 +93,6 @@ class CreateGroup extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
     const teams = state.firestore.ordered.teams;
     const tournament = state.firestore.data.tournaments ? state.firestore.data.tournaments[ownProps.match.params.id] : null;
     return {

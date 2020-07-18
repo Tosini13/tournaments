@@ -59,7 +59,7 @@ class CreateBracket extends Component {
             if (groups && groups.length) {
                 matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, false);
             } else {
-                matches = createBracketMatches(teams, this.state.chosenItems, tournament, [], false);
+                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, false);
             }
             // console.log(matches);
             return (
