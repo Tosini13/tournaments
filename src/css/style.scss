@@ -5,7 +5,7 @@ $header: 56px;
 .App {
     background-color: $firstBackgroundColor;
     min-height: 100vh;
-    color: white;
+    color: $secondFontColor;
     nav {
         position: fixed;
         left: 0px;
@@ -17,8 +17,18 @@ $header: 56px;
         ul {
             display: flex;
             justify-content: space-around;
-            a {
+            i {
                 color: $firstFontColor;
+                font-size: 25px;
+            }
+            .btn-back {
+                opacity: 0;
+                transform: translate(-100px, 0px);
+                transition: transform 0.3s, opacity 0.3s;
+                &.btn-back-show {
+                    transform: translate(0px, 0px);
+                    opacity: 1;
+                }
             }
         }
     }
@@ -26,6 +36,11 @@ $header: 56px;
         padding-bottom: 5px;
         padding-top: $header;
     }
+}
+
+.splash-screen {
+    background-color: $firstBackgroundColor;
+    color: $secondFontColor;
 }
 
 a {
@@ -41,21 +56,30 @@ a {
 
 .btns {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: 5px 0px;
+    flex-wrap: wrap;
 }
 
 .btn {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+    margin: 2px;
+    height: auto;
+    width: auto;
+    text-shadow: $btnTextShadow;
     &.btn-green {
-        background-color: $green;
+        color: $green;
+        text-shadow: $btnTextShadow;
     }
     &.btn-red {
-        background-color: $red;
+        color: $red;
+        text-shadow: $btnTextShadow;
     }
     &.btn-blue {
-        background-color: $blue;
+        color: $blue;
+        text-shadow: $btnTextShadow;
     }
     &.btn-icon {
         padding: 0px 5px;
@@ -80,10 +104,29 @@ a {
     }
 }
 
+#create-tournament {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label {
+        color: $firstFontColor;
+    }
+    input {
+        color: white;
+        text-align: center;
+    }
+
+    .tournament-time {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+}
+
 .tournaments-list {
     .tournament-card {
         background-color: $secondBackgroundColor;
-        color: $firstFontColor;
+        color: $secondFontColor;
         text-align: center;
     }
 }
@@ -193,18 +236,23 @@ a {
     }
 }
 
+.match-date,
+.match-round {
+    text-align: center;
+    font-size: 10px;
+    padding: 0px;
+    margin: 0px;
+    color: $firstFontColor;
+}
+.match-date{
+    font-size: 13px;
+}
+
 .match {
-    .match-round {
-        grid-column: 1/11;
-        text-align: center;
-        font-size: 10px;
-        padding: 0px;
-        margin: 0px;
-        color: black;
-    }
     .match-teams {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        color: $secondFontColor;
         > p:nth-child(1) {
             grid-column: 1/4;
             justify-content: flex-end;
@@ -352,6 +400,9 @@ a {
             margin: 50px 0px;
             display: flex;
             justify-content: space-around;
+            .btn {
+                padding: 0 8px;
+            }
         }
     }
 }

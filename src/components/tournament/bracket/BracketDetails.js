@@ -3,16 +3,19 @@ import MatchesList from '../matches/MatchesList';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { setBackBtn } from '../../../structures/extra';
 
 class BracketDetails extends Component {
+    componentDidMount() {
+        setBackBtn(() => {
+            this.props.history.push('/tournaments/' + this.props.match.params.id);
+        });
+    }
     render() {
         const { allTeams, bracket, groups } = this.props;
         return (
             <div className='bracket'>
                 <div className='btns'>
-                    <div className='btn' onClick={() => {
-                        this.props.history.push('/tournaments/' + this.props.match.params.id);
-                    }}>Back to tournament</div>
                 </div>
                 <MatchesList matches={bracket} teams={allTeams} tournamentId={this.props.match.params.id} groups={groups} bracket />
             </div>

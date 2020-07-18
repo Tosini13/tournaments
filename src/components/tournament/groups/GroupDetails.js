@@ -15,8 +15,8 @@ class GroupDetails extends Component {
 
 
     render() {
-        const { teams, group, creation } = this.props;
-        const matches = craeteGroupMatches(teams, false);
+        const { teams, group, groupsQtt, groupNum, tournament, creation } = this.props;
+        const matches = craeteGroupMatches(teams, tournament, groupsQtt, groupNum, false);
         group.matches = matches;
         group.name = this.state.name;
         return (

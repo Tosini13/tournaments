@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import Question from '../../extra/Question';
 import MatchSummary from './MatchSummary';
+import { setBackBtn } from '../../../structures/extra';
 
 class MatchDetails extends Component {
+
+    componentDidMount() {
+        console.log('TournamentDetails didmount');
+        setBackBtn(() => {
+            this.props.historyPush();
+        });
+    }
 
     state = {
         question: null
@@ -53,16 +61,13 @@ class MatchDetails extends Component {
             }
             return (
                 <div className='match-details'>
-                    <div className='btns'>
-                        <div className='btn' onClick={this.props.historyPush}>Back</div>
-                    </div>
                     <MatchSummary match={match} teams={allTeams} groups={groups} matches={matches} handleUpdateMatch={this.props.handleUpdateMatch} />
                     <div className='match-dashboard'>
                         <div className='score-dashboard'>
-                            <div className='btn' id='home-add' onClick={() => { this.props.handleAddGoal(match, match.home); }}>+</div>
-                            <div className='btn' id='home-less' onClick={() => { this.props.handleLessGoal(match, match.home); }}>-</div>
-                            <div className='btn' id='away-less' onClick={() => { this.props.handleLessGoal(match, match.away); }}>-</div>
-                            <div className='btn' id='away-add' onClick={() => { this.props.handleAddGoal(match, match.away); }}>+</div>
+                            <div className='btn' id='home-add' onClick={() => { this.props.handleAddGoal(match, match.home); }}><i className='icon-plus'></i></div>
+                            <div className='btn' id='home-less' onClick={() => { this.props.handleLessGoal(match, match.home); }}><i className='icon-minus'></i></div>
+                            <div className='btn' id='away-less' onClick={() => { this.props.handleLessGoal(match, match.away); }}><i className='icon-minus'></i></div>
+                            <div className='btn' id='away-add' onClick={() => { this.props.handleAddGoal(match, match.away); }}><i className='icon-plus'></i></div>
                         </div>
                         <div className='btn' onClick={() => {
                             if (updateMode === 'NOT_STARTED') {

@@ -7,7 +7,6 @@ const SplashScreen = (props) => {
         height: '100vh',
         top: '0',
         left: '0',
-        backgroundColor: '#57370D',
     }
     const styleContainer = {
         position: 'absolute',
@@ -20,15 +19,14 @@ const SplashScreen = (props) => {
         alignItems: 'center',
         padding: '15px 0px',
         fontSize: '20px',
-        color: '#FFE998',
     }
     return (
-        <div className='splashScreen' style={styleScreen}>
+        <div className='splash-screen' style={styleScreen}>
             <div style={styleContainer}>
                 <p>
                     <i className='icon-trophy' style={{ fontSize: '100px' }}></i>
                 </p>
-                <p>Tournaments v1.0</p>
+                <p>Tournaments v1.1</p>
             </div>
         </div>
     )

@@ -54,9 +54,8 @@ class CreateGroup extends Component {
     }
 
     render() {
-        const { teams } = this.props;
-
-        if (teams) {
+        const { teams, tournament } = this.props;
+        if (teams && tournament) {
             return (
                 <div className='groups'>
                     <div className='control-panel'>
@@ -77,8 +76,8 @@ class CreateGroup extends Component {
                         </div>
                     </div>
                     <div className='group-list'>
-                        {this.state.groups && this.state.groups.map(group => {
-                            return <GroupDetails key={group.name} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
+                        {this.state.groups && this.state.groups.map((group, i) => {
+                            return <GroupDetails key={group.name} tournament={tournament} groupNum={i+1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
                         })}
                     </div>
                 </div>
@@ -94,9 +93,12 @@ class CreateGroup extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let teams = state.firestore.ordered.teams;
+    console.log(state);
+    const teams = state.firestore.ordered.teams;
+    const tournament = state.firestore.data.tournaments ? state.firestore.data.tournaments[ownProps.match.params.id] : null;
     return {
         teams,
+        tournament,
     }
 }
 
@@ -111,9 +113,12 @@ export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => {
         return [{
+            collection: 'tournaments'
+        },
+        {
             collection: 'tournaments',
             doc: props.match.params.id,
-            subcollections: [{ collection: 'teams'}],
+            subcollections: [{ collection: 'teams' }],
             storeAs: 'teams'
         }]
     }

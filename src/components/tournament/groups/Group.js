@@ -6,8 +6,16 @@ import { firestoreConnect } from 'react-redux-firebase';
 import GroupTable from './GroupTable';
 import { getPromoted, initGroupPromoted } from '../../../structures/Groups'
 import { updateGroup } from '../../../store/actions/GroupActions';
+import { setBackBtn } from '../../../structures/extra';
 
 class Group extends Component {
+
+    componentDidMount() {
+        console.log('TournamentDetails didmount');
+        setBackBtn(() => {
+            this.props.history.push('/tournaments/' + this.props.match.params.id);
+        });
+    }
 
     tournamentId = this.props.match.params.id;
     groupId = this.props.match.params.groupId;
@@ -39,9 +47,6 @@ class Group extends Component {
             return (
                 <div className='group'>
                     <div className='btns'>
-                        <div className='btn' onClick={() => {
-                            this.props.history.push('/tournaments/' + this.props.match.params.id);
-                        }}>Back to tournament</div>
                         {group.finished ?
                             <p className='btn btn-blue' onClick={() => { this.handleContinueGroup(group) }}>Continue group</p>
                             :
@@ -103,7 +108,7 @@ export default compose(
                 subcollections: [{
                     collection: 'groups',
                     doc: props.match.params.groupId,
-                    subcollections: [{ collection: 'matches' }],
+                    subcollections: [{ collection: 'matches', orderBy: ['date', 'asc'] }],
                 }],
                 storeAs: 'matches'
             }]

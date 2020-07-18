@@ -1,4 +1,6 @@
 //groups can be null?
+import moment from 'moment';
+
 function shuffle(arr) {
     let indexes = [];
     let newArr = [];
@@ -56,14 +58,17 @@ export const createGroups = (teams, groupsQtt) => {
             {
                 name: groupName,
                 teams: groupTeams,
-                promoted: initPromoted(groupName, teamsInGroup)
+                promoted: initPromoted(groupName, teamsInGroup),
             }
         );
     }
     return groups;
 }
 
-export const craeteGroupMatches = (teams, returnGames) => {
+export const craeteGroupMatches = (teams, tournament, groupsQtt, groupNum, returnGames) => {
+    const matchTime = tournament.matchTimeInGroup;
+    const breakTime = tournament.breakTimeInGroup;
+    let timeCounter = moment(tournament.date.toDate()).add(matchTime * groupNum + breakTime * groupNum, 'minutes');
     let matches = [];
     for (let i = 0; i < teams.length - 1; i++) {
         for (let j = i + 1; j < teams.length; j++) {
@@ -72,12 +77,14 @@ export const craeteGroupMatches = (teams, returnGames) => {
                 home: teams[i].id,
                 away: teams[j].id,
                 mode: 'NOT_STARTED',
+                date: moment(timeCounter).format('YYYY-MM-DD HH:mm'),
                 result: {
                     home: 0,
                     away: 0
                 }
             }
             matches.push(match);
+            timeCounter = moment(timeCounter).add(matchTime * groupsQtt  + breakTime * groupsQtt , 'minutes');
         }
     }
     if (returnGames) {
@@ -88,12 +95,14 @@ export const craeteGroupMatches = (teams, returnGames) => {
                     home: teams[i].id,
                     away: teams[j].id,
                     mode: 'NOT_STARTED',
+                    date: moment(timeCounter).format('YYYY-MM-DD HH:mm'),
                     result: {
                         home: 0,
                         away: 0
                     }
                 }
                 matches.push(match);
+                timeCounter = moment(timeCounter).add(matchTime * groupsQtt + breakTime * groupsQtt, 'minutes');
             }
         }
     }

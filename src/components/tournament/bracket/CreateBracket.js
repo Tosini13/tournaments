@@ -53,13 +53,13 @@ class CreateBracket extends Component {
     }
 
     render() {
-        const { teams, groups } = this.props;
-        if (teams) {
+        const { teams, groups, tournament } = this.props;
+        if (teams && groups && tournament) {
             let matches = null;
             if (groups && groups.length) {
-                matches = createBracketMatches(teams, [], this.state.chosenItems, false);
+                matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, false);
             } else {
-                matches = createBracketMatches(teams, this.state.chosenItems, [], false);
+                matches = createBracketMatches(teams, this.state.chosenItems, tournament, [], false);
             }
             // console.log(matches);
             return (
@@ -90,9 +90,13 @@ class CreateBracket extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state);
+    // const tournament = state.firestore.data.tournaments ? state.firestore.data.tournaments[ownProps.match.params.id] : null;
+    const tournament = state.firestore.ordered.tournaments ? state.firestore.ordered.tournaments.find(tournament => tournament.id === ownProps.match.params.id) : null;
     return {
         teams: state.firestore.ordered.teams,
         groups: state.firestore.ordered.groups,
+        tournament
     }
 }
 
@@ -105,17 +109,20 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => {
-        return [{
-            collection: 'tournaments',
-            doc: props.match.params.id,
-            subcollections: [{ collection: 'teams', orderBy: ['name', 'asc'] }],
-            storeAs: 'teams'
-        },
-        {
-            collection: 'tournaments',
-            doc: props.match.params.id,
-            subcollections: [{ collection: 'groups', orderBy: ['name', 'asc'] }],
-            storeAs: 'groups'
-        }]
+        return [
+            {
+                collection: 'tournaments'
+            }, {
+                collection: 'tournaments',
+                doc: props.match.params.id,
+                subcollections: [{ collection: 'teams', orderBy: ['name', 'asc'] }],
+                storeAs: 'teams'
+            },
+            {
+                collection: 'tournaments',
+                doc: props.match.params.id,
+                subcollections: [{ collection: 'groups', orderBy: ['name', 'asc'] }],
+                storeAs: 'groups'
+            }]
     }
     ))(CreateBracket);

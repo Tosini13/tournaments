@@ -10,9 +10,16 @@ import { firestoreConnect } from "react-redux-firebase";
 import { deleteTournament } from "../../store/actions/TournamentActions";
 import Question from "../extra/Question";
 import { maxTeamsQtt } from "../../structures/Bracket";
+import { setBackBtn } from "../../structures/extra";
 
 // import TournamentNav from "./TournamentNav";
 class TournamentDetails extends Component {
+
+    componentDidMount() {
+        setBackBtn(() => {
+            this.props.history.push('/');
+        });
+    }
 
     state = {
         question: null

@@ -3,8 +3,12 @@ import TournamentSummary from "../tournament/TournamentSummary";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
+import { setBackBtn } from "../../structures/extra";
 
 class Dashboard extends Component {
+    componentDidMount(){
+        setBackBtn();
+    }
     render() {
         const { tournaments } = this.props;
         return (
@@ -28,6 +32,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state);
     return {
         tournamentsMy: state.tournament.tournaments,
         tournaments: state.firestore.ordered.tournaments

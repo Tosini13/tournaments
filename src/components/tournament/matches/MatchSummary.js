@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { placeholderToName } from '../../../structures/Bracket';
 import { connect } from 'react-redux';
 import { updateBracketMatch } from '../../../store/actions/BracketAction';
-
+import moment from 'moment'
 
 const MatchSummary = (props) => {
     const { match, teams, groups, matches } = props;
@@ -56,27 +56,30 @@ const MatchSummary = (props) => {
     }
     return (
         <Link to={link}>
-            <div className={matchClass}>
+            <>
                 {match.name ? <p className='match-round'>{match.name}</p> : null}
-                <div className='match-teams'>
-                    <p>
-                        {home ? home.name : match.home} {/* it can be less */}
-                    </p>
-                    <p>vs</p>
-                    <p>
-                        {away ? away.name : match.away}
-                    </p>
+                {match.date ? <p className='match-date'>{moment(match.date).format('YYYY-MM-DD HH:mm')}</p> : null}
+                <div className={matchClass}>
+                    <div className='match-teams'>
+                        <p>
+                            {home ? home.name : match.home} {/* it can be less */}
+                        </p>
+                        <p>vs</p>
+                        <p>
+                            {away ? away.name : match.away}
+                        </p>
+                    </div>
+                    {(match.mode === 'NOT_STARTED') ?
+                        <div className='match-result match-result-not-started'>
+                            <div className='score'></div> : <div className='score'></div>
+                        </div>
+                        :
+                        <div className='match-result'>
+                            <div className='score'>{match.result.home}</div> : <div className='score'>{match.result.away}</div>
+                        </div>
+                    }
                 </div>
-                {(match.mode === 'NOT_STARTED') ?
-                    <div className='match-result match-result-not-started'>
-                        <div className='score'></div> : <div className='score'></div>
-                    </div>
-                    :
-                    <div className='match-result'>
-                        <div className='score'>{match.result.home}</div> : <div className='score'>{match.result.away}</div>
-                    </div>
-                }
-            </div>
+            </>
         </Link>
     )
 }

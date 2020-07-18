@@ -1,7 +1,7 @@
 .App {
-  background-color: #57370d;
+  background-color: #323232;
   min-height: 100vh;
-  color: white;
+  color: #c9c9c9;
 }
 
 .App nav {
@@ -23,8 +23,25 @@
       justify-content: space-around;
 }
 
-.App nav ul a {
-  color: #ffe998;
+.App nav ul i {
+  color: #7e6714;
+  font-size: 25px;
+}
+
+.App nav ul .btn-back {
+  opacity: 0;
+  -webkit-transform: translate(-100px, 0px);
+          transform: translate(-100px, 0px);
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: opacity 0.3s, -webkit-transform 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+}
+
+.App nav ul .btn-back.btn-back-show {
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+  opacity: 1;
 }
 
 .App main {
@@ -32,8 +49,13 @@
   padding-top: 56px;
 }
 
+.splash-screen {
+  background-color: #323232;
+  color: #c9c9c9;
+}
+
 a {
-  color: #ffe998;
+  color: #7e6714;
 }
 
 .btns-main {
@@ -50,28 +72,39 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 5px 0px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .btn {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+  margin: 2px;
+  height: auto;
+  width: auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn.btn-green {
-  background-color: #0f7300;
+  color: #18b500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn.btn-red {
-  background-color: #9c0303;
+  color: #9c0303;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn.btn-blue {
-  background-color: #052093;
+  color: #001a90;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn.btn-icon {
@@ -86,7 +119,7 @@ a {
 }
 
 .title {
-  color: #ffe998;
+  color: #7e6714;
   text-align: center;
 }
 
@@ -99,9 +132,40 @@ a {
           justify-content: space-evenly;
 }
 
+#create-tournament {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#create-tournament label {
+  color: #7e6714;
+}
+
+#create-tournament input {
+  color: white;
+  text-align: center;
+}
+
+#create-tournament .tournament-time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100%;
+}
+
 .tournaments-list .tournament-card {
   background-color: #423e3e;
-  color: #ffe998;
+  color: #c9c9c9;
   text-align: center;
 }
 
@@ -114,7 +178,7 @@ a {
 }
 
 .tournament-details > .tournament-description .tournament-date {
-  color: grey;
+  color: #c9c9c9;
   font-size: 15px;
   text-align: center;
 }
@@ -258,15 +322,17 @@ a {
   font-weight: 700;
 }
 
-.match .match-round {
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 10;
-  grid-column: 1/11;
+.match-date,
+.match-round {
   text-align: center;
   font-size: 10px;
   padding: 0px;
   margin: 0px;
-  color: black;
+  color: #7e6714;
+}
+
+.match-date {
+  font-size: 13px;
 }
 
 .match .match-teams {
@@ -274,6 +340,7 @@ a {
   display: grid;
   -ms-grid-columns: (1fr)[7];
       grid-template-columns: repeat(7, 1fr);
+  color: #c9c9c9;
 }
 
 .match .match-teams > p:nth-child(1) {
@@ -523,6 +590,10 @@ a {
       justify-content: space-around;
 }
 
+.match-details .match-dashboard .score-dashboard .btn {
+  padding: 0 8px;
+}
+
 .team-list {
   text-align: center;
   padding: 2px 10px;
@@ -636,6 +707,6 @@ a {
 }
 
 .bracket-choose-list .bracket-choose .bracket-choose-children .bracket-choose-children-places.promoted {
-  background-color: #0f7300;
+  background-color: #18b500;
 }
 /*# sourceMappingURL=style.css.map */
