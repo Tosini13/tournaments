@@ -50,6 +50,12 @@ class TournamentDetails extends Component {
         const id = this.props.match.params.id
         const { tournament, teams, groups, auth, bracket } = this.props;
         if (tournament && groups && teams) {
+            let groupFinished = false;
+            groups.forEach(group => {
+                if (group.finished) {
+                    groupFinished = true;
+                }
+            })
             return (
                 <div className='tournament-details'>
                     <section className='tournament-description'>
@@ -60,7 +66,7 @@ class TournamentDetails extends Component {
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
                             <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />
-                            <BracketDashboard tournamentId={id} bracket={bracket} auth={auth} />
+                            <BracketDashboard tournamentId={id} bracket={bracket} auth={auth} groupFinished={groupFinished}/>
                         </div>
                         <div className='teams-dashboard'>
                             <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length) && auth} control={Boolean(auth)} />
