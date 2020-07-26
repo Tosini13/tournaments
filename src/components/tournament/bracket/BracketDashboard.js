@@ -4,20 +4,21 @@ import { Link } from 'react-router-dom';
 const BracketDashboard = (props) => {
     const { bracket, auth, groupFinished } = props;
     console.log(groupFinished);
-    if (groupFinished) {
-        return (
-            <div className='groups-dashboard'>
-                <p className='title'>Play-offs</p>
-                <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
-            </div>
-        )
-    } else if (Boolean(bracket) && bracket.length) {
+    if (Boolean(bracket) && bracket.length) {
         return (
             <div className='bracket-dashboard'>
                 <p className='title'>Play-offs</p>
                 <div className='btns'>
                     <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>play-offs</Link>
                 </div>
+            </div>
+        )
+    }
+    else if (groupFinished) {
+        return (
+            <div className='groups-dashboard'>
+                <p className='title'>Play-offs</p>
+                <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
             </div>
         )
     } else if (auth) {

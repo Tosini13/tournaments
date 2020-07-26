@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { createGroups, createRandomGroups } from '../../../structures/Groups'
+import { createGroups, createRandomGroups, initGroupMatches } from '../../../structures/Groups'
 import GroupDetails from '../groups/GroupDetails';
 import { createGroupsToTournament } from '../../../store/actions/GroupActions'
+import ChooseTeamsToGroup from '../groups/ChooseTeamsToGroup';
 
 
 class CreateGroup extends Component {
 
     state = {
+        chooseTeams: null,
         groupQtt: 0,
         groups: null,
     }
@@ -34,7 +36,10 @@ class CreateGroup extends Component {
     }
 
     handleAddGroup = (teams) => {
-        const groups = createGroups(teams, this.state.groupQtt + 1, this.props.tournament, false);
+        if (teams.length / (this.state.groupQtt + 1) < 2) {
+            return false;
+        }
+        const groups = createGroups(teams, this.state.groupQtt + 1);
         if (groups) {
             this.setState({
                 groups,
@@ -44,7 +49,7 @@ class CreateGroup extends Component {
     }
 
     handleRemoveGroup = (teams) => {
-        const groups = createGroups(teams, this.state.groupQtt - 1, this.props.tournament, false);
+        const groups = createGroups(teams, this.state.groupQtt - 1);
         if (groups) {
             this.setState({
                 groups,
@@ -53,9 +58,32 @@ class CreateGroup extends Component {
         }
     }
 
+    handleAddTeamToGroup = (teamId) => {
+        let groups = this.state.groups;
+        if (groups[this.state.chooseTeams].teams.includes(teamId)) {
+            groups[this.state.chooseTeams].teams = groups[this.state.chooseTeams].teams.filter(team => team !== teamId);
+        } else if (groups[this.state.chooseTeams].teams.length === groups[this.state.chooseTeams].promoted.length) {
+            return false;
+        } else {
+            groups[this.state.chooseTeams].teams.push(teamId);
+        }
+        this.setState({
+            groups
+        });
+    }
+
+    handleInitGroupMatches = () => {
+        const groups = initGroupMatches(this.props.tournament, this.state.groups, this.props.teams, false);
+        this.setState({
+            groups
+        })
+    }
+
+
     render() {
+        console.log(this.state.groups);
         const { teams, tournament } = this.props;
-        if (teams && tournament) {
+        if (teams && tournament && this.state.chooseTeams === null) {
             return (
                 <div className='groups'>
                     <div className='control-panel'>
@@ -77,11 +105,38 @@ class CreateGroup extends Component {
                     </div>
                     <div className='group-list'>
                         {this.state.groups && this.state.groups.map((group, i) => {
-                            return <GroupDetails key={group.name} tournament={tournament} groupNum={i + 1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
+                            return (
+                                <div className='group' key={group.name}>
+                                    <GroupDetails tournament={tournament} groupNum={i + 1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
+                                    <div className='btns'>
+                                        <div className='btn btn-icon' onClick={() => {
+                                            this.setState({ chooseTeams: i });
+                                        }}>
+                                            Add Teams
+                                        </div>
+                                    </div>
+                                </div>
+                            );
                         })}
                     </div>
                 </div>
             )
+        }
+        else if (teams && tournament && this.state.chooseTeams !== null) {
+            let chosenTeams = [];
+            let theGroupChosenTeams = this.state.groups[this.state.chooseTeams].teams;
+            this.state.groups.forEach(group => {
+                chosenTeams = [...chosenTeams, ...group.teams];
+            });
+            return (<div>
+                <div className='btns'>
+                    <div className='btn btn-green btn-icon' onClick={() => {
+                        this.handleInitGroupMatches();
+                        this.setState({ chooseTeams: null })
+                    }}><i className='icon-ok'></i></div>
+                </div>
+                <ChooseTeamsToGroup teams={teams} chosenTeams={chosenTeams} theGroupChosenTeams={theGroupChosenTeams} handleChooseTeam={this.handleAddTeamToGroup} />
+            </div >)
         } else {
             return (
                 <div>

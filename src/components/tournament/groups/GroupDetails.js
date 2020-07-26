@@ -17,7 +17,7 @@ class GroupDetails extends Component {
         const { teams, group, creation } = this.props;
         group.name = this.state.name;
         return (
-            <div className='group'>
+            <>
                 <div className='group-dashboard'>
                     {creation ?
                         <form>
@@ -27,11 +27,16 @@ class GroupDetails extends Component {
                         <p className='title'>{group.name}</p>
                     }
                 </div>
-                <div className='group-content'>
-                    <TeamList teams={teams} />
-                    <MatchesList matches={group.matches} teams={teams} />
-                </div>
-            </div>
+                {teams.length ?
+
+                    <div className='group-content'>
+                        <TeamList teams={teams} />
+                        <MatchesList matches={group.matches} teams={teams} />
+                    </div>
+                    :
+                    null
+                }
+            </>
         )
     }
 }

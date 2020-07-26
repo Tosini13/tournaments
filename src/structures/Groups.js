@@ -25,10 +25,10 @@ function initPromoted(groupName, teamsQtt) {
 }
 
 export const createRandomGroups = (teams, groupsQtt, tournament, returnGames) => {
-    return createGroups(shuffle(teams), groupsQtt, tournament, returnGames);
+    return createGroupsAuto(shuffle(teams), groupsQtt, tournament, returnGames);
 }
 
-export const setMatchesTime = (tournament, groups) => {
+const setMatchesTime = (tournament, groups) => {
     const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
     let timeCounter = tournament.date.toDate();
     let matchesQtt = 0;
@@ -47,7 +47,7 @@ export const setMatchesTime = (tournament, groups) => {
                     timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
                 }
                 matchCounter++;
-            } else if (i === groups[j].matches.length) {
+            } else if (i === groups[j].matches.length && i !== 0) {
                 groups[j].finishAt = moment(groups[j].matches[groups[j].matches.length - 1].date).add(timeUnit, 'minutes').format('YYYY-MM-DD HH:mm');
             }
         }
@@ -55,7 +55,37 @@ export const setMatchesTime = (tournament, groups) => {
     return groups;
 }
 
-export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
+export const createGroups = (teams, groupsQtt) => {
+    const teamsQtt = teams.length;
+    let restTeams = 0; //in one group!
+    let add = 0;
+    let groups = [];
+    if (groupsQtt !== 1) {
+        restTeams = teamsQtt % groupsQtt;
+    }
+    for (let i = 0; i < groupsQtt; i++) {
+        //check if it will be the same amount of teams or not
+        if (restTeams !== 0) {
+            add = 1;
+            restTeams--;
+        } else {
+            add = 0;
+        }
+        let teamsInGroup = Math.floor(teamsQtt / groupsQtt) + add;
+        const groupName = 'Group ' + String.fromCharCode(65 + i);
+        groups.push(
+            {
+                name: groupName,
+                finishAt: null,
+                teams: [],
+                promoted: initPromoted(groupName, teamsInGroup),
+            }
+        );
+    }
+    return groups;
+}
+
+export const createGroupsAuto = (teams, groupsQtt, tournament, returnGames) => {
     if (teams.length / groupsQtt < 2) {
         return false;
     }
@@ -86,10 +116,16 @@ export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
                 name: groupName,
                 teams: groupTeams,
                 promoted: initPromoted(groupName, teamsInGroup),
-                finishAt: null
+                finishAt: null,
+                matches: null
             }
         );
     }
+    initGroupMatches(tournament, groups, teams, returnGames);
+    return groups;
+}
+
+export const initGroupMatches = (tournament, groups, teams, returnGames) => {
     groups.forEach((group, i) => {
         group.matches = createGroupMatches(teams.filter(team => group.teams.includes(team.id)), returnGames);
     })
@@ -97,7 +133,7 @@ export const createGroups = (teams, groupsQtt, tournament, returnGames) => {
     return groups;
 }
 
-export const createGroupMatches = (teams, returnGames) => {
+const createGroupMatches = (teams, returnGames) => {
     let matches = [];
     for (let i = 0; i < teams.length - 1; i++) {
         for (let j = i + 1; j < teams.length; j++) {
@@ -133,6 +169,8 @@ export const createGroupMatches = (teams, returnGames) => {
     }
     return matches;
 }
+
+
 
 // TABLE
 const tableInit = (teams) => {
