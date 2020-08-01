@@ -32,7 +32,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
     return {
         tournamentsMy: state.tournament.tournaments,
         tournaments: state.firestore.ordered.tournaments
@@ -41,11 +40,9 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(connect(mapStateToProps), 
 firestoreConnect(props => {
-    // if (!props.auth.uid) return []
     return [
         {
             collection: 'tournaments', orderBy: ['date', 'desc'],
-            // where: [['ownerId', '==', props.auth.uid]]
         }
     ]
 }))(Dashboard);

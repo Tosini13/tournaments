@@ -56,6 +56,13 @@ const setMatchesTime = (tournament, groups) => {
 }
 
 export const createGroups = (teams, groupsQtt) => {
+    if (teams.length / groupsQtt < 2) {
+        console.log('more than half');
+        return false;
+    } else if (groupsQtt < 1) {
+        console.log('less than 1');
+        return false;
+    }
     const teamsQtt = teams.length;
     let restTeams = 0; //in one group!
     let add = 0;

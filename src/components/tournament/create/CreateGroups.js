@@ -36,9 +36,6 @@ class CreateGroup extends Component {
     }
 
     handleAddGroup = (teams) => {
-        if (teams.length / (this.state.groupQtt + 1) < 2) {
-            return false;
-        }
         const groups = createGroups(teams, this.state.groupQtt + 1);
         if (groups) {
             this.setState({
@@ -81,7 +78,6 @@ class CreateGroup extends Component {
 
 
     render() {
-        console.log(this.state.groups);
         const { teams, tournament } = this.props;
         if (teams && tournament && this.state.chooseTeams === null) {
             return (
