@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { createTournament } from '../../../store/actions/TournamentActions'
 import TextField from '@material-ui/core/TextField';
@@ -42,7 +43,6 @@ class CreateTournament extends Component {
             margin: '5px 10px'
         }
     }
-
     render() {
         return (
             <form onSubmit={this.handleSubmit} id='create-tournament'>
@@ -52,8 +52,7 @@ class CreateTournament extends Component {
                     id="dateTime"
                     label="Match date & time"
                     type="datetime-local"
-                    defaultValue="2017-05-24T10:30"
-                    // className={classes.textField}
+                    defaultValue={moment(new Date()).format('YYYY-MM-DDTHH:mm')}
                     InputLabelProps={{
                         shrink: true,
                     }}
