@@ -17,7 +17,7 @@ const ChooseTeamsToGroup = (props) => {
                 const chosen = theGroupChosen ? true : chosenTeams.find(id => id === team.id);
                 return (
                     <div className='teams-choosing-board' key={team.id}>
-                        <div className='bracket-choose' onClick={() => props.handleChooseTeam(team.id)} style={chosen ? style.theGroupTeam : null}>
+                        <div className='bracket-choose' onClick={() => chosen ? null : props.handleChooseTeam(team.id)} style={chosen ? style.theGroupTeam : null}>
                             <p className='bracket-choose-title'>{team.name}</p>
                             <span className='bracket-choose-order'>
                                 {chosen ?

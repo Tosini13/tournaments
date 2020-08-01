@@ -8,7 +8,6 @@ const BracketChooseGroups = (props) => {
             {groups.map((group) => {
                 const groupPlaces = group.teams.map((team, i) => {
                     let groupPlaceClass = 'bracket-choose-children-places';
-                    // let groupPlaceName = group.id + ' ' + (i + 1);
                     let groupPlaceholder = {
                         lastRound: group.id,
                         place: i
@@ -19,7 +18,9 @@ const BracketChooseGroups = (props) => {
                         }
                     });
                     return (
-                        <div key={i} className={groupPlaceClass} onClick={() => { props.handleChooseGroup(groupPlaceholder) }}>{(i + 1) + ' place'}</div>
+                        <div key={i} className={groupPlaceClass} onClick={() => {
+                            props.handleChooseGroup(groupPlaceholder, group)
+                        }}>{(i + 1) + ' place'}</div>
                     )
                 })
                 return (

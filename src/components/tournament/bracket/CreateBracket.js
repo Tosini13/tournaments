@@ -6,15 +6,18 @@ import BracketChooseTeams from './BracketChooseTeams';
 import { createBracketMatches, getFirstMatchTimeInBracket } from '../../../structures/Bracket';
 import MatchesList from '../matches/MatchesList'
 import { createBracket } from '../../../store/actions/BracketAction';
+import { updateGroup } from '../../../store/actions/GroupActions';
 import BracketChooseGroups from './BracketChooseGroups';
 
 class CreateBracket extends Component {
+
 
     state = {
         bracketOrder: 0,
         matches: null,
         chosenItems: [],
-        step: 'CHOOSE_TEAMS'
+        step: 'CHOOSE_TEAMS',
+        groupsPromotedQtt: []
     }
 
     handleDecline = () => {
@@ -23,6 +26,13 @@ class CreateBracket extends Component {
 
     handleAccept = (matches) => {
         this.props.createBracket(this.props.match.params.id, matches);
+        this.props.groups.forEach(group => {
+            const groupEdited = {
+                ...group,
+                promotedQtt: this.state.groupsPromotedQtt[group.id]
+            }
+            this.props.updateGroup(this.props.match.params.id, group.id, groupEdited);
+        });
         this.props.history.push('/tournaments/' + this.props.match.params.id);
     }
 
@@ -39,15 +49,26 @@ class CreateBracket extends Component {
         }
     }
 
-    handleChooseGroup = (groupPlaceholder) => {
+    handleChooseGroup = (groupPlaceholder, group) => {
+        let groupsPromotedQtt = this.state.groupsPromotedQtt;
         let chosenItems = this.state.chosenItems.filter(chosen => (chosen.lastRound !== groupPlaceholder.lastRound || chosen.place !== groupPlaceholder.place));
         if (chosenItems && chosenItems.length !== this.state.chosenItems.length) {
+            if (groupsPromotedQtt[group.id]) {
+                groupsPromotedQtt[group.id]--;
+            }
             this.setState({
-                chosenItems
+                chosenItems,
+                groupsPromotedQtt
             })
         } else {
+            if (groupsPromotedQtt[group.id]) {
+                groupsPromotedQtt[group.id]++;
+            } else {
+                groupsPromotedQtt[group.id] = 1;
+            }
             this.setState({
-                chosenItems: [...this.state.chosenItems, groupPlaceholder]
+                chosenItems: [...this.state.chosenItems, groupPlaceholder],
+                groupsPromotedQtt
             })
         }
     }
@@ -66,7 +87,6 @@ class CreateBracket extends Component {
                     <div className='control-panel'>
                         <div className='btns'>
                             <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
-                            {/* <div className='btn btn-icon' onClick={() => { this.handleDraw(teams) }}><i className='icon-arrows-cw'></i></div> */}
                             <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
                         </div>
                     </div>
@@ -99,7 +119,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createBracket: (tournamentId, bracket) => dispatch(createBracket(tournamentId, bracket))
+        createBracket: (tournamentId, bracket) => dispatch(createBracket(tournamentId, bracket)),
+        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group))
     }
 }
 

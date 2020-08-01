@@ -4,10 +4,9 @@ import { createTable } from '../../../structures/Groups';
 class GroupTable extends Component {
 
     render() {
-        const { teams, matches } = this.props;
+        const { teams, matches, promotedQtt } = this.props;
         const table = createTable(teams, matches);
 
-        let promotedQtt = 1;
         let promotionCounter = 0;
         this.table = table.map(row => {
             let rowClass = '';

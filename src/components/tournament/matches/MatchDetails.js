@@ -6,7 +6,6 @@ import { setBackBtn } from '../../../structures/extra';
 class MatchDetails extends Component {
 
     componentDidMount() {
-        console.log('TournamentDetails didmount');
         setBackBtn(() => {
             this.props.historyPush();
         });

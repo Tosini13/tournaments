@@ -11,7 +11,6 @@ import { setBackBtn } from '../../../structures/extra';
 class Group extends Component {
 
     componentDidMount() {
-        console.log('TournamentDetails didmount');
         setBackBtn(() => {
             this.props.history.push('/tournaments/' + this.props.match.params.id);
         });
@@ -56,7 +55,7 @@ class Group extends Component {
                     </div>
                     <p className='title'>{group.name}</p>
                     <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
-                    <GroupTable matches={matches} teams={teams} />
+                    <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
                 </div>
             )
         } else {

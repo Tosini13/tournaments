@@ -84,6 +84,7 @@ export const createGroups = (teams, groupsQtt) => {
                 finishAt: null,
                 teams: [],
                 promoted: initPromoted(groupName, teamsInGroup),
+                promotedQtt: 0
             }
         );
     }
@@ -122,7 +123,8 @@ export const createGroupsAuto = (teams, groupsQtt, tournament, returnGames) => {
                 teams: groupTeams,
                 promoted: initPromoted(groupName, teamsInGroup),
                 finishAt: null,
-                matches: null
+                matches: null,
+                promotedQtt: 0
             }
         );
     }
