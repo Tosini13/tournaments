@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import BracketChooseTeams from './BracketChooseTeams';
 import { createBracketMatches, getFirstMatchTimeInBracket } from '../../../structures/Bracket';
 import MatchesList from '../matches/MatchesList'
@@ -9,15 +14,23 @@ import { createBracket } from '../../../store/actions/BracketAction';
 import { updateGroup } from '../../../store/actions/GroupActions';
 import BracketChooseGroups from './BracketChooseGroups';
 
-class CreateBracket extends Component {
+const style = {
+    select: {
+        width: '100%',
+        margin: '15px 0px',
+    }
+}
 
+class CreateBracket extends Component {
 
     state = {
         bracketOrder: 0,
         matches: null,
         chosenItems: [],
         step: 'CHOOSE_TEAMS',
-        groupsPromotedQtt: []
+        groupsPromotedQtt: [],
+        autoMode: false,
+        roundQtt: 0,
     }
 
     handleDecline = () => {
@@ -49,28 +62,88 @@ class CreateBracket extends Component {
         }
     }
 
+
     handleChooseGroup = (groupPlaceholder, group) => {
-        let groupsPromotedQtt = this.state.groupsPromotedQtt;
-        let chosenItems = this.state.chosenItems.filter(chosen => (chosen.lastRound !== groupPlaceholder.lastRound || chosen.place !== groupPlaceholder.place));
-        if (chosenItems && chosenItems.length !== this.state.chosenItems.length) {
+        const newState = this.saveGroupChoose(groupPlaceholder, group, this.state.chosenItems, this.state.groupsPromotedQtt);
+        this.setState({
+            chosenItems: newState.chosenItems,
+            groupsPromotedQtt: newState.groupsPromotedQtt
+        })
+    }
+
+    handleSelectChange = (event) => {
+        const roundQtt = event.target.value;
+
+        const newState = this.chooseGroupAuto(this.props.groups, roundQtt);
+        this.setState({
+            chosenItems: newState.chosenItems,
+            groupsPromotedQtt: newState.groupsPromotedQtt,
+            roundQtt
+        })
+    };
+
+    chooseGroupAuto = (groups, roundQtt) => {
+        let newState = {
+            chosenItems: [],
+            groupsPromotedQtt: []
+        }
+        let basket = [];
+        let roundQttIterator = 0;
+        for (let i = 0; i < groups[0].teams.length; i++) {
+            if (roundQttIterator >= roundQtt * 2) break;
+            for (let j = 0; j < groups.length; j++) {
+                if (roundQttIterator >= roundQtt * 2) break;
+                const groupPlaceholder = {
+                    lastRound: groups[j].id,
+                    place: i
+                }
+                basket.push({
+                    groupPlaceholder,
+                    group: groups[j]
+                });
+                roundQttIterator++;
+            }
+        }
+        const centerIndex = Math.floor(basket.length / 2);
+        for (let i = 0; i < centerIndex; i++) {
+            let evenCounter = i;
+            let oddCounter = basket.length - i - 1;
+            //if the same group:
+            if (basket[evenCounter].group.id === basket[oddCounter].group.id && this.props.groups.length !== 1) {
+                let oddBasket = basket[oddCounter];
+                basket[oddCounter] = basket[oddCounter - 1];
+                basket[oddCounter - 1] = oddBasket;
+            }
+            newState = this.saveGroupChoose(basket[evenCounter].groupPlaceholder, basket[evenCounter].group, newState.chosenItems, newState.groupsPromotedQtt);
+            newState = this.saveGroupChoose(basket[oddCounter].groupPlaceholder, basket[oddCounter].group, newState.chosenItems, newState.groupsPromotedQtt);
+        }
+        if (basket.length % 2 === 1) {
+            newState = this.saveGroupChoose(basket[centerIndex].groupPlaceholder, basket[centerIndex].group, newState.chosenItems, newState.groupsPromotedQtt);
+        }
+        console.log(newState);
+        return newState;
+    }
+
+
+    saveGroupChoose = (groupPlaceholder, group, stateChosenItems, promotedQtt) => {
+        let groupsPromotedQtt = promotedQtt;
+        let chosenItems = stateChosenItems.filter(chosen => (chosen.lastRound !== groupPlaceholder.lastRound || chosen.place !== groupPlaceholder.place));
+        if (chosenItems && chosenItems.length !== stateChosenItems.length) {
             if (groupsPromotedQtt[group.id]) {
                 groupsPromotedQtt[group.id]--;
             }
-            this.setState({
-                chosenItems,
-                groupsPromotedQtt
-            })
         } else {
             if (groupsPromotedQtt[group.id]) {
                 groupsPromotedQtt[group.id]++;
             } else {
                 groupsPromotedQtt[group.id] = 1;
             }
-            this.setState({
-                chosenItems: [...this.state.chosenItems, groupPlaceholder],
-                groupsPromotedQtt
-            })
+            chosenItems = [...stateChosenItems, groupPlaceholder];
         }
+        return {
+            chosenItems,
+            groupsPromotedQtt
+        };
     }
 
     render() {
@@ -88,8 +161,27 @@ class CreateBracket extends Component {
                         <div className='btns'>
                             <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
                             <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
+                            <div className='btn btn-icon' onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</div>
                         </div>
                     </div>
+                    {this.state.autoMode ?
+                        <FormControl style={style.select}>
+                            <InputLabel id="demo-simple-select-label">Choose Rounds Quantity</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={this.state.roundQtt}
+                                onChange={this.handleSelectChange}
+                            >
+                                <MenuItem value={1}>Finał</MenuItem>
+                                <MenuItem value={2}>Finał, Półfinały</MenuItem>
+                                <MenuItem value={4}>Finał, Półfinały, Ćwierćfinały</MenuItem>
+                                <MenuItem value={8}>Finał, Półfinały, Ćwierćfinały, 1/16</MenuItem>
+                            </Select>
+                        </FormControl>
+                        :
+                        null
+                    }
                     {groups && groups.length ?
                         <BracketChooseGroups groups={groups} chosenGroups={this.state.chosenItems} handleChooseGroup={this.handleChooseGroup} />
                         :
