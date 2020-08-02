@@ -5,6 +5,17 @@ import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { setBackBtn } from "../../structures/extra";
 import moment from 'moment';
+import styled from 'styled-components';
+
+const FilterButton = styled.div`
+    padding: 2px 4px;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    &.current{
+        background-color: rgba(0,0,0,0.2);
+    }
+`;
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -43,10 +54,34 @@ class Dashboard extends Component {
             return (
                 <div className='dashboard-container container'>
                     <ul className='dashboard-nav'>
-                        <li onClick={() => { this.handleShow('LIVE') }}><a href='#Live'>Live</a></li>
-                        <li onClick={() => { this.handleShow('TODAY') }}><a href='#Today'>Today</a></li>
-                        <li onClick={() => { this.handleShow('PAST') }}><a href='#Past'>Past</a></li>
-                        <li onClick={() => { this.handleShow('FUTURE') }}><a href='#Future'>Future</a></li>
+                        <li>
+                            <FilterButton
+                                className={this.state.showDate === 'LIVE' ? 'current' : ''}
+                                onClick={() => { this.handleShow('LIVE') }}>
+                                <a href='#Live'>Live</a>
+                            </FilterButton>
+                        </li>
+                        <li>
+                            <FilterButton
+                                className={this.state.showDate === 'TODAY' ? 'current' : ''}
+                                onClick={() => { this.handleShow('TODAY') }}>
+                                <a href='#Today'>Today</a>
+                            </FilterButton>
+                        </li>
+                        <li>
+                            <FilterButton
+                                className={this.state.showDate === 'PAST' ? 'current' : ''}
+                                onClick={() => { this.handleShow('PAST') }}>
+                                <a href='#Past'>Past</a>
+                            </FilterButton>
+                        </li>
+                        <li>
+                            <FilterButton
+                                className={this.state.showDate === 'FUTURE' ? 'current' : ''}
+                                onClick={() => { this.handleShow('FUTURE') }}>
+                                <a href='#Future'>Future</a>
+                            </FilterButton>
+                        </li>
                     </ul>
 
                     <div className='tournaments-list'>
