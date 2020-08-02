@@ -18,6 +18,11 @@ const style = {
     select: {
         width: '100%',
         margin: '15px 0px',
+    },
+    autoButton: {
+        on: {
+            backgroundColor: 'darkgoldenrod',
+        }
     }
 }
 
@@ -50,16 +55,10 @@ class CreateBracket extends Component {
     }
 
     handleChooseTeam = (id) => {
-        if (this.state.chosenItems.includes(id)) {
-            let chosenItems = this.state.chosenItems.filter(team => team !== id);
-            this.setState({
-                chosenItems
-            })
-        } else {
-            this.setState({
-                chosenItems: [...this.state.chosenItems, id]
-            })
-        }
+        const chosenItems = this.saveTeamsChoose(id, this.state.chosenItems);
+        this.setState({
+            chosenItems
+        })
     }
 
 
@@ -74,13 +73,44 @@ class CreateBracket extends Component {
     handleSelectChange = (event) => {
         const roundQtt = event.target.value;
 
-        const newState = this.chooseGroupAuto(this.props.groups, roundQtt);
-        this.setState({
-            chosenItems: newState.chosenItems,
-            groupsPromotedQtt: newState.groupsPromotedQtt,
-            roundQtt
-        })
+        if (this.props.groups && this.props.groups.length) {
+            const newState = this.chooseGroupAuto(this.props.groups, roundQtt);
+            this.setState({
+                chosenItems: newState.chosenItems,
+                groupsPromotedQtt: newState.groupsPromotedQtt,
+                roundQtt
+            })
+        } else {
+            const chosenItems = this.chooseTeamsAuto(roundQtt);
+            this.setState({
+                chosenItems,
+                roundQtt
+            })
+        }
     };
+
+    saveTeamsChoose = (id, chosenItemsState) => {
+        let chosenItems;
+        if (chosenItemsState.includes(id)) {
+            chosenItems = chosenItemsState.filter(team => team !== id);
+        } else {
+            chosenItems = [...chosenItemsState, id];
+        }
+        return chosenItems;
+    }
+
+    chooseTeamsAuto = (roundQtt) => {
+        let chosenItems = [];
+        let roundQttIterator = 0;
+        this.props.teams.forEach(team => {
+            if (roundQttIterator < roundQtt * 2) {
+                chosenItems = this.saveTeamsChoose(team.id, chosenItems);
+                console.log(roundQttIterator);
+                roundQttIterator++;
+            }
+        })
+        return chosenItems;
+    }
 
     chooseGroupAuto = (groups, roundQtt) => {
         let newState = {
@@ -120,7 +150,7 @@ class CreateBracket extends Component {
         if (basket.length % 2 === 1) {
             newState = this.saveGroupChoose(basket[centerIndex].groupPlaceholder, basket[centerIndex].group, newState.chosenItems, newState.groupsPromotedQtt);
         }
-        console.log(newState);
+
         return newState;
     }
 
@@ -161,7 +191,7 @@ class CreateBracket extends Component {
                         <div className='btns'>
                             <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
                             <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
-                            <div className='btn btn-icon' onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</div>
+                            <div className='btn btn-icon' style={this.state.autoMode ? style.autoButton.on : null} onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</div>
                         </div>
                     </div>
                     {this.state.autoMode ?
