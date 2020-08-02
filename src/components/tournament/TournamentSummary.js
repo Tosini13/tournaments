@@ -7,7 +7,7 @@ const TournamentSummary = (props) => {
         <Link to={'tournaments/' + props.tournament.id}>
             <div className='tournament-card card z-depth-1'>
                 <div className='card-title tournament-title'>{props.tournament.name}</div>
-                <div className='tournament-date'>{moment(props.tournament.date.toDate()).format('yyyy MMMM DD')}</div>
+                <div className='tournament-date'>{moment(props.tournament.date).format('yyyy MMMM DD')}</div>
             </div>
         </Link>
     )

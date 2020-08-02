@@ -49,13 +49,14 @@ class CreateTournament extends Component {
                 <p>Create Tournament:</p>
                 <TextField style={this.style.input} id="name" label="name" value={this.state.name} onChange={this.handleChange} required />
                 <TextField style={this.style.input}
-                    id="dateTime"
+                    id="date"
                     label="Match date & time"
                     type="datetime-local"
                     defaultValue={moment(new Date()).format('YYYY-MM-DDTHH:mm')}
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    onChange={this.handleChange}
                 />
                 <p>In group</p>
                 <div className='tournament-time'>

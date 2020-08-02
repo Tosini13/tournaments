@@ -60,7 +60,7 @@ class TournamentDetails extends Component {
                 <div className='tournament-details'>
                     <section className='tournament-description'>
                         <div className='title'>{tournament.name}</div>
-                        <div className='tournament-date'>{moment(tournament.date.toDate()).format('yyyy MMMM DD')}</div>
+                        <div className='tournament-date'>{moment(tournament.date).format('yyyy MMMM DD')}</div>
                     </section>
                     {/* <TournamentNav /> */}
                     <section className='tournament-dashboard'>

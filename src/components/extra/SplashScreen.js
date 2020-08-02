@@ -26,7 +26,7 @@ const SplashScreen = (props) => {
                 <p>
                     <i className='icon-trophy' style={{ fontSize: '100px' }}></i>
                 </p>
-                <p>Tournaments v1.3</p>
+                <p>Tournaments v1.4</p>
             </div>
         </div>
     )

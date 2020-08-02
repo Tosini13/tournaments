@@ -183,7 +183,7 @@ class CreateBracket extends Component {
             if (groups && groups.length) {
                 matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, getFirstMatchTimeInBracket(groups), false);
             } else {
-                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, tournament.date.toDate(), false);
+                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, tournament.date, false);
             }
             return (
                 <div className='bracket'>
