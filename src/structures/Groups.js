@@ -30,7 +30,7 @@ export const createRandomGroups = (teams, groupsQtt, tournament, returnGames) =>
 
 const setMatchesTime = (tournament, groups) => {
     const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
-    let timeCounter = tournament.date.toDate();
+    let timeCounter = tournament.date;
     let matchesQtt = 0;
     groups.forEach(group => {
         if (matchesQtt < group.matches.length) {
