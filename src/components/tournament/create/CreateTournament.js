@@ -10,7 +10,7 @@ class CreateTournament extends Component {
 
     state = {
         name: '',
-        date: new Date(),
+        date: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
         matchTimeInGroup: 10,
         breakTimeInGroup: 2,
         matchTimeInBracket: 12,
