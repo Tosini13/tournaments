@@ -49,7 +49,7 @@ export default compose(firestoreConnect(props => {
         {
             collection: 'tournaments',
             doc: props.match.params.id,
-            subcollections: [{ collection: 'bracket', orderBy: ['date', 'asc'] }],
+            subcollections: [{ collection: 'bracket', orderBy: [['date', 'asc'], ['name', 'desc']] }],
             storeAs: 'bracket'
         }]
 }), connect(mapStateToProps))(BracketDetails);

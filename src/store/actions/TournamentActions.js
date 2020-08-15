@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 export const createTournament = (tournament) => {
 
     return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -19,14 +21,20 @@ export const createTournament = (tournament) => {
 
 export const deleteTournament = (tournamentId) => {
 
+    const path = `/tournaments/${tournamentId}`;
     return (dispatch, getState, { getFirebase, getFirestore }) => {
 
-        const firestore = getFirestore();
-        firestore.collection('tournaments').doc(tournamentId).delete()
-            .then(() => {
+        var deleteFn = firebase.functions().httpsCallable('recursiveDelete');
+        console.log(path);
+        deleteFn({ path: path })
+            .then(function (result) {
                 dispatch({ type: 'DELETE_TOURNAMENT' })
-            }).catch(err => {
-                dispatch({ type: 'DELETE_TOURNAMENT_ERROR', err })
+                console.log('Delete success: ' + JSON.stringify(result));
             })
+            .catch(function (err) {
+                dispatch({ type: 'DELETE_TOURNAMENT_ERROR', err })
+                console.log('Delete failed, see console,');
+                console.log(err);
+            });
     }
 }
