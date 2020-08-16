@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 export const createGroupsToTournament = (tournamentId, groups) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
@@ -84,5 +86,25 @@ export const updateGroup = (tournamentId, groupId, group) => {
         }).catch((err) => {
             dispatch({ type: 'EDIT_GROUP_ERROR', err });
         })
+    }
+}
+
+export const deleteAllGroupsFromTournament = (tournamentId) => {
+
+    console.log('group action delete');
+    const path = `/tournaments/${tournamentId}/groups`;
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        var deleteFn = firebase.functions().httpsCallable('recursiveDelete');
+        console.log(path);
+        deleteFn({ path: path })
+            .then(function (result) {
+                dispatch({ type: 'DELETE_ALL_GROUPS_FROM_TOURNAMENT' })
+                console.log('Delete success: ' + JSON.stringify(result));
+            })
+            .catch(function (err) {
+                dispatch({ type: 'DELETE_ALL_GROUPS_FROM_TOURNAMENT_ERROR', err })
+                console.log('Delete failed, see console,');
+                console.log(err);
+            });
     }
 }

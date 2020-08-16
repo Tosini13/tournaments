@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 export const createBracket = (tournamentId, bracket) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         const firestore = getFirestore();
@@ -23,5 +25,23 @@ export const updateBracketMatch = (tournamentId, matchId, match) => {
         }).catch((err) => {
             dispatch({ type: 'EDIT_BRACKET_MATCH_ERROR', err });
         })
+    }
+}
+
+export const deleteBracketFromTournament = (tournamentId) => {
+
+    const path = `/tournaments/${tournamentId}/bracket`;
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        var deleteFn = firebase.functions().httpsCallable('recursiveDelete');
+        deleteFn({ path: path })
+            .then(function (result) {
+                dispatch({ type: 'DELETE_BRACKET_FROM_TOURNAMENT' })
+                console.log('Delete success: ' + JSON.stringify(result));
+            })
+            .catch(function (err) {
+                dispatch({ type: 'DELETE_BRACKET_FROM_TOURNAMENT_ERROR', err })
+                console.log('Delete failed, see console,');
+                console.log(err);
+            });
     }
 }

@@ -25,6 +25,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'CREATE_GROUP_ERROR':
             console.log('group creation error', action.err);
             return state;
+        case 'DELETE_ALL_GROUPS_FROM_TOURNAMENT':
+            console.log('DELETE_ALL_GROUPS_FROM_TOURNAMENT');
+            return state;
+        case 'DELETE_ALL_GROUPS_FROM_TOURNAMENT_ERROR':
+            console.log('DELETE_ALL_GROUPS_FROM_TOURNAMENT_ERROR', action.err);
+            return state;
         case 'CREATE_MATCHES_TO_GROUP':
             console.log('matches to group created');
             return state;
@@ -36,6 +42,12 @@ const tournamentReducer = (state = initState, action) => {
             return state;
         case 'CREATE_BRACKET_ERROR':
             console.log('bracket creation error', action.err);
+            return state;
+        case 'DELETE_BRACKET_FROM_TOURNAMENT':
+            console.log('DELETE_BRACKET_FROM_TOURNAMENT');
+            return state;
+        case 'DELETE_BRACKET_FROM_TOURNAMENT_ERROR':
+            console.log('DELETE_BRACKET_FROM_TOURNAMENT_ERROR', action.err);
             return state;
         case 'DELETE_TEAM_FROM_TOURNAMENT':
             console.log('team deleted from tournament');

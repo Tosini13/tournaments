@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
 
 const BracketDashboard = (props) => {
     const { bracket, auth, groupFinished } = props;
@@ -10,6 +12,12 @@ const BracketDashboard = (props) => {
                 <div className='btns'>
                     <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>play-offs</Link>
                 </div>
+                <div className='btn btn-red'
+                    onClick={() => {
+                        console.log('to delete');
+                        props.deleteBracketFromTournament(props.tournamentId)
+                    }}
+                >DELETE PLAY-OFFS</div>
             </div>
         )
     }
@@ -39,4 +47,10 @@ const BracketDashboard = (props) => {
     }
 }
 
-export default BracketDashboard;
+const mapStateToDispatch = (dispatch) => {
+    return {
+        deleteBracketFromTournament: (tournamentId) => dispatch(deleteBracketFromTournament(tournamentId))
+    }
+}
+
+export default connect(null, mapStateToDispatch)(BracketDashboard);
