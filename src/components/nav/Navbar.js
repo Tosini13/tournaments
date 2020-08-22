@@ -3,15 +3,23 @@ import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import { NavBar } from '../style/styledLayouts'
+
 const Navbar = (props) => {
-    const { auth } = props;
+    const { auth, toggleSideBarMenu } = props;
     const links = auth.uid ? <SignedInLinks profile={props.profile} /> : <SignedOutLinks />;
     return (
-        <nav className='nav-warpper grey darken-3'>
+        <NavBar>
             <div className='container'>
                 {links}
             </div>
-        </nav>
+            <IconButton onClick={toggleSideBarMenu}>
+                <MenuIcon />
+            </IconButton>
+        </NavBar>
     )
 }
 
