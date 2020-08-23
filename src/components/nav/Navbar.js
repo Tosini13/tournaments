@@ -1,33 +1,34 @@
-import React from 'react'
-import SignedInLinks from './SignedInLinks'
-import SignedOutLinks from './SignedOutLinks'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
 
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
 import { NavBar } from '../style/styledLayouts'
+import { HamburgerStyled } from '../style/styledIcons'
+import MenuSideBar from '../menu/Menu'
 
 const Navbar = (props) => {
-    const { auth, toggleSideBarMenu } = props;
-    const links = auth.uid ? <SignedInLinks profile={props.profile} /> : <SignedOutLinks />;
+
+    const [sideBarMenu, setSideBarMenu] = useState(false)
+
+    const toggleSideBarMenu = () => {
+        setSideBarMenu(!sideBarMenu);
+    }
+
     return (
-        <NavBar>
-            <div className='container'>
-                {links}
-            </div>
-            <IconButton onClick={toggleSideBarMenu}>
-                <MenuIcon />
-            </IconButton>
-        </NavBar>
+        <>
+            <NavBar>
+                <div>
+                    <KeyboardArrowLeftIcon />
+                </div>
+                <HamburgerStyled open={sideBarMenu} onClick={toggleSideBarMenu}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </HamburgerStyled>
+            </NavBar>
+            <MenuSideBar sideBarMenu={sideBarMenu} toggleSideBarMenu={toggleSideBarMenu} />
+        </>
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        auth: state.firebase.auth,
-        profile: state.firebase.profile
-    }
-}
-
-export default connect(mapStateToProps)(Navbar)
+export default Navbar;

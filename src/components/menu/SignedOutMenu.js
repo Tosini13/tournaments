@@ -1,14 +1,44 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 
-const SignedOutMenu = () => {
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/Inbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import Divider from '@material-ui/core/Divider';
+
+import { MenuLinkStyled } from '../style/styledLayouts';
+
+const SignedOutMenu = (props) => {
+
+    const { chooseMenuOption } = props;
+
     return (
-        <ul className='right'>
-            <li><NavLink to={'/'}>Home</NavLink></li>
-            <li><NavLink to='/signup'>Sign up</NavLink></li>
-            <li><NavLink to='/signin'>Log in</NavLink></li>
-        </ul>
+        <List>
+            <ListItem button onClick={() => {
+                chooseMenuOption();
+            }}>
+                <MenuLinkStyled to={'/signin'}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Zaloguj'} />
+                </MenuLinkStyled>
+            </ListItem>
+            <Divider />
+            <ListItem button onClick={() => {
+                chooseMenuOption(props.singOut);
+            }}>
+                <MenuLinkStyled to={'/'}>
+                    <ListItemIcon>
+                        <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Turnieje" />
+                </MenuLinkStyled>
+            </ListItem>
+        </List>
     )
 }
 
-export default SignedOutMenu
+export default SignedOutMenu;

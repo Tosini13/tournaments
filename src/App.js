@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './css/style.css'
 import './css/fontello/css/fontello.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
@@ -14,22 +14,14 @@ import MatchGroup from './components/tournament/matches/MatchGroup';
 import CreateBracket from './components/tournament/bracket/CreateBracket';
 import BracketDetails from './components/tournament/bracket/BracketDetails';
 import MatchBracket from './components/tournament/matches/MatchBracket';
-import MenuSideBar from './components/menu/Menu';
 
 
 function App() {
 
-  const [sideBarMenu, setSideBarMenu] = useState(false)
-
-  const toggleSideBarMenu = () => {
-    setSideBarMenu(!sideBarMenu);
-  }
-
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar toggleSideBarMenu={toggleSideBarMenu} />
-        <MenuSideBar sideBarMenu={sideBarMenu} toggleSideBarMenu={toggleSideBarMenu} />
+        <Navbar/>
         <main className='container'>
           <Switch>
             <Route exact path='/' component={Dashboard} />

@@ -5,14 +5,15 @@ import { connect } from 'react-redux'
 import { signOut } from '../../store/actions/AuthActions'
 
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import Divider from '@material-ui/core/Divider';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
+import LockIcon from '@material-ui/icons/Lock';
 
-import { MenuLinkStyled } from '../style/styledLayouts';
+import { MenuLinkStyled, ListItemStyled } from '../style/styledLayouts';
+import { IconFontelloStyled } from '../style/styledIcons'
 
 const SignedInMenu = (props) => {
 
@@ -20,39 +21,48 @@ const SignedInMenu = (props) => {
 
     return (
         <List>
-            <ListItem>
+            <ListItemStyled>
                 <ListItemIcon>
-                    <InboxIcon />
+                    <AccountCircleIcon />
                 </ListItemIcon>
                 <ListItemText primary={user?.login} />
-            </ListItem>
-            <Divider />
-            <ListItem button onClick={() => {
+            </ListItemStyled>
+            <ListItemStyled button onClick={() => {
                 chooseMenuOption();
             }}>
                 <MenuLinkStyled to={'/create'}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <AddCircleOutlineIcon />
                     </ListItemIcon>
                     <ListItemText primary="Stwórz turniej" />
                 </MenuLinkStyled>
-            </ListItem>
-            <ListItem button onClick={() => {
+            </ListItemStyled>
+            <ListItemStyled button onClick={() => {
+                chooseMenuOption();
+            }}>
+                <MenuLinkStyled to={'/'}>
+                    <ListItemIcon>
+                        <IconFontelloStyled className='icon-trophy' />
+                    </ListItemIcon>
+                    <ListItemText primary="Turnieje" />
+                </MenuLinkStyled>
+            </ListItemStyled>
+            <ListItemStyled button onClick={() => {
                 chooseMenuOption();
             }}>
                 <ListItemIcon>
-                    <DraftsIcon />
+                    <SportsSoccerIcon />
                 </ListItemIcon>
                 <ListItemText primary="Moje turnieje" />
-            </ListItem>
-            <ListItem button onClick={() => {
+            </ListItemStyled>
+            <ListItemStyled button onClick={() => {
                 chooseMenuOption(props.singOut);
             }}>
                 <ListItemIcon>
-                    <DraftsIcon />
+                    <LockIcon />
                 </ListItemIcon>
                 <ListItemText primary="Wyloguj" />
-            </ListItem>
+            </ListItemStyled>
         </List>
     )
 }

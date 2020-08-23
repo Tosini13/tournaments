@@ -6,6 +6,9 @@ $header: 56px;
     background-color: $firstBackgroundColor;
     min-height: 100vh;
     color: $secondFontColor;
+    position: relative;
+    width: 100vw;
+    overflow: hidden;
     nav {
         position: fixed;
         left: 0px;
@@ -34,7 +37,7 @@ $header: 56px;
     }
     main {
         padding-bottom: 5px;
-        padding-top: $header;
+        padding-top: 100px;
     }
 }
 

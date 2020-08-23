@@ -1,15 +1,18 @@
 import React from 'react'
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import trophy from '../../configureFiles/img/trophy.png'
+
+import { TournamentListItemStyled, TournamentLinkItemStyled, TournamentListItemTitleStyled, TournamentListItemDateStyled, TournamentListItemImgStyled } from '../style/styledLayouts'
 
 const TournamentSummary = (props) => {
     return (
-        <Link to={'tournaments/' + props.tournament.id}>
-            <div className='tournament-card card z-depth-1'>
-                <div className='card-title tournament-title'>{props.tournament.name}</div>
-                <div className='tournament-date'>{moment(props.tournament.date).format('yyyy MMMM DD')}</div>
-            </div>
-        </Link>
+        <TournamentListItemStyled>
+            <TournamentLinkItemStyled to={'tournaments/' + props.tournament.id}>
+                <TournamentListItemDateStyled>{moment(props.tournament.date).format('DD MMMM yyyy HH:mm')}</TournamentListItemDateStyled>
+                <TournamentListItemImgStyled src={trophy} alt='logo' />
+                <TournamentListItemTitleStyled>{props.tournament.name}</TournamentListItemTitleStyled>
+            </TournamentLinkItemStyled>
+        </TournamentListItemStyled>
     )
 }
 

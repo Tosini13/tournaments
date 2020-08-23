@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 
 import { MenuSideBarContainerStyled } from '../style/styledLayouts'
 import SignedInMenu from './SignedInMenu';
+import SignedOutMenu from './SignedOutMenu';
 
 const MenuSideBar = (props) => {
 
-    const { sideBarMenu, user, toggleSideBarMenu } = props;
+    const { sideBarMenu, user, toggleSideBarMenu, auth } = props;
 
     const chooseMenuOption = (action) => {
         if (action) action();
@@ -18,7 +19,11 @@ const MenuSideBar = (props) => {
 
     return (
         <MenuSideBarContainerStyled open={sideBarMenu}>
-            <SignedInMenu user={user} chooseMenuOption={chooseMenuOption} />
+            {auth.uid ?
+                <SignedInMenu user={user} chooseMenuOption={chooseMenuOption} />
+                :
+                <SignedOutMenu chooseMenuOption={chooseMenuOption} />
+            }
         </MenuSideBarContainerStyled>
     )
 }

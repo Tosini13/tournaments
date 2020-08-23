@@ -5,18 +5,11 @@ import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { setBackBtn } from "../../structures/extra";
 import moment from 'moment';
-import styled from 'styled-components';
 import { timeRange } from "../../const";
 
-const FilterButton = styled.div`
-    padding: 2px 4px;
-    background-color: transparent;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    &.current{
-        background-color: rgba(0,0,0,0.2);
-    }
-`;
+import List from '@material-ui/core/List';
+
+import { TournamentDashboardStyled, TournamentDashboardElementStyled } from '../style/styledLayouts'
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -53,46 +46,35 @@ class Dashboard extends Component {
         if (tournaments && tournaments.length) {
             const tournamentsFiltered = this.filterByDate(tournaments);
             return (
-                <div className='dashboard-container container'>
-                    <ul className='dashboard-nav'>
-                        <li>
-                            <FilterButton
-                                className={this.state.showDate === timeRange.live ? 'current' : ''}
-                                onClick={() => { this.handleShow(timeRange.live) }}>
-                                <a href='#Live'>Live</a>
-                            </FilterButton>
-                        </li>
-                        <li>
-                            <FilterButton
-                                className={this.state.showDate === timeRange.today ? 'current' : ''}
-                                onClick={() => { this.handleShow(timeRange.today) }}>
-                                <a href='#Today'>Today</a>
-                            </FilterButton>
-                        </li>
-                        <li>
-                            <FilterButton
-                                className={this.state.showDate === timeRange.past ? 'current' : ''}
-                                onClick={() => { this.handleShow(timeRange.past) }}>
-                                <a href='#Past'>Past</a>
-                            </FilterButton>
-                        </li>
-                        <li>
-                            <FilterButton
-                                className={this.state.showDate === timeRange.future ? 'current' : ''}
-                                onClick={() => { this.handleShow(timeRange.future) }}>
-                                <a href='#Future'>Future</a>
-                            </FilterButton>
-                        </li>
-                    </ul>
+                <div className='dashboard-container'>
+                    <TournamentDashboardStyled className='dashboard-nav'>
+                        <TournamentDashboardElementStyled current={this.state.showDate === timeRange.live ? true : false}
+                            onClick={() => { this.handleShow(timeRange.live) }}>Live
+                        </TournamentDashboardElementStyled>
+                        <TournamentDashboardElementStyled
+                            current={this.state.showDate === timeRange.today ? true : false}
+                            onClick={() => { this.handleShow(timeRange.today) }}>
+                            Today
+                        </TournamentDashboardElementStyled>
+                        <TournamentDashboardElementStyled
+                            current={this.state.showDate === timeRange.past ? true : false}
+                            onClick={() => { this.handleShow(timeRange.past) }}>
+                            Past
+                        </TournamentDashboardElementStyled>
+                        <TournamentDashboardElementStyled current={this.state.showDate === timeRange.future ? true : false}
+                            onClick={() => { this.handleShow(timeRange.future) }}>
+                            Future
+                        </TournamentDashboardElementStyled>
+                    </TournamentDashboardStyled>
 
-                    <div className='tournaments-list'>
+                    <List>
                         {tournamentsFiltered && tournamentsFiltered.map(tournament => {
                             return (
                                 <TournamentSummary key={tournament.id} tournament={tournament} />
                             )
                         })}
-                    </div>
-                </div>
+                    </List>
+                </div >
             )
         } else {
             return (
