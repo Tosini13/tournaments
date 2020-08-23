@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-
 import { NavBar } from '../style/styledLayouts'
 import { HamburgerStyled } from '../style/styledIcons'
 import MenuSideBar from '../menu/Menu'
@@ -18,7 +16,6 @@ const Navbar = (props) => {
         <>
             <NavBar>
                 <div>
-                    <KeyboardArrowLeftIcon />
                 </div>
                 <HamburgerStyled open={sideBarMenu} onClick={toggleSideBarMenu}>
                     <div></div>

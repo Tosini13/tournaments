@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { createTournament } from '../../../store/actions/TournamentActions'
@@ -15,7 +13,8 @@ class CreateTournament extends Component {
         breakTimeInGroup: 2,
         matchTimeInBracket: 12,
         breakTimeInBracket: 3,
-        fields: 1
+        fields: 1,
+        image: null
     }
 
     handleChangeDate = (date) => {
@@ -26,6 +25,13 @@ class CreateTournament extends Component {
 
     handleChange = (e) => {
         this.setState({ [e.target.id]: e.target.value });
+    }
+
+    handleChangeImage = (e) => {
+        const image = e.target.files[0];
+        this.setState({
+            image
+        });
     }
 
     handleSubmit = (e) => {
@@ -69,6 +75,7 @@ class CreateTournament extends Component {
                     <TextField style={this.style.input} name='breakTimeInBracket' id='breakTimeInBracket' label="Break time (mins)" type='number' value={this.state.breakTimeInBracket} onChange={this.handleChange} required />
                 </div>
                 <TextField style={this.style.input} name='fields' id='fields' label="Fields quantity" type='number' value={this.state.fields} onChange={this.handleChange} required />
+                <TextField style={this.style.input} name='icon' id='icon' label="Tournament's icon" type='file' onChange={this.handleChangeImage} />
                 <div className='btns'>
                     <button className="btn lighten-1 z-depth-0">
                         Create

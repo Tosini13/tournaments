@@ -62,7 +62,6 @@ class TournamentDetails extends Component {
                         <div className='title'>{tournament.name}</div>
                         <div className='tournament-date'>{moment(tournament.date).format('yyyy MMMM DD')}</div>
                     </section>
-                    {/* <TournamentNav /> */}
                     <section className='tournament-dashboard'>
                         <div className='tournament-stages'>
                             <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />

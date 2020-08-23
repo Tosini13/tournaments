@@ -7,6 +7,12 @@ const tournamentReducer = (state = initState, action) => {
         case 'CREATE_TOURNAMENT_ERROR':
             console.log('tournament creation error', action.err);
             return state;
+        case 'IMAGE_UPLOADED':
+            console.log('IMAGE_UPLOADED');
+            return state;
+        case 'IMAGE_UPLOADED_ERROR':
+            console.log('IMAGE_UPLOADED_ERROR', action.err);
+            return state;
         case 'DELETE_TOURNAMENT':
             console.log('tournament deleted');
             return state;

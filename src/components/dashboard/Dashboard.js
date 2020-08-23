@@ -9,7 +9,7 @@ import { timeRange } from "../../const";
 
 import List from '@material-ui/core/List';
 
-import { TournamentDashboardStyled, TournamentDashboardElementStyled } from '../style/styledLayouts'
+import { TournamentDashboardStyled, TournamentDashboardElementStyled } from '../style/styledTournament'
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -19,6 +19,8 @@ class Dashboard extends Component {
     state = {
         showDate: timeRange.today
     }
+
+
 
     handleShow = (showDate) => {
         this.setState({
@@ -67,7 +69,7 @@ class Dashboard extends Component {
                         </TournamentDashboardElementStyled>
                     </TournamentDashboardStyled>
 
-                    <List>
+                    <List style={{ marginTop: '30px' }}>
                         {tournamentsFiltered && tournamentsFiltered.map(tournament => {
                             return (
                                 <TournamentSummary key={tournament.id} tournament={tournament} />

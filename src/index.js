@@ -11,6 +11,11 @@ import { getFirestore, reduxFirestore, createFirestoreInstance } from 'redux-fir
 import { getFirebase, ReactReduxFirebaseProvider, isLoaded } from 'react-redux-firebase';
 import fbConfig from './config/fbConfig'
 import firebase from 'firebase/app'
+
+import { StylesProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+import { mainTheme } from './components/style/styledConst'
 import SplashScreen from './components/extra/SplashScreen';
 
 const store = createStore(
@@ -20,11 +25,6 @@ const store = createStore(
     reduxFirestore(fbConfig, { useFirestoreForProfile: true, useProfile: 'users', attachAuthIsReady: true })
   )
 );
-
-// store.subscribe(() => {
-//   console.log('store changed!');
-//   console.log(store.getState());
-// });
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth)
@@ -41,18 +41,19 @@ const rrfProps = {
 
 ReactDOM.render(
   // <React.StrictMode>
-  <ReactReduxFirebaseProvider {...rrfProps}>
-    <Provider store={store}>
-      <AuthIsLoaded>
-        <App />
-      </AuthIsLoaded>
-    </Provider>
-  </ReactReduxFirebaseProvider>
+  <StylesProvider injectFirst>
+    <ThemeProvider theme={mainTheme}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <Provider store={store}>
+          <AuthIsLoaded>
+            <App />
+          </AuthIsLoaded>
+        </Provider>
+      </ReactReduxFirebaseProvider>
+    </ThemeProvider>
+  </StylesProvider>
   // </React.StrictMode>
   , document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
