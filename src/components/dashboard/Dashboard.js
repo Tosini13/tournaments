@@ -49,27 +49,27 @@ class Dashboard extends Component {
             const tournamentsFiltered = this.filterByDate(tournaments);
             return (
                 <div className='dashboard-container'>
-                    <TournamentDashboardStyled className='dashboard-nav'>
-                        <TournamentDashboardElementStyled current={this.state.showDate === timeRange.live ? true : false}
-                            onClick={() => { this.handleShow(timeRange.live) }}>Live
+                    <TournamentDashboardStyled>
+                        <TournamentDashboardElementStyled selected={this.state.showDate === timeRange.live ? true : false}
+                            onClick={() => { this.handleShow(timeRange.live) }}>Na żywo
                         </TournamentDashboardElementStyled>
                         <TournamentDashboardElementStyled
-                            current={this.state.showDate === timeRange.today ? true : false}
+                            selected={this.state.showDate === timeRange.today ? true : false}
                             onClick={() => { this.handleShow(timeRange.today) }}>
-                            Today
+                            Dzisiaj
                         </TournamentDashboardElementStyled>
                         <TournamentDashboardElementStyled
-                            current={this.state.showDate === timeRange.past ? true : false}
+                            selected={this.state.showDate === timeRange.past ? true : false}
                             onClick={() => { this.handleShow(timeRange.past) }}>
-                            Past
+                            Przeszłe
                         </TournamentDashboardElementStyled>
-                        <TournamentDashboardElementStyled current={this.state.showDate === timeRange.future ? true : false}
+                        <TournamentDashboardElementStyled selected={this.state.showDate === timeRange.future ? true : false}
                             onClick={() => { this.handleShow(timeRange.future) }}>
-                            Future
+                            Przyszłe
                         </TournamentDashboardElementStyled>
                     </TournamentDashboardStyled>
 
-                    <List style={{ marginTop: '30px' }}>
+                    <List>
                         {tournamentsFiltered && tournamentsFiltered.map(tournament => {
                             return (
                                 <TournamentSummary key={tournament.id} tournament={tournament} />

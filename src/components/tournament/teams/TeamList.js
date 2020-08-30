@@ -15,7 +15,6 @@ const TeamList = (props) => {
 
     return (
         <div className='team-list z-depth-1'>
-            <p className='title'>Teams</p>
             {props.teams && props.teams.map(team => {
                 return (
                     <TeamSummary key={team.id} team={team} control={props.control} deleteControl={props.deleteControl} handleDeleteTeam={handleDeleteTeam} handleEditTeam={handleEditTeam} />

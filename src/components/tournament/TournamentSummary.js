@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase';
 import moment from 'moment';
 import trophy from '../../configureFiles/img/trophy.png'
@@ -16,17 +16,25 @@ const TournamentSummary = (props) => {
 
     const [image, setImage] = useState(null);
 
-    if (props.tournament.image) {
-        const url = `images/${props.tournament.authorId}/`;
-        const storage = firebase.storage();
-        const pathReference = storage.ref(url);
+    useEffect(() => {
+        if (props.tournament.image) {
+            const url = `images/${props.tournament.authorId}/`;
+            const imageId = `${url}${props.tournament.image}`;
+            const img = localStorage.getItem(imageId);
+            if (!img) {
+                const storage = firebase.storage();
+                const pathReference = storage.ref(url);
 
-        pathReference.child(props.tournament.image).getDownloadURL().then(function (url) {
-            setImage(url);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
+                pathReference.child(props.tournament.image).getDownloadURL().then(function (imgUrl) {
+                    localStorage.setItem(imageId, imgUrl);
+                    setImage(imgUrl);
+                }).catch(function (error) {
+                });
+            } else {
+                setImage(img);
+            }
+        }
+    })
 
     const favourite = false;
     return (

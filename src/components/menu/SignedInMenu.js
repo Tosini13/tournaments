@@ -11,9 +11,9 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import LockIcon from '@material-ui/icons/Lock';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 import { MenuLinkStyled, ListItemStyled } from '../style/styledLayouts';
-import { IconFontelloStyled } from '../style/styledIcons'
 
 const SignedInMenu = (props) => {
 
@@ -42,7 +42,7 @@ const SignedInMenu = (props) => {
             }}>
                 <MenuLinkStyled to={'/'}>
                     <ListItemIcon>
-                        <IconFontelloStyled className='icon-trophy' />
+                        <EmojiEventsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Turnieje" />
                 </MenuLinkStyled>

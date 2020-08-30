@@ -8,40 +8,37 @@ const BracketDashboard = (props) => {
     if (Boolean(bracket) && bracket.length) {
         return (
             <div className='bracket-dashboard'>
-                <p className='title'>Play-offs</p>
                 <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>play-offs</Link>
+                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>Faza pucharowa</Link>
                 </div>
                 <div className='btn btn-red'
                     onClick={() => {
                         console.log('to delete');
                         props.deleteBracketFromTournament(props.tournamentId)
                     }}
-                >DELETE PLAY-OFFS</div>
+                >USUŃ FAZĘ PUCHAROWĄ</div>
             </div>
         )
     }
     else if (groupFinished) {
         return (
             <div className='groups-dashboard'>
-                <p className='title'>Play-offs</p>
                 <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
+                <p className='title'>Faza pucharowa nie jest dostępna, ponieważ faza grupowa już się skończyła!</p>
             </div>
         )
     } else if (auth) {
         return (
             <div className='bracket-dashboard'>
-                <p className='title'>Play-offs</p>
                 <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket/create'}>Add play-offs</Link>
+                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket/create'}>Stwórz fazę pucharową</Link>
                 </div>
             </div>
         )
     } else {
         return (
             <div className='groups-dashboard'>
-                <p className='title'>Play-offs</p>
-                <p className='title'>Play-offs are not available yet for visitors</p>
+            <p className='title'>Faza pucharowa nie jest jeszcze dostępna!</p>
             </div>
         )
     }

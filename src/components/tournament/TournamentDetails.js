@@ -1,16 +1,24 @@
 import React, { Component } from "react";
+import firebase from 'firebase';
 import { connect } from "react-redux";
-import moment from 'moment'
-import TeamList from './teams/TeamList'
-import GroupsDashboard from './groups/GroupsDashboard'
-import BracketDashboard from './bracket/BracketDashboard'
-import AddTeam from './create/AddTeam'
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { deleteTournament } from "../../store/actions/TournamentActions";
 import Question from "../extra/Question";
-import { maxTeamsQtt } from "../../structures/Bracket";
 import { setBackBtn } from "../../structures/extra";
+import { TournamentListItemImgStyled } from "../style/styledTournament";
+
+import trophy from '../../configureFiles/img/trophy.png'
+import {
+    TournamentDetailsContainerStyled, TournamentDetailsHeaderStyled,
+    TournamentDetailsTitleStyled
+} from '../style/styledTournament'
+import TournamentDetailsInfo from "./tournamentDetails/TournamentDetailsInfo";
+import TournamentDetailsGroups from "./tournamentDetails/TournamentDetailsGroups";
+import TournamentDetailsBracket from "./tournamentDetails/TournamentDetailsBracket";
+import TournamentDetailsTeams from "./tournamentDetails/TournamentDetailsTeams";
+import TournamentDetailsNav from "./tournamentDetails/TournamentDetailsNav";
+import { tournamentView } from "../../configureFiles/constants";
 
 // import TournamentNav from "./TournamentNav";
 class TournamentDetails extends Component {
@@ -22,7 +30,13 @@ class TournamentDetails extends Component {
     }
 
     state = {
-        question: null
+        question: null,
+        image: null,
+        view: tournamentView.info
+    }
+
+    handleChangeView = (view) => {
+        this.setState({ view });
     }
 
     handleDeleteTournament = () => {
@@ -46,35 +60,76 @@ class TournamentDetails extends Component {
         });
     }
 
+
+    componentWillUpdate() {
+        if (this.props.tournament?.image) {
+            const url = `images/${this.props.tournament.authorId}/`;
+            const storage = firebase.storage();
+            const pathReference = storage.ref(url);
+            const imageId = `${url}${this.props.tournament.image}`;
+            const img = localStorage.getItem(imageId);
+
+            const setImage = (url) => {
+                this.setState({
+                    image: url
+                });
+            }
+
+            if (!img) {
+                pathReference.child(this.props.tournament.image).getDownloadURL().then(function (imgUrl) {
+                    localStorage.setItem(imageId, imgUrl);
+                    setImage(imgUrl);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            } else {
+                if (!this.state.image) {
+                    setImage(img);
+                }
+            }
+        }
+    }
+
+    getView = (tournament, teams, groups, auth, bracket, id) => {
+        let groupFinished = false;
+        groups.forEach(group => {
+            if (group.finished) {
+                groupFinished = true;
+            }
+        })
+        switch (this.state.view) {
+            case tournamentView.info:
+                return (<><TournamentDetailsInfo tournament={tournament} />
+                    <div onClick={this.handleDeleteTournament} className='btn btn-red'>USUŃ</div>
+                    {this.state.question ? <Question question={this.state.question} /> : null}</>);
+            case tournamentView.groups:
+                return <TournamentDetailsGroups tournamentId={id} groups={groups} isBracketCreated={Boolean(bracket) && bracket.length} auth={auth} />
+            case tournamentView.bracket:
+                return <TournamentDetailsBracket tournamentId={id} bracket={bracket} isGroupFinished={groupFinished} auth={auth} />
+            case tournamentView.teams:
+                return <TournamentDetailsTeams tournamentId={id} teams={teams} isGroupCreated={Boolean(groups) && !groups.length} auth={auth} />
+            default:
+                return <TournamentDetailsInfo tournament={tournament} />;
+        }
+    }
+
     render() {
         const id = this.props.match.params.id
         const { tournament, teams, groups, auth, bracket } = this.props;
         if (tournament && groups && teams) {
-            let groupFinished = false;
-            groups.forEach(group => {
-                if (group.finished) {
-                    groupFinished = true;
-                }
-            })
+
+
             return (
-                <div className='tournament-details'>
-                    <section className='tournament-description'>
-                        <div className='title'>{tournament.name}</div>
-                        <div className='tournament-date'>{moment(tournament.date).format('yyyy MMMM DD')}</div>
-                    </section>
-                    <section className='tournament-dashboard'>
-                        <div className='tournament-stages'>
-                            <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />
-                            <BracketDashboard tournamentId={id} bracket={bracket} auth={auth} groupFinished={groupFinished}/>
-                        </div>
-                        <div className='teams-dashboard'>
-                            <TeamList tournamentId={id} teams={teams} deleteControl={(Boolean(groups) && !groups.length) && auth} control={Boolean(auth)} />
-                            {(auth && groups.length === 0 && (teams.length <= maxTeamsQtt())) ? <AddTeam tournamentId={id} /> : null}
-                        </div>
-                    </section>
-                    <div onClick={this.handleDeleteTournament} className='btn btn-red'>DELETE</div>
-                    {this.state.question ? <Question question={this.state.question} /> : null}
-                </div>
+                <>
+                    <TournamentDetailsNav handleChangeView={this.handleChangeView} currentView={this.state.view} />
+                    <TournamentDetailsContainerStyled className='tournament-details'>
+                        <TournamentDetailsHeaderStyled className='tournament-description'>
+                            <TournamentListItemImgStyled src={this.state.image ? this.state.image : trophy} alt='logo' />
+                            <TournamentDetailsTitleStyled className='title'>{tournament.name}</TournamentDetailsTitleStyled>
+                        </TournamentDetailsHeaderStyled>
+                        {this.getView(tournament, teams, groups, auth, bracket, id)}
+                    </TournamentDetailsContainerStyled>
+                </>
             )
         } else {
             return (
