@@ -4,20 +4,26 @@ import GroupsList from './GroupsList';
 import { connect } from 'react-redux';
 import { deleteAllGroupsFromTournament } from '../../../store/actions/GroupActions';
 
+import { ButtoErrorStyled, ButtoSuccessStyled } from "../../style/styledButtons";
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import { MainContainerStyled } from '../../style/styledLayouts';
+
+
 const GroupsDashboard = (props) => {
 
     const { groups, bracket, auth } = props;
     if (Boolean(groups) && groups.length) {
         return (
-            <div className='groups-dashboard'>
+            <MainContainerStyled>
                 <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
-                <div className='btn btn-red'
+                <ButtoErrorStyled
+                    startIcon={<DeleteIcon />}
                     onClick={() => {
-                        console.log('to delete');
                         props.deleteAllGroupsFromTournament(props.tournamentId)
                     }}
-                >USUŃ FAZĘ GRUPOWĄ</div>
-            </div>
+                >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
+            </MainContainerStyled>
         )
     } else if (auth) {
         if (bracket) {
@@ -29,9 +35,9 @@ const GroupsDashboard = (props) => {
         }
         return (
             <div className='groups-dashboard'>
-                <div className='btns'>
-                    <Link className='btn' to={props.tournamentId + '/groups/create'}>Stwórz fazę grupową</Link>
-                </div>
+                <Link to={props.tournamentId + '/groups/create'}>
+                    <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę grupową</ButtoSuccessStyled>
+                </Link>
             </div>
         )
     } else {

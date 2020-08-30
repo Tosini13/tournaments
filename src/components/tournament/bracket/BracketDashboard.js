@@ -3,21 +3,26 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
 
+import { ButtoSuccessStyled, ButtoErrorStyled } from "../../style/styledButtons";
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ListItemLinkStyled, MainContainerStyled } from '../../style/styledLayouts';
+
 const BracketDashboard = (props) => {
     const { bracket, auth, groupFinished } = props;
     if (Boolean(bracket) && bracket.length) {
         return (
-            <div className='bracket-dashboard'>
-                <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>Faza pucharowa</Link>
-                </div>
-                <div className='btn btn-red'
+            <MainContainerStyled>
+                <ListItemLinkStyled to={'/tournaments/' + props.tournamentId + '/bracket'}>
+                    Faza pucharowa
+                </ListItemLinkStyled>
+                <ButtoErrorStyled
+                    startIcon={<DeleteIcon />}
                     onClick={() => {
-                        console.log('to delete');
                         props.deleteBracketFromTournament(props.tournamentId)
                     }}
-                >USUŃ FAZĘ PUCHAROWĄ</div>
-            </div>
+                >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
+            </MainContainerStyled>
         )
     }
     else if (groupFinished) {
@@ -30,15 +35,15 @@ const BracketDashboard = (props) => {
     } else if (auth) {
         return (
             <div className='bracket-dashboard'>
-                <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket/create'}>Stwórz fazę pucharową</Link>
-                </div>
-            </div>
+                <Link to={'/tournaments/' + props.tournamentId + '/bracket/create'}>
+                    <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę pucharową</ButtoSuccessStyled>
+                </Link>
+            </div >
         )
     } else {
         return (
             <div className='groups-dashboard'>
-            <p className='title'>Faza pucharowa nie jest jeszcze dostępna!</p>
+                <p className='title'>Faza pucharowa nie jest jeszcze dostępna!</p>
             </div>
         )
     }

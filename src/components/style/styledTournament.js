@@ -90,7 +90,10 @@ export const TournamentListItemFavouriteStyled = styled.div`
 
 
 export const TournamentDetailsContainerStyled = styled.div`
-
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px;
 `
 
 export const TournamentDetailsHeaderStyled = styled.div`

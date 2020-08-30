@@ -36,8 +36,11 @@ $header: 100px;
         }
     }
     main {
+        display: flex;
+        flex-direction: column;
         padding-bottom: 5px;
         padding-top: $header;
+        height: 100vh;
     }
 }
 

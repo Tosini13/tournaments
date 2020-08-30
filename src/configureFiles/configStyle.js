@@ -7,6 +7,12 @@ export const colors = {
     secondary: {
         main: '#7e6714',
         light: 'rgb(201, 201, 201)',
+    },
+    error: {
+        main: '#c90000',
+    },
+    success: {
+        main: '#18b500',
     }
 }
 

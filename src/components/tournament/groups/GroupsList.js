@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import { GroupSummaryListStyled } from '../../style/styledGroups';
+import { ListItemLinkStyled } from '../../style/styledLayouts';
 
 const GroupsList = (props) => {
     const { groups } = props;
     return (
-        <div className='btns'>
-            {groups && groups.map(group => {
-                return <Link to={'/tournaments/' + props.tournamentId + '/groups/' + group.id} key={group.id}>
-                    <div className='btn'>
-                        {group.name}
-                    </div>
-                </Link>
-            })}
-        </div>
+        <GroupSummaryListStyled>
+            {groups && groups.map(group =>
+                <ListItemLinkStyled to={'/tournaments/' + props.tournamentId + '/groups/' + group.id} key={group.id}>
+                    {group.name}
+                </ListItemLinkStyled>
+            )}
+        </GroupSummaryListStyled >
     )
 }
 

@@ -8,6 +8,9 @@ import Question from "../extra/Question";
 import { setBackBtn } from "../../structures/extra";
 import { TournamentListItemImgStyled } from "../style/styledTournament";
 
+
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import trophy from '../../configureFiles/img/trophy.png'
 import {
     TournamentDetailsContainerStyled, TournamentDetailsHeaderStyled,
@@ -18,9 +21,9 @@ import TournamentDetailsGroups from "./tournamentDetails/TournamentDetailsGroups
 import TournamentDetailsBracket from "./tournamentDetails/TournamentDetailsBracket";
 import TournamentDetailsTeams from "./tournamentDetails/TournamentDetailsTeams";
 import TournamentDetailsNav from "./tournamentDetails/TournamentDetailsNav";
-import { tournamentView } from "../../configureFiles/constants";
+import { TournamentViewConst } from "../../configureFiles/constants";
+import { ButtoErrorStyled } from "../style/styledButtons";
 
-// import TournamentNav from "./TournamentNav";
 class TournamentDetails extends Component {
 
     componentDidMount() {
@@ -32,7 +35,7 @@ class TournamentDetails extends Component {
     state = {
         question: null,
         image: null,
-        view: tournamentView.info
+        view: TournamentViewConst.info
     }
 
     handleChangeView = (view) => {
@@ -98,15 +101,20 @@ class TournamentDetails extends Component {
             }
         })
         switch (this.state.view) {
-            case tournamentView.info:
+            case TournamentViewConst.info:
                 return (<><TournamentDetailsInfo tournament={tournament} />
-                    <div onClick={this.handleDeleteTournament} className='btn btn-red'>USUŃ</div>
+                    <ButtoErrorStyled
+                        onClick={this.handleDeleteTournament}
+                        startIcon={<DeleteIcon />}
+                    >
+                        USUŃ TURNIEJ
+                  </ButtoErrorStyled>
                     {this.state.question ? <Question question={this.state.question} /> : null}</>);
-            case tournamentView.groups:
+            case TournamentViewConst.groups:
                 return <TournamentDetailsGroups tournamentId={id} groups={groups} isBracketCreated={Boolean(bracket) && bracket.length} auth={auth} />
-            case tournamentView.bracket:
+            case TournamentViewConst.bracket:
                 return <TournamentDetailsBracket tournamentId={id} bracket={bracket} isGroupFinished={groupFinished} auth={auth} />
-            case tournamentView.teams:
+            case TournamentViewConst.teams:
                 return <TournamentDetailsTeams tournamentId={id} teams={teams} isGroupCreated={Boolean(groups) && !groups.length} auth={auth} />
             default:
                 return <TournamentDetailsInfo tournament={tournament} />;
@@ -122,10 +130,10 @@ class TournamentDetails extends Component {
             return (
                 <>
                     <TournamentDetailsNav handleChangeView={this.handleChangeView} currentView={this.state.view} />
-                    <TournamentDetailsContainerStyled className='tournament-details'>
-                        <TournamentDetailsHeaderStyled className='tournament-description'>
+                    <TournamentDetailsContainerStyled>
+                        <TournamentDetailsHeaderStyled>
                             <TournamentListItemImgStyled src={this.state.image ? this.state.image : trophy} alt='logo' />
-                            <TournamentDetailsTitleStyled className='title'>{tournament.name}</TournamentDetailsTitleStyled>
+                            <TournamentDetailsTitleStyled>{tournament.name}</TournamentDetailsTitleStyled>
                         </TournamentDetailsHeaderStyled>
                         {this.getView(tournament, teams, groups, auth, bracket, id)}
                     </TournamentDetailsContainerStyled>
