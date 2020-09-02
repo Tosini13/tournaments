@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { connect } from 'react-redux'
-import { signOut } from '../../store/actions/AuthActions'
+import { signOut } from '../../../store/actions/AuthActions'
 
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,7 +13,8 @@ import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import LockIcon from '@material-ui/icons/Lock';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
-import { MenuLinkStyled, ListItemStyled } from '../style/styledLayouts';
+import { ListItemStyled } from '../../style/styledLayouts';
+import { MenuLinkStyled } from '../../style/styleNav';
 
 const SignedInMenu = (props) => {
 

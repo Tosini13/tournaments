@@ -86,7 +86,7 @@ class CreateGroup extends Component {
                         <div className='btns'>
                             <div className='btns-main'>
                                 <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
-                                <div className='btn btn-green btn-icon' onClick={this.handleAccept}><i className='icon-ok'></i></div>
+                                <div className='btn btn-green btn-icon' onClick={() => { if (this.state.groupQtt !== 0) this.handleAccept() }}><i className='icon-ok'></i></div>
                             </div>
                             <div className='btn btn-icon' onClick={() => { this.handleAddGroup(teams) }}>
                                 <i className='icon-plus'></i>

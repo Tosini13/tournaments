@@ -18,13 +18,14 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from './components/style/styledConst'
 import SplashScreen from './components/extra/SplashScreen';
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
     reduxFirestore(fbConfig, { useFirestoreForProfile: true, useProfile: 'users', attachAuthIsReady: true })
   )
 );
+
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth)

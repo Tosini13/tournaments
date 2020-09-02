@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { TournamentDashboardStyled, TournamentDashboardElementStyled } from '../../style/styledTournament'
-import { tournamentView } from "../../../configureFiles/constants";
+import { TournamentViewConst } from "../../../configureFiles/constants";
 
-const TournamentDetailsNav = ({ handleChangeView, currentView }) => {
+class TournamentDetailsNav extends Component {
 
-    return (
-        <TournamentDashboardStyled>
-            <TournamentDashboardElementStyled selected={currentView === tournamentView.info ? true : false}
-                onClick={() => { handleChangeView(tournamentView.info) }}>
-                Informacje
+    render() {
+        console.log(this.props);
+        return (
+            <TournamentDashboardStyled>
+                <TournamentDashboardElementStyled selected={this.props.currentView === TournamentViewConst.info ? true : false}
+                    onClick={() => { this.props.handleChangeView(TournamentViewConst.info) }}>
+                    Informacje
                     </TournamentDashboardElementStyled>
-            <TournamentDashboardElementStyled selected={currentView === tournamentView.groups ? true : false}
-                onClick={() => { handleChangeView(tournamentView.groups) }}>
-                Faza grupowa
+                <TournamentDashboardElementStyled selected={this.props.currentView === TournamentViewConst.groups ? true : false}
+                    onClick={() => { this.props.handleChangeView(TournamentViewConst.groups) }}>
+                    Faza grupowa
                     </TournamentDashboardElementStyled>
-            <TournamentDashboardElementStyled selected={currentView === tournamentView.bracket ? true : false}
-                onClick={() => { handleChangeView(tournamentView.bracket) }}>
-                Faza pucharowa
+                <TournamentDashboardElementStyled selected={this.props.currentView === TournamentViewConst.bracket ? true : false}
+                    onClick={() => { this.props.handleChangeView(TournamentViewConst.bracket) }}>
+                    Faza pucharowa
             </TournamentDashboardElementStyled>
-            <TournamentDashboardElementStyled selected={currentView === tournamentView.teams ? true : false}
-                onClick={() => { handleChangeView(tournamentView.teams) }}>
-                Zespoły
+                <TournamentDashboardElementStyled selected={this.props.currentView === TournamentViewConst.teams ? true : false}
+                    onClick={() => { this.props.handleChangeView(TournamentViewConst.teams) }}>
+                    Zespoły
                     </TournamentDashboardElementStyled>
-        </TournamentDashboardStyled>
-    )
+            </TournamentDashboardStyled>
+        )
+    }
 }
 
 export default TournamentDetailsNav;

@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import { colors } from '../../configureFiles/configStyle'
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export const HamburgerStyled = styled.div`
     display: flex;
@@ -35,4 +40,24 @@ export const HamburgerStyled = styled.div`
 
 export const IconFontelloStyled = styled.i`
     font-size: 17px;
+`
+
+export const DeleteIconStyled = styled(DeleteIcon)`
+    color: ${colors.error.main};
+`
+
+export const EditIconStyled = styled(EditIcon)`
+    color: ${colors.info.main};
+`
+
+export const AddIconStyled = styled(AddIcon)`
+    color: ${colors.success.main};
+`
+
+export const DoneIconStyled = styled(DoneIcon)`
+    color: ${colors.success.main};
+`
+
+export const ClearIconStyled = styled(ClearIcon)`
+    color: ${colors.error.main};
 `

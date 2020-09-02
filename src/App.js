@@ -14,15 +14,16 @@ import MatchGroup from './components/tournament/matches/MatchGroup';
 import CreateBracket from './components/tournament/bracket/CreateBracket';
 import BracketDetails from './components/tournament/bracket/BracketDetails';
 import MatchBracket from './components/tournament/matches/MatchBracket';
+import { MainStyled, AppStyled } from './components/style/styledLayouts';
 
 
 function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Navbar/>
-        <main className='container'>
+      <AppStyled className="App">
+        <Navbar />
+        <MainStyled>
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route path='/tournaments/:id/groups/:groupId/matches/:matchId' component={MatchGroup} />
@@ -36,8 +37,8 @@ function App() {
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
           </Switch>
-        </main>
-      </div>
+        </MainStyled>
+      </AppStyled>
     </BrowserRouter>
   );
 }

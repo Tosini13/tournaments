@@ -8,31 +8,36 @@ import Question from "../extra/Question";
 import { setBackBtn } from "../../structures/extra";
 import { TournamentListItemImgStyled } from "../style/styledTournament";
 
+
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import { changeMenu, changeMenuView } from '../../store/actions/MenuActions'
 import trophy from '../../configureFiles/img/trophy.png'
 import {
     TournamentDetailsContainerStyled, TournamentDetailsHeaderStyled,
     TournamentDetailsTitleStyled
 } from '../style/styledTournament'
 import TournamentDetailsInfo from "./tournamentDetails/TournamentDetailsInfo";
-import TournamentDetailsGroups from "./tournamentDetails/TournamentDetailsGroups";
-import TournamentDetailsBracket from "./tournamentDetails/TournamentDetailsBracket";
 import TournamentDetailsTeams from "./tournamentDetails/TournamentDetailsTeams";
-import TournamentDetailsNav from "./tournamentDetails/TournamentDetailsNav";
-import { tournamentView } from "../../configureFiles/constants";
+import { TournamentViewConst, MenuConst } from "../../configureFiles/constants";
+import { ButtoErrorStyled } from "../style/styledButtons";
+import GroupsDashboard from "./groups/GroupsDashboard";
+import BracketDashboard from "./bracket/BracketDashboard";
 
-// import TournamentNav from "./TournamentNav";
 class TournamentDetails extends Component {
 
     componentDidMount() {
         setBackBtn(() => {
             this.props.history.push('/');
         });
+        this.props.changeMenu(MenuConst.tournament);
+        this.props.changeMenuView(TournamentViewConst.info);
     }
 
     state = {
         question: null,
         image: null,
-        view: tournamentView.info
+        view: TournamentViewConst.info
     }
 
     handleChangeView = (view) => {
@@ -97,16 +102,23 @@ class TournamentDetails extends Component {
                 groupFinished = true;
             }
         })
-        switch (this.state.view) {
-            case tournamentView.info:
-                return (<><TournamentDetailsInfo tournament={tournament} />
-                    <div onClick={this.handleDeleteTournament} className='btn btn-red'>USUŃ</div>
-                    {this.state.question ? <Question question={this.state.question} /> : null}</>);
-            case tournamentView.groups:
-                return <TournamentDetailsGroups tournamentId={id} groups={groups} isBracketCreated={Boolean(bracket) && bracket.length} auth={auth} />
-            case tournamentView.bracket:
-                return <TournamentDetailsBracket tournamentId={id} bracket={bracket} isGroupFinished={groupFinished} auth={auth} />
-            case tournamentView.teams:
+        switch (this.props.menu.menuView) {
+            case TournamentViewConst.info:
+                return (
+                    <TournamentDetailsInfo tournament={tournament}>
+                        <ButtoErrorStyled
+                            onClick={this.handleDeleteTournament}
+                            startIcon={<DeleteIcon />}
+                        >
+                            USUŃ TURNIEJ
+                  </ButtoErrorStyled>
+                        {this.state.question ? <Question question={this.state.question} /> : null}
+                    </TournamentDetailsInfo>);
+            case TournamentViewConst.groups:
+                return <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />
+            case TournamentViewConst.bracket:
+                return <BracketDashboard tournamentId={id} bracket={bracket} groupFinished={groupFinished} auth={auth} />
+            case TournamentViewConst.teams:
                 return <TournamentDetailsTeams tournamentId={id} teams={teams} isGroupCreated={Boolean(groups) && !groups.length} auth={auth} />
             default:
                 return <TournamentDetailsInfo tournament={tournament} />;
@@ -121,11 +133,10 @@ class TournamentDetails extends Component {
 
             return (
                 <>
-                    <TournamentDetailsNav handleChangeView={this.handleChangeView} currentView={this.state.view} />
-                    <TournamentDetailsContainerStyled className='tournament-details'>
-                        <TournamentDetailsHeaderStyled className='tournament-description'>
+                    <TournamentDetailsContainerStyled>
+                        <TournamentDetailsHeaderStyled>
                             <TournamentListItemImgStyled src={this.state.image ? this.state.image : trophy} alt='logo' />
-                            <TournamentDetailsTitleStyled className='title'>{tournament.name}</TournamentDetailsTitleStyled>
+                            <TournamentDetailsTitleStyled>{tournament.name}</TournamentDetailsTitleStyled>
                         </TournamentDetailsHeaderStyled>
                         {this.getView(tournament, teams, groups, auth, bracket, id)}
                     </TournamentDetailsContainerStyled>
@@ -147,6 +158,7 @@ const mapStateToProps = (state, ownProps) => {
     const tournament = tournaments ? tournaments[id] : null;
     const auth = state.firebase.auth.uid;
     return {
+        menu: state.menu,
         tournament: tournament,
         teams: state.firestore.ordered.teams,
         groups: state.firestore.ordered.groups,
@@ -157,7 +169,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteTournament: (tournamentId) => dispatch(deleteTournament(tournamentId))
+        deleteTournament: (tournamentId) => dispatch(deleteTournament(tournamentId)),
+        changeMenu: (menu) => dispatch(changeMenu(menu)),
+        changeMenuView: (menuView) => dispatch(changeMenuView(menuView))
     }
 }
 

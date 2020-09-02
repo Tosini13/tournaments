@@ -4,7 +4,7 @@ import { firestoreConnect } from "react-redux-firebase";
 
 import { connect } from 'react-redux'
 
-import { MenuSideBarContainerStyled } from '../style/styledLayouts'
+import { MenuSideBarContainerStyled } from '../../style/styleNav'
 import SignedInMenu from './SignedInMenu';
 import SignedOutMenu from './SignedOutMenu';
 

@@ -1,45 +1,58 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
+
+import { ButtoSuccessStyled, ButtoErrorStyled, LinkStyled } from "../../style/styledButtons";
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ListItemLinkStyled, MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 
 const BracketDashboard = (props) => {
     const { bracket, auth, groupFinished } = props;
     if (Boolean(bracket) && bracket.length) {
         return (
-            <div className='bracket-dashboard'>
-                <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket'}>Faza pucharowa</Link>
-                </div>
-                <div className='btn btn-red'
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <ListItemLinkStyled to={'/tournaments/' + props.tournamentId + '/bracket'}>
+                        Faza pucharowa
+                </ListItemLinkStyled>
+                </MainContainerContentStyled>
+                <ButtoErrorStyled
+                    startIcon={<DeleteIcon />}
                     onClick={() => {
-                        console.log('to delete');
                         props.deleteBracketFromTournament(props.tournamentId)
                     }}
-                >USUŃ FAZĘ PUCHAROWĄ</div>
-            </div>
+                >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
+            </MainContainerStyled>
         )
     }
     else if (groupFinished) {
         return (
-            <div className='groups-dashboard'>
-                <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
-                <p className='title'>Faza pucharowa nie jest dostępna, ponieważ faza grupowa już się skończyła!</p>
-            </div>
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
+                    <p className='title'>Faza pucharowa nie jest dostępna, ponieważ faza grupowa już się skończyła!</p>
+                </MainContainerContentStyled>
+            </MainContainerStyled>
         )
     } else if (auth) {
         return (
-            <div className='bracket-dashboard'>
-                <div className='btns'>
-                    <Link className='btn' to={'/tournaments/' + props.tournamentId + '/bracket/create'}>Stwórz fazę pucharową</Link>
-                </div>
-            </div>
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <p className='title'>Faza pucharowa nie jest stworzona</p>
+                </MainContainerContentStyled>
+                <LinkStyled to={'/tournaments/' + props.tournamentId + '/bracket/create'}>
+                    <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę pucharową</ButtoSuccessStyled>
+                </LinkStyled>
+            </MainContainerStyled>
         )
     } else {
         return (
-            <div className='groups-dashboard'>
-            <p className='title'>Faza pucharowa nie jest jeszcze dostępna!</p>
-            </div>
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <p className='title'>Faza pucharowa nie jest jeszcze dostępna!</p>
+                </MainContainerContentStyled>
+            </MainContainerStyled>
         )
     }
 }

@@ -3,17 +3,7 @@
 $header: 100px;
 
 .App {
-    background-color: $firstBackgroundColor;
-    min-height: 100vh;
-    color: $secondFontColor;
-    position: relative;
-    width: 100vw;
-    overflow: hidden;
     nav {
-        position: fixed;
-        left: 0px;
-        top: 0px;
-        z-index: 10;
         .desktop {
             display: none;
         }
@@ -34,10 +24,6 @@ $header: 100px;
                 }
             }
         }
-    }
-    main {
-        padding-bottom: 5px;
-        padding-top: $header;
     }
 }
 
@@ -243,7 +229,7 @@ $header: 100px;
     margin: 0px;
     color: $firstFontColor;
 }
-.match-date{
+.match-date {
     font-size: 13px;
 }
 

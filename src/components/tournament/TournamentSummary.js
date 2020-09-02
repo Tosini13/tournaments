@@ -34,7 +34,7 @@ const TournamentSummary = (props) => {
                 setImage(img);
             }
         }
-    })
+    }, [props.tournament.image, props.tournament.authorId]);
 
     const favourite = false;
     return (
