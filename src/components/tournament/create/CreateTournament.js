@@ -107,7 +107,7 @@ class CreateTournament extends Component {
                 </TournamentCreateAddressContainerStyled>
                 <TournamentCreateTextFieldStyled style={this.style.input} name='icon' id='icon' label="Tournament's icon" type='file' onChange={this.handleChangeImage} />
 
-                <ButtonStyled>
+                <ButtonStyled type='submit'>
                     Create
                 </ButtonStyled>
             </form>

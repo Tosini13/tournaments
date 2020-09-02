@@ -10,7 +10,6 @@ import { MainContainerStyled, MainContainerContentStyled } from '../../style/sty
 import { ALinkStyled } from '../../style/styledButtons';
 
 const TournamentDetailsInfo = ({ tournament, children }) => {
-    console.log(tournament);
     return (
         <MainContainerStyled>
             <MainContainerContentStyled>

@@ -39,7 +39,7 @@ class AddTeam extends Component {
         return (
             <AddTeamFormStyled onSubmit={this.handleSubmit}>
                 <TextField id="standard-basic" label="Nazwa" name='name' onChange={this.handleChange} value={this.state.name} style={style.textFiled} />
-                <IconButtonStyled aria-label="add">
+                <IconButtonStyled aria-label="add" type='submit'>
                     <AddIconStyled />
                 </IconButtonStyled>
             </AddTeamFormStyled>
