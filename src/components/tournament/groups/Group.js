@@ -7,6 +7,7 @@ import GroupTable from './GroupTable';
 import { getPromoted, initGroupPromoted } from '../../../structures/Groups'
 import { updateGroup } from '../../../store/actions/GroupActions';
 import { setBackBtn } from '../../../structures/extra';
+import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 
 class Group extends Component {
 
@@ -44,7 +45,12 @@ class Group extends Component {
         if (group && matches && allTeams) {
             const teams = allTeams.filter(team => group.teams.includes(team.id)); //withdraw only group's teams
             return (
-                <div className='group'>
+                <MainContainerStyled>
+                    <MainContainerContentStyled>
+                        <p className='title'>{group.name}</p>
+                        <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
+                        <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
+                    </MainContainerContentStyled>
                     <div className='btns'>
                         {group.finished ?
                             <p className='btn btn-blue' onClick={() => { this.handleContinueGroup(group) }}>Continue group</p>
@@ -53,10 +59,7 @@ class Group extends Component {
                         }
 
                     </div>
-                    <p className='title'>{group.name}</p>
-                    <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
-                    <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
-                </div>
+                </MainContainerStyled>
             )
         } else {
             return (

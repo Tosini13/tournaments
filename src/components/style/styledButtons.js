@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { colors } from '../../configureFiles/configStyle'
 
+import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
@@ -17,6 +18,14 @@ export const IconButtonBackStyled = styled(IconButton)`
     }
 `
 
+export const IconButtonStyled = styled(IconButton)`
+    padding: 5px;
+    margin: 0px 2px;
+    background-color: rgba(0,0,0,0.145);
+    height: fit-content;
+    width: fit-content;
+`
+
 export const ButtonStyled = styled(Button)`
     color: ${colors.secondary.main};
     background-color: rgba(0,0,0,0.4);
@@ -26,10 +35,20 @@ export const ButtonStyled = styled(Button)`
     display: flex;
 `
 
+export const ButtoSuccessStyled = styled(ButtonStyled)`
+    color: ${colors.success.main};
+`
+
 export const ButtoErrorStyled = styled(ButtonStyled)`
     color: ${colors.error.main};
 `
 
-export const ButtoSuccessStyled = styled(ButtonStyled)`
-    color: ${colors.success.main};
+export const LinkStyled = styled(Link)`
+    text-decoration: none;
 `
+
+export const ALinkStyled = styled.a`
+    text-decoration: none;
+    color: ${colors.secondary.light};
+`
+

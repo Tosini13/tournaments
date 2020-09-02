@@ -1,25 +1,21 @@
-import { dashboardViewConst, MenuConst } from "../../configureFiles/constants";
+import { DashboardViewConst, MenuConst } from "../../configureFiles/constants";
 
 const initState = {
     menu: MenuConst.main,
-    submenu: dashboardViewConst.today
+    menuView: DashboardViewConst.today
 }
 
-const authReducer = (state = initState, action) => {
+const menuReducer = (state = initState, action) => {
     switch (action.type) {
         case 'MENU_CHANGED':
-            console.log('MENU_CHANGED');
-            return {
-                ...state,
-            };
+            state.menu = action.menu;
+            return { ...state };
         case 'MENU_VIEW_CHANGED':
-            console.log('MENU_VIEW_CHANGED');
-            return {
-                ...state,
-            };
+            state.menuView = action.menuView;
+            return { ...state };
         default:
-            return state;
+            return { ...state };
     }
 }
 
-export default authReducer;
+export default menuReducer;

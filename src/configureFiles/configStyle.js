@@ -9,10 +9,13 @@ export const colors = {
         light: 'rgb(201, 201, 201)',
     },
     error: {
-        main: '#c90000',
+        main: '#960a00',
     },
     success: {
         main: '#18b500',
+    },
+    info: {
+        main: '#000c66',
     }
 }
 

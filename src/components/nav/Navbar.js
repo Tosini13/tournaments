@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
+import Menu from './menu/Menu'
 import { IconButtonBackStyled } from '../style/styledButtons'
-import { NavBar } from '../style/styledLayouts'
+import { NavBarStyled, NavContainerStyled } from '../style/styleNav'
 import { HamburgerStyled } from '../style/styledIcons'
-import MenuSideBar from '../menu/Menu'
+import MenuSideBar from './mainMenu/MenuSideBar'
 
 const Navbar = (props) => {
 
@@ -17,16 +18,19 @@ const Navbar = (props) => {
 
     return (
         <>
-            <NavBar>
-                <IconButtonBackStyled className='btn-back'>
-                    <KeyboardArrowLeftIcon fontSize="large" />
-                </IconButtonBackStyled>
-                <HamburgerStyled open={sideBarMenu} onClick={toggleSideBarMenu}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </HamburgerStyled>
-            </NavBar>
+            <NavContainerStyled>
+                <NavBarStyled>
+                    <IconButtonBackStyled className='btn-back'>
+                        <KeyboardArrowLeftIcon fontSize="large" />
+                    </IconButtonBackStyled>
+                    <HamburgerStyled open={sideBarMenu} onClick={toggleSideBarMenu}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </HamburgerStyled>
+                </NavBarStyled>
+                <Menu />
+            </NavContainerStyled>
             <MenuSideBar sideBarMenu={sideBarMenu} toggleSideBarMenu={toggleSideBarMenu} />
         </>
     )

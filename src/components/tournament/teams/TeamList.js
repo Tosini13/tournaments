@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { deleteTeamFromTournament, editTeamFromTournament } from '../../../store/actions/TeamActions';
 import TeamSummary from './TeamSummary.js';
+import { TeamListStyled } from '../../style/styledTeams';
 
 const TeamList = (props) => {
 
@@ -14,13 +15,13 @@ const TeamList = (props) => {
     }
 
     return (
-        <div className='team-list z-depth-1'>
+        <TeamListStyled>
             {props.teams && props.teams.map(team => {
                 return (
                     <TeamSummary key={team.id} team={team} control={props.control} deleteControl={props.deleteControl} handleDeleteTeam={handleDeleteTeam} handleEditTeam={handleEditTeam} />
                 )
             })}
-        </div>
+        </TeamListStyled>
     )
 }
 const mapDispatchToState = (dispatch) => {

@@ -1,13 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import GroupsList from './GroupsList';
 import { connect } from 'react-redux';
 import { deleteAllGroupsFromTournament } from '../../../store/actions/GroupActions';
 
-import { ButtoErrorStyled, ButtoSuccessStyled } from "../../style/styledButtons";
+import { ButtoErrorStyled, ButtoSuccessStyled, LinkStyled } from "../../style/styledButtons";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import { MainContainerStyled } from '../../style/styledLayouts';
+
+import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 
 
 const GroupsDashboard = (props) => {
@@ -16,7 +16,9 @@ const GroupsDashboard = (props) => {
     if (Boolean(groups) && groups.length) {
         return (
             <MainContainerStyled>
-                <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
+                <MainContainerContentStyled>
+                    <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
+                </MainContainerContentStyled>
                 <ButtoErrorStyled
                     startIcon={<DeleteIcon />}
                     onClick={() => {
@@ -28,23 +30,28 @@ const GroupsDashboard = (props) => {
     } else if (auth) {
         if (bracket) {
             return (
-                <div className='groups-dashboard'>
+                <MainContainerStyled>
                     <p className='title'>Faza grupowa nie jest dostępna, ponieważ faza pucharowa jest już stworzona!</p>
-                </div>
+                </MainContainerStyled>
             )
         }
         return (
-            <div className='groups-dashboard'>
-                <Link to={props.tournamentId + '/groups/create'}>
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <p className='title'>Faza grupowa nie jest stworzona</p>
+                </MainContainerContentStyled>
+                <LinkStyled to={props.tournamentId + '/groups/create'}>
                     <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę grupową</ButtoSuccessStyled>
-                </Link>
-            </div>
+                </LinkStyled>
+            </MainContainerStyled>
         )
     } else {
         return (
-            <div className='groups-dashboard'>
-                <p className='title'>Faza grupowa nie jest jeszcze dostępna!</p>
-            </div>
+            <MainContainerStyled>
+                <MainContainerContentStyled>
+                    <p className='title'>Faza grupowa nie jest dostępna!</p>
+                </MainContainerContentStyled>
+            </MainContainerStyled>
         )
     }
 }

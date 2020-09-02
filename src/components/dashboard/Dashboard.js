@@ -5,19 +5,21 @@ import { compose } from "redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { setBackBtn } from "../../structures/extra";
 import moment from 'moment';
-import { timeRange } from "../../const";
+
+import { changeMenu, changeMenuView } from '../../store/actions/MenuActions'
 
 import List from '@material-ui/core/List';
-
-import { TournamentDashboardStyled, TournamentDashboardElementStyled } from '../style/styledTournament'
+import { MenuConst, DashboardViewConst } from "../../configureFiles/constants";
 
 class Dashboard extends Component {
     componentDidMount() {
         setBackBtn();
+        this.props.changeMenu(MenuConst.main);
+        this.props.changeMenuView(DashboardViewConst.today);
     }
 
     state = {
-        showDate: timeRange.today
+        showDate: DashboardViewConst.today
     }
 
 
@@ -29,14 +31,14 @@ class Dashboard extends Component {
     }
 
     filterByDate = (tournaments) => {
-        switch (this.state.showDate) {
-            case timeRange.live:
+        switch (this.props.menu.menuView) {
+            case DashboardViewConst.live:
                 return tournaments.filter(tournament => moment(new Date()).isSame(tournament.date));
-            case timeRange.today:
+            case DashboardViewConst.today:
                 return tournaments.filter(tournament => moment(new Date()).isSame(tournament.date, 'day'));
-            case timeRange.past:
+            case DashboardViewConst.past:
                 return tournaments.filter(tournament => moment(new Date()).isAfter(tournament.date, 'day'));
-            case timeRange.future:
+            case DashboardViewConst.future:
                 return tournaments.filter(tournament => moment(new Date()).isBefore(tournament.date, 'day'));
             default:
                 return tournaments;
@@ -49,26 +51,6 @@ class Dashboard extends Component {
             const tournamentsFiltered = this.filterByDate(tournaments);
             return (
                 <div className='dashboard-container'>
-                    <TournamentDashboardStyled>
-                        <TournamentDashboardElementStyled selected={this.state.showDate === timeRange.live ? true : false}
-                            onClick={() => { this.handleShow(timeRange.live) }}>Na żywo
-                        </TournamentDashboardElementStyled>
-                        <TournamentDashboardElementStyled
-                            selected={this.state.showDate === timeRange.today ? true : false}
-                            onClick={() => { this.handleShow(timeRange.today) }}>
-                            Dzisiaj
-                        </TournamentDashboardElementStyled>
-                        <TournamentDashboardElementStyled
-                            selected={this.state.showDate === timeRange.past ? true : false}
-                            onClick={() => { this.handleShow(timeRange.past) }}>
-                            Przeszłe
-                        </TournamentDashboardElementStyled>
-                        <TournamentDashboardElementStyled selected={this.state.showDate === timeRange.future ? true : false}
-                            onClick={() => { this.handleShow(timeRange.future) }}>
-                            Przyszłe
-                        </TournamentDashboardElementStyled>
-                    </TournamentDashboardStyled>
-
                     <List>
                         {tournamentsFiltered && tournamentsFiltered.map(tournament => {
                             return (
@@ -89,11 +71,19 @@ class Dashboard extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         tournamentsMy: state.tournament.tournaments,
-        tournaments: state.firestore.ordered.tournaments
+        tournaments: state.firestore.ordered.tournaments,
+        menu: state.menu
     }
 }
 
-export default compose(connect(mapStateToProps),
+const mapDispatchToProps = dispatch => {
+    return {
+        changeMenu: (menu) => dispatch(changeMenu(menu)),
+        changeMenuView: (menuView) => dispatch(changeMenuView(menuView))
+    }
+}
+
+export default compose(connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(props => {
         return [
             {

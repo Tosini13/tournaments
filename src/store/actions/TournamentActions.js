@@ -15,6 +15,7 @@ export const createTournament = (data) => {
             breakTimeInGroup: data.breakTimeInGroup,
             matchTimeInBracket: data.matchTimeInBracket,
             breakTimeInBracket: data.breakTimeInBracket,
+            location: `${data.location.city} ${data.location.street} ${data.location.number}`,
             fields: data.fields,
             image: data.image.name
         }

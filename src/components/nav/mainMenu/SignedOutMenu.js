@@ -8,7 +8,7 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import Divider from '@material-ui/core/Divider';
 
-import { MenuLinkStyled } from '../style/styledLayouts';
+import { MenuLinkStyled } from '../../style/styleNav';
 
 const SignedOutMenu = (props) => {
 

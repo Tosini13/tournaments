@@ -1,13 +1,13 @@
-export const changeMenu = (menuConst) => {
+export const changeMenu = (menu) => {
     return {
         type: 'MENU_CHANGED',
-        menuConst
+        menu
     }
 }
 
-export const changeMenuView = (menuViewConst) => {
+export const changeMenuView = (menuView) => {
     return {
         type: 'MENU_VIEW_CHANGED',
-        menuViewConst
+        menuView
     }
 }

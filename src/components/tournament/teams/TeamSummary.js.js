@@ -1,5 +1,20 @@
 import React, { Component } from 'react'
 
+import TextField from '@material-ui/core/TextField';
+
+import { IconButtonStyled } from '../../style/styledButtons';
+import { DeleteIconStyled, EditIconStyled, ClearIconStyled, DoneIconStyled } from '../../style/styledIcons';
+import { TeamListElementStyled, TeamListNameStyled } from '../../style/styledTeams';
+import { EditTeamFormStyled } from '../../style/styledForms';
+
+const style = {
+    textFiled: {
+        marginLeft: '15px',
+        flexGrow: '1'
+    }
+}
+
+
 class TeamSummary extends Component {
 
     state = {
@@ -20,41 +35,53 @@ class TeamSummary extends Component {
     render() {
         const { team, control, deleteControl, handleDeleteTeam, handleEditTeam } = this.props;
         return (
-            <div className='team'>
-                <div className='btns'>
-                    {deleteControl ?
-                        <div className='btn btn-red btn-icon' onClick={() => {
-                            handleDeleteTeam(team.id);
-                        }}>
-                            <i className='icon-trash-empty'></i>
-                        </div>
-                        :
-                        null
-                    }
-                    {control ?
-                        <div className='btn btn-blue btn-icon' onClick={() => {
-                            this.setState({ edit: true });
-                        }}>
-                            <i className='icon-pencil-1'></i>
-                        </div>
-                        :
-                        null
-                    }
-                </div>
+            <TeamListElementStyled>
                 {this.state.edit ?
-                    <form className='team-name-form' onSubmit={() => {
-                        handleEditTeam(team.id, this.state.team);
-                        this.setState({ edit: false });
-                    }}>
-                        <input className='team-name' type='text' value={this.state.team.name} onChange={this.handleChange}></input>
-                        <button type='submit' className='btn btn-green btn-icon'>
-                            <i className='icon-ok'></i>
-                        </button>
-                    </form>
+                    <EditTeamFormStyled>
+                        <IconButtonStyled aria-label="cancel" onClick={() => {
+                            this.setState({
+                                team: {
+                                    name: this.props.team.name
+                                },
+                                edit: false
+                            });
+                        }}>
+                            <ClearIconStyled />
+                        </IconButtonStyled>
+                        <IconButtonStyled aria-label="submit" onClick={() => {
+                            handleEditTeam(team.id, this.state.team);
+                            this.setState({ edit: false });
+                        }}>
+                            <DoneIconStyled />
+                        </IconButtonStyled>
+                        <TextField id="standard-basic" label="Nazwa" name='name' value={this.state.team.name} onChange={this.handleChange} style={style.textFiled} />
+                    </EditTeamFormStyled>
                     :
-                    <p className='team-name'>{this.state.team.name}</p>
+                    <>
+                        <div className='btns'>
+                            {deleteControl ?
+                                <IconButtonStyled aria-label="delete" onClick={() => {
+                                    handleDeleteTeam(team.id);
+                                }}>
+                                    <DeleteIconStyled />
+                                </IconButtonStyled>
+                                :
+                                null
+                            }
+                            {control ?
+                                <IconButtonStyled aria-label="delete" onClick={() => {
+                                    this.setState({ edit: true });
+                                }}>
+                                    <EditIconStyled />
+                                </IconButtonStyled>
+                                :
+                                null
+                            }
+                        </div>
+                        <TeamListNameStyled className='team-name'>{this.state.team.name}</TeamListNameStyled>
+                    </>
                 }
-            </div>
+            </TeamListElementStyled>
         )
     }
 

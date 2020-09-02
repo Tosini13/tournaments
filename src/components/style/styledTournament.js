@@ -46,6 +46,7 @@ justify-content: space-between;
 align-items: stretch;
 width: 100%;
 color: ${colors.secondary.main};
+text-decoration: none;
 >div{
     display: flex;
     flex-direction: column;
@@ -98,6 +99,7 @@ export const TournamentDetailsContainerStyled = styled.div`
 
 export const TournamentDetailsHeaderStyled = styled.div`
     display: flex;   
+    margin-bottom: 10px;
 `
 
 export const TournamentDetailsTitleStyled = styled.div`
@@ -108,6 +110,7 @@ export const TournamentDetailsTitleStyled = styled.div`
 `
 
 export const TournamentDetailsInfoStyled = styled.div`
+    color: ${colors.secondary.main};
     display: flex;
     align-items: center;
 `
@@ -118,9 +121,10 @@ export const TournamentDetailsInfoTitleStyled = styled.p`
 `
 
 export const TournamentDetailsInfoContentStyled = styled.p`
-    color: ${colors.secondary.main};
+    color: ${colors.secondary.light};
     font-size: 20px;
-    margin: 2px;
+    margin: 5px;
+    margin-left: 10px;
 `
 
 export const TournamentDetailsDashboardStyled = styled.div`
