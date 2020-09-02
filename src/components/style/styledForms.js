@@ -2,6 +2,26 @@ import styled from 'styled-components'
 
 import TextField from '@material-ui/core/TextField';
 
+
+export const AuthFormStyled = styled.form`
+    display: flex;
+    flex-direction: column;
+`
+export const TextFiledContainerStyled = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+`
+export const AuthTextFiledStyled = styled(TextField)`
+    margin-bottom: 10px;
+`
+
+export const FormTitleStyled = styled.p`
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+`
+
 export const AddTeamFormStyled = styled.form`
     display: flex;
     align-items: center;

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { createTournament } from '../../../store/actions/TournamentActions'
 import { TournamentCreateTextFieldStyled, TournamentCreateMatchTimeContainerStyled, TournamentCreateAddressCityStyled, TournamentCreateAddressContainerStyled, TournamentCreateAddressStreetNumberStyled, TournamentCreateAddressStreetStyled } from '../../style/styledForms';
+import { ButtonStyled } from '../../style/styledButtons';
 
 class CreateTournament extends Component {
 
@@ -106,11 +107,9 @@ class CreateTournament extends Component {
                 </TournamentCreateAddressContainerStyled>
                 <TournamentCreateTextFieldStyled style={this.style.input} name='icon' id='icon' label="Tournament's icon" type='file' onChange={this.handleChangeImage} />
 
-                <div className='btns'>
-                    <button className="btn lighten-1 z-depth-0">
-                        Create
-                    </button>
-                </div>
+                <ButtonStyled>
+                    Create
+                </ButtonStyled>
             </form>
         )
     }
