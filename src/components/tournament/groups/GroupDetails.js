@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import MatchesList from '../matches/MatchesList';
 import TeamList from '../teams/TeamList';
 
+import { TextFiledStyled } from '../../style/styledForms';
+
 class GroupDetails extends Component {
 
     state = {
@@ -21,7 +23,7 @@ class GroupDetails extends Component {
                 <div className='group-dashboard'>
                     {creation ?
                         <form>
-                            <input className='title' name='name' type='text' value={this.state.name} onChange={this.handleOnChange} />
+                            <TextFiledStyled className='title' name='name' type='text' value={this.state.name} onChange={this.handleOnChange} />
                         </form>
                         :
                         <p className='title'>{group.name}</p>

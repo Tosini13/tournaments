@@ -6,9 +6,15 @@ import { createGroups, createRandomGroups, initGroupMatches } from '../../../str
 import GroupDetails from '../groups/GroupDetails';
 import { createGroupsToTournament } from '../../../store/actions/GroupActions'
 import ChooseTeamsToGroup from '../groups/ChooseTeamsToGroup';
-
+import { IconButtonStyled, ButtonStyled } from '../../style/styledButtons';
+import { ClearIconStyled, DoneIconStyled, AddGoalIconStyled, LessGoalIconStyled, RandomIconStyled } from '../../style/styledIcons';
+import { changeMenu } from '../../../store/actions/MenuActions';
 
 class CreateGroup extends Component {
+
+    componentDidMount() {
+        this.props.changeMenu(null);
+    }
 
     state = {
         chooseTeams: null,
@@ -85,18 +91,18 @@ class CreateGroup extends Component {
                     <div className='control-panel'>
                         <div className='btns'>
                             <div className='btns-main'>
-                                <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
-                                <div className='btn btn-green btn-icon' onClick={() => { if (this.state.groupQtt !== 0) this.handleAccept() }}><i className='icon-ok'></i></div>
+                                <IconButtonStyled onClick={this.handleDecline}><ClearIconStyled /></IconButtonStyled>
+                                <IconButtonStyled onClick={() => { if (this.state.groupQtt !== 0) this.handleAccept() }}><DoneIconStyled /></IconButtonStyled>
                             </div>
-                            <div className='btn btn-icon' onClick={() => { this.handleAddGroup(teams) }}>
-                                <i className='icon-plus'></i>
-                            </div>
-                            <div className='btn btn-icon' onClick={() => { this.handleRemoveGroup(teams) }}>
-                                <i className='icon-minus'></i>
-                            </div>
-                            <div className='btn btn-icon' onClick={() => { this.handleDraw(teams) }}>
-                                <i className='icon-arrows-cw'></i>
-                            </div>
+                            <IconButtonStyled onClick={() => { this.handleAddGroup(teams) }}>
+                                <AddGoalIconStyled />
+                            </IconButtonStyled>
+                            <IconButtonStyled onClick={() => { this.handleRemoveGroup(teams) }}>
+                                <LessGoalIconStyled />
+                            </IconButtonStyled>
+                            <IconButtonStyled onClick={() => { this.handleDraw(teams) }}>
+                                <RandomIconStyled />
+                            </IconButtonStyled>
                         </div>
                     </div>
                     <div className='group-list'>
@@ -105,11 +111,11 @@ class CreateGroup extends Component {
                                 <div className='group' key={group.name}>
                                     <GroupDetails tournament={tournament} groupNum={i + 1} groupsQtt={this.state.groups.length} group={group} teams={teams.filter(team => group.teams.includes(team.id))} creation />
                                     <div className='btns'>
-                                        <div className='btn btn-icon' onClick={() => {
+                                        <ButtonStyled onClick={() => {
                                             this.setState({ chooseTeams: i });
                                         }}>
                                             Add Teams
-                                        </div>
+                                        </ButtonStyled>
                                     </div>
                                 </div>
                             );
@@ -154,7 +160,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createGroupsToTournament: (tournamentId, groups) => dispatch(createGroupsToTournament(tournamentId, groups))
+        createGroupsToTournament: (tournamentId, groups) => dispatch(createGroupsToTournament(tournamentId, groups)),
+        changeMenu: (menu) => dispatch(changeMenu(menu))
     }
 }
 

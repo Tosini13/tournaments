@@ -2,7 +2,6 @@ import React from 'react'
 
 
 const Bracket = (props) => {
-    console.log(props);
     if (props.bracket) {
         return (
             <div className='bracket-list'>

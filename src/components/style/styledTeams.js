@@ -3,10 +3,14 @@ import styled from 'styled-components'
 export const TeamListStyled = styled.div`
     padding: 2px 0px;
     margin: 5px 0px;
+    width: 100%;
+    div:last-child {
+        border: none;    
+    }
 `
 
 export const TeamListElementStyled = styled.div`
-    border-bottom: rgba(0,0,0,0.2) solid 0.1px;
+    border-bottom: rgba(0,0,0,0.2) solid 0.1px; 
     padding: 2px 0px;
     position: relative;
     display: flex;

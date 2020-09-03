@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/style.css'
+import './css/style.scss'
 import './css/fontello/css/fontello.css'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Navbar from './components/nav/Navbar'
@@ -15,15 +15,15 @@ import CreateBracket from './components/tournament/bracket/CreateBracket';
 import BracketDetails from './components/tournament/bracket/BracketDetails';
 import MatchBracket from './components/tournament/matches/MatchBracket';
 import { MainStyled, AppStyled } from './components/style/styledLayouts';
+import { connect } from 'react-redux';
 
 
-function App() {
-
+function App(props) {
   return (
     <BrowserRouter>
       <AppStyled className="App">
         <Navbar />
-        <MainStyled>
+        <MainStyled menuIsOpen={Boolean(props.menu.menu)}>
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route path='/tournaments/:id/groups/:groupId/matches/:matchId' component={MatchGroup} />
@@ -43,4 +43,11 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    menu: state.menu
+  }
+}
+
+
+export default connect(mapStateToProps)(App);

@@ -15,7 +15,7 @@ export const colors = {
         main: '#18b500',
     },
     info: {
-        main: '#000c66',
+        main: '#4b58b8',
     }
 }
 
