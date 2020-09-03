@@ -13,6 +13,10 @@ import MatchesList from '../matches/MatchesList'
 import { createBracket } from '../../../store/actions/BracketAction';
 import { updateGroup } from '../../../store/actions/GroupActions';
 import BracketChooseGroups from './BracketChooseGroups';
+import { IconButtonStyled, ButtonStyled } from '../../style/styledButtons';
+import { ClearIconStyled, DoneIconStyled } from '../../style/styledIcons';
+import { changeMenu } from '../../../store/actions/MenuActions';
+import { setBackBtn } from '../../../structures/extra';
 
 const style = {
     select: {
@@ -27,6 +31,13 @@ const style = {
 }
 
 class CreateBracket extends Component {
+
+    componentDidMount() {
+        setBackBtn(() => {
+            this.props.history.push('/tournaments/' + this.props.match.params.id);
+        });
+        this.props.changeMenu(null);
+    }
 
     state = {
         bracketOrder: 0,
@@ -189,9 +200,9 @@ class CreateBracket extends Component {
                 <div className='bracket'>
                     <div className='control-panel'>
                         <div className='btns'>
-                            <div className='btn btn-red btn-icon' onClick={this.handleDecline}><i className='icon-cancel'></i></div>
-                            <div className='btn btn-green btn-icon' onClick={() => { this.handleAccept(matches) }}><i className='icon-ok'></i></div>
-                            <div className='btn btn-icon' style={this.state.autoMode ? style.autoButton.on : null} onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</div>
+                            <IconButtonStyled onClick={this.handleDecline}><ClearIconStyled /></IconButtonStyled>
+                            <IconButtonStyled onClick={() => { this.handleAccept(matches) }}><DoneIconStyled /></IconButtonStyled>
+                            <ButtonStyled style={this.state.autoMode ? style.autoButton.on : null} onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</ButtonStyled>
                         </div>
                     </div>
                     {this.state.autoMode ?
@@ -242,7 +253,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         createBracket: (tournamentId, bracket) => dispatch(createBracket(tournamentId, bracket)),
-        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group))
+        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group)),
+        changeMenu: (menu) => dispatch(changeMenu(menu))
     }
 }
 

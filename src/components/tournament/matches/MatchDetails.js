@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+
 import Question from '../../extra/Question';
 import MatchSummary from './MatchSummary';
 import { setBackBtn } from '../../../structures/extra';
+import { IconButtonStyled, ButtonStyled } from '../../style/styledButtons';
+import { AddGoalIconStyled, LessGoalIconStyled } from '../../style/styledIcons';
+import { connect } from 'react-redux';
+import { changeMenu } from '../../../store/actions/MenuActions';
 
 class MatchDetails extends Component {
 
@@ -9,6 +14,7 @@ class MatchDetails extends Component {
         setBackBtn(() => {
             this.props.historyPush();
         });
+        this.props.changeMenu(null);
     }
 
     state = {
@@ -18,16 +24,16 @@ class MatchDetails extends Component {
     handleRestartMatch = (match, mode) => {
         this.setState({
             question: {
-                question: 'Do you want to restart the match?',
+                question: 'Czy na pewno chcesz zrestartować mecz?',
                 answer1: {
-                    answer: 'Yes',
+                    answer: 'Tak',
                     feedback: () => {
                         this.props.handleUpdateMatchMode(match, mode);
                         this.setState({ question: null });
                     }
                 },
                 answer2: {
-                    answer: 'No',
+                    answer: 'Nie',
                     feedback: () => {
                         this.setState({ question: null });
                     }
@@ -44,15 +50,15 @@ class MatchDetails extends Component {
             switch (match.mode) {
                 case 'NOT_STARTED':
                     updateMode = 'LIVE';
-                    modeButton = 'START';
+                    modeButton = 'ROZPOCZNIJ';
                     break;
                 case 'LIVE':
                     updateMode = 'FINISHED';
-                    modeButton = 'FINISH';
+                    modeButton = 'ZAKOŃCZ';
                     break;
                 case 'FINISHED':
                     updateMode = 'NOT_STARTED';
-                    modeButton = 'RESTART';
+                    modeButton = 'ZRESETUJ';
                     break;
                 default:
                     console.log('match mode error');
@@ -63,18 +69,18 @@ class MatchDetails extends Component {
                     <MatchSummary match={match} teams={allTeams} groups={groups} matches={matches} handleUpdateMatch={this.props.handleUpdateMatch} />
                     <div className='match-dashboard'>
                         <div className='score-dashboard'>
-                            <div className='btn' id='home-add' onClick={() => { this.props.handleAddGoal(match, match.home); }}><i className='icon-plus'></i></div>
-                            <div className='btn' id='home-less' onClick={() => { this.props.handleLessGoal(match, match.home); }}><i className='icon-minus'></i></div>
-                            <div className='btn' id='away-less' onClick={() => { this.props.handleLessGoal(match, match.away); }}><i className='icon-minus'></i></div>
-                            <div className='btn' id='away-add' onClick={() => { this.props.handleAddGoal(match, match.away); }}><i className='icon-plus'></i></div>
+                            <IconButtonStyled id='home-add' onClick={() => { this.props.handleAddGoal(match, match.home); }}><AddGoalIconStyled /></IconButtonStyled>
+                            <IconButtonStyled id='home-less' onClick={() => { this.props.handleLessGoal(match, match.home); }}><LessGoalIconStyled /></IconButtonStyled>
+                            <IconButtonStyled id='away-less' onClick={() => { this.props.handleLessGoal(match, match.away); }}><LessGoalIconStyled /></IconButtonStyled>
+                            <IconButtonStyled id='away-add' onClick={() => { this.props.handleAddGoal(match, match.away); }}><AddGoalIconStyled /></IconButtonStyled>
                         </div>
-                        <div className='btn' onClick={() => {
+                        <ButtonStyled onClick={() => {
                             if (updateMode === 'NOT_STARTED') {
                                 this.handleRestartMatch(match, updateMode);
                             } else {
                                 this.props.handleUpdateMatchMode(match, updateMode);
                             }
-                        }}>{modeButton}</div>
+                        }}>{modeButton}</ButtonStyled>
                     </div>
                     {this.state.question ? <Question question={this.state.question} /> : null}
                 </div>
@@ -89,4 +95,10 @@ class MatchDetails extends Component {
     }
 }
 
-export default MatchDetails;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeMenu: (menu) => dispatch(changeMenu(menu))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(MatchDetails);

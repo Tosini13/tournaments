@@ -6,6 +6,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
+import RemoveIcon from '@material-ui/icons/Remove';
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 export const HamburgerStyled = styled.div`
     display: flex;
@@ -60,4 +63,21 @@ export const DoneIconStyled = styled(DoneIcon)`
 
 export const ClearIconStyled = styled(ClearIcon)`
     color: ${colors.error.main};
+`
+
+
+export const AddGoalIconStyled = styled(AddIcon)`
+    color: ${colors.secondary.main};
+`
+
+export const LessGoalIconStyled = styled(RemoveIcon)`
+    color: ${colors.secondary.main};
+`
+
+export const StartMatchIconStyled = styled(PlayCircleFilledWhiteIcon)`
+    color: ${colors.secondary.main};
+`
+
+export const RandomIconStyled = styled(AutorenewIcon)`
+    color: ${colors.secondary.main};
 `

@@ -32,12 +32,10 @@ class SignIn extends Component {
             <AuthFormStyled onSubmit={this.handleSubmit}>
                 <FormTitleStyled>Sign In</FormTitleStyled>
                 <TextFiledContainerStyled>
-                    <AuthTextFiledStyled id="standard-basic" label="E-mail" type="email" id='email' onChange={this.handleChange} />
-                    <AuthTextFiledStyled id="standard-basic" label="Hasło" type="password" id='password' onChange={this.handleChange} />
+                    <AuthTextFiledStyled label="E-mail" type="email" id='email' onChange={this.handleChange} value={this.state.email} />
+                    <AuthTextFiledStyled label="Hasło" type="password" id='password' onChange={this.handleChange} value={this.state.password} />
                 </TextFiledContainerStyled>
-                <ButtonStyled>
-                    Zaloguj
-                        </ButtonStyled>
+                <ButtonStyled type='submit'>Zaloguj</ButtonStyled>
                 <div className="red-text center">
                     {authError ? <p>{authError}</p> : null}
                 </div>

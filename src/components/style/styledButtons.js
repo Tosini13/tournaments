@@ -21,7 +21,6 @@ export const IconButtonBackStyled = styled(IconButton)`
 export const IconButtonStyled = styled(IconButton)`
     padding: 5px;
     margin: 0px 2px;
-    background-color: rgba(0,0,0,0.145);
     height: fit-content;
     width: fit-content;
 `
@@ -41,6 +40,10 @@ export const ButtoSuccessStyled = styled(ButtonStyled)`
 
 export const ButtoErrorStyled = styled(ButtonStyled)`
     color: ${colors.error.main};
+`
+
+export const ButtoInfoStyled = styled(ButtonStyled)`
+    color: ${colors.info.main};
 `
 
 export const LinkStyled = styled(Link)`

@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { setBackBtn } from '../../../structures/extra';
+import { changeMenu } from '../../../store/actions/MenuActions';
 
 class BracketDetails extends Component {
     componentDidMount() {
         setBackBtn(() => {
             this.props.history.push('/tournaments/' + this.props.match.params.id);
         });
+        this.props.changeMenu(null);
     }
+
     render() {
         const { allTeams, bracket, groups } = this.props;
         return (
@@ -32,6 +35,11 @@ const mapStateToProps = (state, ownState) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeMenu: (menu) => dispatch(changeMenu(menu))
+    }
+}
 export default compose(firestoreConnect(props => {
     return [
         {
@@ -52,4 +60,4 @@ export default compose(firestoreConnect(props => {
             subcollections: [{ collection: 'bracket', orderBy: [['date', 'asc'], ['name', 'desc']] }],
             storeAs: 'bracket'
         }]
-}), connect(mapStateToProps))(BracketDetails);
+}), connect(mapStateToProps, mapDispatchToProps))(BracketDetails);

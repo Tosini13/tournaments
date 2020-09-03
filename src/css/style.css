@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .App nav .desktop {
   display: none;
 }

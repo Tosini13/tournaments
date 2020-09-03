@@ -66,3 +66,8 @@ export const TournamentCreateAddressStreetNumberStyled = styled.div`
     max-width: 100px;
     margin-left: 5px;
 `
+
+export const TextFiledStyled = styled(TextField)`
+    margin-bottom: 10px;
+    width: 100%;
+`

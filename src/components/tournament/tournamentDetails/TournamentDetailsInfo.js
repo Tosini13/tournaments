@@ -5,12 +5,11 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import PlaceIcon from '@material-ui/icons/Place';
 
-import { TournamentDetailsInfoStyled, TournamentDetailsInfoTitleStyled, TournamentDetailsInfoContentStyled } from '../../style/styledTournament'
+import { TournamentDetailsInfoStyled, TournamentDetailsInfoContentStyled } from '../../style/styledTournament'
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 import { ALinkStyled } from '../../style/styledButtons';
 
 const TournamentDetailsInfo = ({ tournament, children }) => {
-    console.log(tournament);
     return (
         <MainContainerStyled>
             <MainContainerContentStyled>

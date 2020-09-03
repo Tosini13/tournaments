@@ -33,6 +33,11 @@ export const MenuElementStyled = styled.li`
         :
         `background-color: ${colors.primary.main};`
     }
+
+    &:focus,
+    &:active {
+        outline: 0;
+    }
 `
 
 export const MenuSideBarContainerStyled = styled.div`
@@ -62,7 +67,7 @@ export const NavBarStyled = styled.nav`
     background-color: ${colors.primary.main};
     color: ${colors.secondary.main};
     z-index: 10;
-    height: 45px;
+    height: 40px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 `
 

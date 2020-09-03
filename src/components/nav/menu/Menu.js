@@ -8,7 +8,8 @@ import { changeMenuView } from '../../../store/actions/MenuActions';
 
 const Menu = (props) => {
     if (props.menu.menu === MenuConst.tournament) return <TournamentMenu menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
-    return <DashboardMenu menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
+    if (props.menu.menu === MenuConst.main) return <DashboardMenu menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
+    return null;
 }
 
 const mapStateToProps = state => {

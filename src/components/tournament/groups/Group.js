@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import MatchesList from '../matches/MatchesList';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+
+import MatchesList from '../matches/MatchesList';
 import GroupTable from './GroupTable';
 import { getPromoted, initGroupPromoted } from '../../../structures/Groups'
 import { updateGroup } from '../../../store/actions/GroupActions';
 import { setBackBtn } from '../../../structures/extra';
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
+import { ButtoInfoStyled, ButtoSuccessStyled } from '../../style/styledButtons';
+import { changeMenu } from '../../../store/actions/MenuActions';
 
 class Group extends Component {
 
@@ -15,6 +18,7 @@ class Group extends Component {
         setBackBtn(() => {
             this.props.history.push('/tournaments/' + this.props.match.params.id);
         });
+        this.props.changeMenu(null);
     }
 
     tournamentId = this.props.match.params.id;
@@ -53,9 +57,9 @@ class Group extends Component {
                     </MainContainerContentStyled>
                     <div className='btns'>
                         {group.finished ?
-                            <p className='btn btn-blue' onClick={() => { this.handleContinueGroup(group) }}>Continue group</p>
+                            <ButtoInfoStyled onClick={() => { this.handleContinueGroup(group) }}>Continue group</ButtoInfoStyled>
                             :
-                            <p className='btn btn-green' onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</p>
+                            <ButtoSuccessStyled onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</ButtoSuccessStyled>
                         }
 
                     </div>
@@ -84,7 +88,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group))
+        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group)),
+        changeMenu: (menu) => dispatch(changeMenu(menu))
     }
 }
 
