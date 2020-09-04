@@ -95,6 +95,7 @@ class TournamentDetails extends Component {
         }
     }
 
+
     getView = (tournament, teams, groups, auth, bracket, id) => {
         let groupFinished = false;
         groups.forEach(group => {
@@ -106,13 +107,17 @@ class TournamentDetails extends Component {
             case TournamentViewConst.info:
                 return (
                     <TournamentDetailsInfo tournament={tournament}>
-                        <ButtoErrorStyled
-                            onClick={this.handleDeleteTournament}
-                            startIcon={<DeleteIcon />}
-                        >
-                            USUŃ TURNIEJ
+                        {auth ?
+                            <>
+                                <ButtoErrorStyled
+                                    onClick={this.handleDeleteTournament}
+                                    startIcon={<DeleteIcon />}
+                                >
+                                    USUŃ TURNIEJ
                   </ButtoErrorStyled>
-                        {this.state.question ? <Question question={this.state.question} /> : null}
+                                {this.state.question ? <Question question={this.state.question} /> : null}
+                            </>
+                            : null}
                     </TournamentDetailsInfo>);
             case TournamentViewConst.groups:
                 return <GroupsDashboard tournamentId={id} groups={groups} bracket={Boolean(bracket) && bracket.length} auth={auth} />

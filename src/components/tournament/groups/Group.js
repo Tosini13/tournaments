@@ -10,7 +10,8 @@ import { updateGroup } from '../../../store/actions/GroupActions';
 import { setBackBtn } from '../../../structures/extra';
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 import { ButtoInfoStyled, ButtoSuccessStyled } from '../../style/styledButtons';
-import { changeMenu } from '../../../store/actions/MenuActions';
+import { changeMenu, changeMenuView } from '../../../store/actions/MenuActions';
+import { MenuConst, GroupViewConst } from '../../../configureFiles/constants';
 
 class Group extends Component {
 
@@ -18,7 +19,8 @@ class Group extends Component {
         setBackBtn(() => {
             this.props.history.push('/tournaments/' + this.props.match.params.id);
         });
-        this.props.changeMenu(null);
+        this.props.changeMenu(MenuConst.group);
+        this.props.changeMenuView(GroupViewConst.table);
     }
 
     tournamentId = this.props.match.params.id;
@@ -44,25 +46,36 @@ class Group extends Component {
         this.props.updateGroup(this.tournamentId, this.groupId, groupUpdated);
     }
 
+
+    getView = (group, matches, teams) => {
+        switch (this.props.menu.menuView) {
+            case GroupViewConst.table:
+                return <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
+            case GroupViewConst.matches:
+                return <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
+        }
+    }
+
     render() {
-        const { group, matches, allTeams } = this.props;
+        const { group, matches, allTeams, auth } = this.props;
         if (group && matches && allTeams) {
             const teams = allTeams.filter(team => group.teams.includes(team.id)); //withdraw only group's teams
             return (
                 <MainContainerStyled>
                     <MainContainerContentStyled>
                         <p className='title'>{group.name}</p>
-                        <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
-                        <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
+                        {this.getView(group, matches, teams)}
                     </MainContainerContentStyled>
-                    <div className='btns'>
-                        {group.finished ?
-                            <ButtoInfoStyled onClick={() => { this.handleContinueGroup(group) }}>Continue group</ButtoInfoStyled>
-                            :
-                            <ButtoSuccessStyled onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</ButtoSuccessStyled>
-                        }
+                    {this.props.menu.menuView === GroupViewConst.table && auth ?
+                        <div className='btns'>
+                            {group.finished ?
+                                <ButtoInfoStyled onClick={() => { this.handleContinueGroup(group) }}>Continue group</ButtoInfoStyled>
+                                :
+                                <ButtoSuccessStyled onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</ButtoSuccessStyled>
+                            }
 
-                    </div>
+                        </div>
+                        : null}
                 </MainContainerStyled>
             )
         } else {
@@ -76,20 +89,24 @@ class Group extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let id = ownProps.match.params.groupId;
-    let groups = state.firestore.data.groups;
-    let group = groups ? groups[id] : null;
+    const id = ownProps.match.params.groupId;
+    const groups = state.firestore.data.groups;
+    const group = groups ? groups[id] : null;
+    const auth = state.firebase.auth.uid;
     return {
+        menu: state.menu,
         group,
         allTeams: state.firestore.ordered.teams,
-        matches: state.firestore.ordered.matches
+        matches: state.firestore.ordered.matches,
+        auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group)),
-        changeMenu: (menu) => dispatch(changeMenu(menu))
+        changeMenu: (menu) => dispatch(changeMenu(menu)),
+        changeMenuView: (menuView) => dispatch(changeMenuView(menuView))
     }
 }
 

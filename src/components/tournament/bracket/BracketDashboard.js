@@ -17,12 +17,14 @@ const BracketDashboard = (props) => {
                         Faza pucharowa
                 </ListItemLinkStyled>
                 </MainContainerContentStyled>
+                {auth ?
                 <ButtoErrorStyled
                     startIcon={<DeleteIcon />}
                     onClick={() => {
                         props.deleteBracketFromTournament(props.tournamentId)
                     }}
                 >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
+                : null}
             </MainContainerStyled>
         )
     }

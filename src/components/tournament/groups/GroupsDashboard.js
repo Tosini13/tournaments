@@ -19,12 +19,14 @@ const GroupsDashboard = (props) => {
                 <MainContainerContentStyled>
                     <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
                 </MainContainerContentStyled>
-                <ButtoErrorStyled
-                    startIcon={<DeleteIcon />}
-                    onClick={() => {
-                        props.deleteAllGroupsFromTournament(props.tournamentId)
-                    }}
-                >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
+                {auth ?
+                    <ButtoErrorStyled
+                        startIcon={<DeleteIcon />}
+                        onClick={() => {
+                            props.deleteAllGroupsFromTournament(props.tournamentId)
+                        }}
+                    >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
+                    : null}
             </MainContainerStyled>
         )
     } else if (auth) {
