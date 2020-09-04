@@ -63,6 +63,15 @@ class CreateGroup extends Component {
 
     handleAddTeamToGroup = (teamId) => {
         let groups = this.state.groups;
+        let legacy = true;
+        groups.forEach(el => {
+            if (el !== groups[this.state.chooseTeams]) {
+                if (el.teams.includes(teamId)) {
+                    legacy = false;
+                }
+            }
+        })
+        if (!legacy) return false;
         if (groups[this.state.chooseTeams].teams.includes(teamId)) {
             groups[this.state.chooseTeams].teams = groups[this.state.chooseTeams].teams.filter(team => team !== teamId);
         } else if (groups[this.state.chooseTeams].teams.length === groups[this.state.chooseTeams].promoted.length) {
@@ -132,10 +141,12 @@ class CreateGroup extends Component {
             });
             return (<div>
                 <div className='btns'>
-                    <div className='btn btn-green btn-icon' onClick={() => {
+                    <IconButtonStyled onClick={() => {
                         this.handleInitGroupMatches();
                         this.setState({ chooseTeams: null })
-                    }}><i className='icon-ok'></i></div>
+                    }}>
+                        <DoneIconStyled />
+                    </IconButtonStyled>
                 </div>
                 <ChooseTeamsToGroup teams={teams} chosenTeams={chosenTeams} theGroupChosenTeams={theGroupChosenTeams} handleChooseTeam={this.handleAddTeamToGroup} />
             </div >)

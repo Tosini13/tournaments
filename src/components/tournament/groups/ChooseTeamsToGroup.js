@@ -1,4 +1,6 @@
 import React from 'react'
+import { IconButtonStyled } from '../../style/styledButtons';
+import { LessGoalIconStyled, AddGoalIconStyled } from '../../style/styledIcons';
 
 const ChooseTeamsToGroup = (props) => {
 
@@ -17,18 +19,20 @@ const ChooseTeamsToGroup = (props) => {
                 const chosen = theGroupChosen ? true : chosenTeams.find(id => id === team.id);
                 return (
                     <div className='teams-choosing-board' key={team.id}>
-                        <div className='bracket-choose' onClick={() => chosen ? null : props.handleChooseTeam(team.id)} style={chosen ? style.theGroupTeam : null}>
+                        <div className='bracket-choose' onClick={() => props.handleChooseTeam(team.id)} style={chosen ? style.theGroupTeam : null}>
                             <p className='bracket-choose-title'>{team.name}</p>
-                            <span className='bracket-choose-order'>
-                                {chosen ?
-                                    theGroupChosen ?
-                                        <i className='icon-minus'></i>
-                                        :
-                                        null
+                            {chosen ?
+                                theGroupChosen ?
+                                    <IconButtonStyled>
+                                        <LessGoalIconStyled />
+                                    </IconButtonStyled>
                                     :
-                                    <i className='icon-plus'></i>
-                                }
-                            </span>
+                                    null
+                                :
+                                <IconButtonStyled>
+                                    <AddGoalIconStyled />
+                                </IconButtonStyled>
+                            }
                         </div>
                     </div>
                 )

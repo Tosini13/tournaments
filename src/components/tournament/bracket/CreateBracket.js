@@ -201,8 +201,8 @@ class CreateBracket extends Component {
                     <div className='control-panel'>
                         <div className='btns'>
                             <IconButtonStyled onClick={this.handleDecline}><ClearIconStyled /></IconButtonStyled>
-                            <IconButtonStyled onClick={() => { this.handleAccept(matches) }}><DoneIconStyled /></IconButtonStyled>
                             <ButtonStyled style={this.state.autoMode ? style.autoButton.on : null} onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</ButtonStyled>
+                            <IconButtonStyled onClick={() => { this.handleAccept(matches) }}><DoneIconStyled /></IconButtonStyled>
                         </div>
                     </div>
                     {this.state.autoMode ?
