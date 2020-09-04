@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { placeholderToName } from '../../../structures/Bracket';
 import { connect } from 'react-redux';
 import { updateBracketMatch } from '../../../store/actions/BracketAction';
 import moment from 'moment'
 
+import MatchLink from './MatchLink';
+
 const MatchSummary = (props) => {
-    const { match, teams, groups, matches } = props;
+    const { match, teams, groups, matches, auth } = props;
     let home = teams.find(team => team.id === match.home);
     let away = teams.find(team => team.id === match.away);
     const matchTeams = placeholderToName(match, teams, groups, matches);
@@ -55,7 +56,7 @@ const MatchSummary = (props) => {
         matchClass += ' match-live';
     }
     return (
-        <Link to={link}>
+        <MatchLink link={link} auth={auth}>
             <>
                 {match.name ? <p className='match-round'>{match.name}</p> : null}
                 {match.date ? <p className='match-date'>{moment(match.date).format('YYYY-MM-DD HH:mm')}</p> : null}
@@ -80,8 +81,15 @@ const MatchSummary = (props) => {
                     }
                 </div>
             </>
-        </Link>
+        </MatchLink>
     )
+}
+
+const mapStateToProps = (state, ownProps) => {
+    const auth = state.firebase.auth.uid;
+    return {
+        auth
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -91,4 +99,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(null, mapDispatchToProps)(MatchSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(MatchSummary);
