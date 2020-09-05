@@ -1,14 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
-import TournamentMenu from './TournamentMenu';
-import { MenuConst } from "../../../configureFiles/constants";
-import DashboardMenu from './DashboardMenu';
+import MenuContent from './MenuContent';
+import { MenuConst, DashboardViewConst, TournamentViewConst, GroupViewConst } from "../../../configureFiles/constants";
 import { changeMenuView } from '../../../store/actions/MenuActions';
 
 const Menu = (props) => {
-    if (props.menu.menu === MenuConst.tournament) return <TournamentMenu menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
-    if (props.menu.menu === MenuConst.main) return <DashboardMenu menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
+
+    const getMenu = () => {
+        switch (props.menu.menu) {
+            case MenuConst.tournament:
+                return TournamentViewConst;
+            case MenuConst.main:
+                return DashboardViewConst;
+            case MenuConst.group:
+                return GroupViewConst;
+            default:
+                return null;
+        }
+    }
+
+    if (props.menu.menu) return <MenuContent menuList={getMenu()} menuView={props.menu.menuView} changeMenuView={props.changeMenuView} />
     return null;
 }
 
