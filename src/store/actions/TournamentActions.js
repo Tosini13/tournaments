@@ -17,17 +17,20 @@ export const createTournament = (data) => {
             breakTimeInBracket: data.breakTimeInBracket,
             location: `${data.location.city} ${data.location.street} ${data.location.number}`,
             fields: data.fields,
-            image: data.image.name
+            image: data.image ? data.image.name : null
         }
 
         firestore.collection('tournaments').add({
             ...tournament,
             authorId: authorId
         }).then((res) => {
-            dispatch({ type: 'CREATE_TOURNAMENT', tournament })
-            const storageRef = firebase.storage().ref();
-            const ref = storageRef.child(`images/${authorId}/${data.image.name}`);
-            ref.put(data.image).then(res => console.log(res));
+            if (data.image) {
+                const storageRef = firebase.storage().ref();
+                const ref = storageRef.child(`images/${authorId}/${data.image.name}`);
+                ref.put(data.image).then(res => dispatch({ type: 'CREATE_TOURNAMENT', tournament }));
+            } else {
+                dispatch({ type: 'CREATE_TOURNAMENT', tournament })
+            }
         }).catch(err => {
             dispatch({ type: 'CREATE_TOURNAMENT_ERROR', err })
         })

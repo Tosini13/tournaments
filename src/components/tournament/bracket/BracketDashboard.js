@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
 
-import { ButtoSuccessStyled, ButtoErrorStyled, LinkStyled } from "../../style/styledButtons";
+import { ButtonSuccessStyled, ButtonErrorStyled, LinkStyled } from "../../style/styledButtons";
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ListItemLinkStyled, MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
@@ -17,13 +17,13 @@ const BracketDashboard = (props) => {
         setQuestion({
             question: `Czy na pewno chcesz usunąć fazę pucharową?`,
             answer1: {
-                answer: 'Yes',
+                answer: 'Tak',
                 feedback: () => {
                     deleteBracketFromTournament(props.tournamentId)
                 }
             },
             answer2: {
-                answer: 'No',
+                answer: 'Nie',
                 feedback: () => {
                     setQuestion(null);
                 }
@@ -48,10 +48,10 @@ const BracketDashboard = (props) => {
                 </ListItemLinkStyled>
                     </MainContainerContentStyled>
                     {auth ?
-                        <ButtoErrorStyled
+                        <ButtonErrorStyled
                             startIcon={<DeleteIcon />}
                             onClick={handleDeleteTeamQuestion}
-                        >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
+                        >USUŃ FAZĘ PUCHAROWĄ</ButtonErrorStyled>
                         : null}
                 </MainContainerStyled>
                 {question ? <Question question={question} onClose={handleCloseQuestion} open={Boolean(question)} /> : null}
@@ -74,7 +74,7 @@ const BracketDashboard = (props) => {
                     <p className='title'>Faza pucharowa nie jest stworzona</p>
                 </MainContainerContentStyled>
                 <LinkStyled to={'/tournaments/' + props.tournamentId + '/bracket/create'}>
-                    <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę pucharową</ButtoSuccessStyled>
+                    <ButtonSuccessStyled startIcon={<AddIcon />}>Stwórz fazę pucharową</ButtonSuccessStyled>
                 </LinkStyled>
             </MainContainerStyled>
         )

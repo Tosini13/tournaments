@@ -3,6 +3,7 @@ import { colors } from '../../configureFiles/configStyle'
 import { Link } from 'react-router-dom'
 
 import ListItem from '@material-ui/core/ListItem';
+import Stepper from '@material-ui/core/Stepper';
 
 export const TournamentDashboardStyled = styled.ul`
 position: fixed;
@@ -127,6 +128,15 @@ export const TournamentDetailsInfoContentStyled = styled.p`
     margin-left: 10px;
 `
 
-export const TournamentDetailsDashboardStyled = styled.div`
-    
+export const TournamentCreationFinishStyled = styled.div`
+    background-color: transparent;
+`
+
+export const TournamentCreationStepperStyled = styled(Stepper)`
+    background-color: transparent;
+    width: 100%;
+`
+
+export const TournamentCreationStepLabelStyled = styled.span`
+    color: ${colors.secondary.light};
 `

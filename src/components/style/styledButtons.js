@@ -25,6 +25,11 @@ export const IconButtonStyled = styled(IconButton)`
     width: fit-content;
 `
 
+export const ButtonRowContainerStyled = styled.div`
+    margin-top: 30px;
+    display: flex;
+`
+
 export const ButtonStyled = styled(Button)`
     color: ${colors.secondary.main};
     background-color: rgba(0,0,0,0.4);
@@ -34,15 +39,15 @@ export const ButtonStyled = styled(Button)`
     display: flex;
 `
 
-export const ButtoSuccessStyled = styled(ButtonStyled)`
+export const ButtonSuccessStyled = styled(ButtonStyled)`
     color: ${colors.success.main};
 `
 
-export const ButtoErrorStyled = styled(ButtonStyled)`
+export const ButtonErrorStyled = styled(ButtonStyled)`
     color: ${colors.error.main};
 `
 
-export const ButtoInfoStyled = styled(ButtonStyled)`
+export const ButtonInfoStyled = styled(ButtonStyled)`
     color: ${colors.info.main};
 `
 

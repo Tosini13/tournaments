@@ -9,7 +9,7 @@ import { getPromoted, initGroupPromoted } from '../../../structures/Groups'
 import { updateGroup } from '../../../store/actions/GroupActions';
 import { setBackBtn } from '../../../structures/extra';
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
-import { ButtoInfoStyled, ButtoSuccessStyled } from '../../style/styledButtons';
+import { ButtonInfoStyled, ButtonSuccessStyled } from '../../style/styledButtons';
 import { changeMenu, changeMenuView } from '../../../store/actions/MenuActions';
 import { MenuConst, GroupViewConst } from '../../../configureFiles/constants';
 
@@ -70,9 +70,9 @@ class Group extends Component {
                     {this.props.menu.menuView === GroupViewConst.table && auth ?
                         <div className='btns'>
                             {group.finished ?
-                                <ButtoInfoStyled onClick={() => { this.handleContinueGroup(group) }}>Continue group</ButtoInfoStyled>
+                                <ButtonInfoStyled onClick={() => { this.handleContinueGroup(group) }}>Continue group</ButtonInfoStyled>
                                 :
-                                <ButtoSuccessStyled onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</ButtoSuccessStyled>
+                                <ButtonSuccessStyled onClick={() => { this.handleFinishGroup(teams, matches) }}>finish group</ButtonSuccessStyled>
                             }
 
                         </div>
