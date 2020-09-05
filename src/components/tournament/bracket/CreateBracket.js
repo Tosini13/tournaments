@@ -116,7 +116,6 @@ class CreateBracket extends Component {
         this.props.teams.forEach(team => {
             if (roundQttIterator < roundQtt * 2) {
                 chosenItems = this.saveTeamsChoose(team.id, chosenItems);
-                console.log(roundQttIterator);
                 roundQttIterator++;
             }
         })

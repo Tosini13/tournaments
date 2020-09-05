@@ -37,7 +37,7 @@ class TournamentDetails extends Component {
     state = {
         question: null,
         image: null,
-        view: TournamentViewConst.info
+        view: TournamentViewConst.info,
     }
 
     handleChangeView = (view) => {
@@ -47,7 +47,7 @@ class TournamentDetails extends Component {
     handleDeleteTournament = () => {
         this.setState({
             question: {
-                question: 'Do you want to delete the tournament?',
+                question: `Czy na pewno chcesz usunąć turniej ${this.props.tournament.name}?`,
                 answer1: {
                     answer: 'Yes',
                     feedback: () => {
@@ -63,6 +63,12 @@ class TournamentDetails extends Component {
                 }
             }
         });
+    }
+
+    handleCloseQuestion = () => {
+        this.setState({
+            question: null
+        })
     }
 
 
@@ -115,7 +121,7 @@ class TournamentDetails extends Component {
                                 >
                                     USUŃ TURNIEJ
                   </ButtoErrorStyled>
-                                {this.state.question ? <Question question={this.state.question} /> : null}
+                                {this.state.question ? <Question question={this.state.question} onClose={this.handleCloseQuestion} open={Boolean(this.state.question)} /> : null}
                             </>
                             : null}
                     </TournamentDetailsInfo>);

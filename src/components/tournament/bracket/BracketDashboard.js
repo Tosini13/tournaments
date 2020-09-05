@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
 
@@ -6,26 +6,56 @@ import { ButtoSuccessStyled, ButtoErrorStyled, LinkStyled } from "../../style/st
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ListItemLinkStyled, MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
+import Question from '../../extra/Question';
 
 const BracketDashboard = (props) => {
-    const { bracket, auth, groupFinished } = props;
+    const { bracket, auth, groupFinished, deleteBracketFromTournament } = props;
+
+    const [question, setQuestion] = useState(null)
+
+    const handleDeleteTeamQuestion = () => {
+        setQuestion({
+            question: `Czy na pewno chcesz usunąć fazę pucharową?`,
+            answer1: {
+                answer: 'Yes',
+                feedback: () => {
+                    deleteBracketFromTournament(props.tournamentId)
+                }
+            },
+            answer2: {
+                answer: 'No',
+                feedback: () => {
+                    setQuestion(null);
+                }
+            }
+        });
+    }
+
+    const handleCloseQuestion = () => {
+        setQuestion(null)
+    }
+
+
+
+
     if (Boolean(bracket) && bracket.length) {
         return (
-            <MainContainerStyled>
-                <MainContainerContentStyled>
-                    <ListItemLinkStyled to={'/tournaments/' + props.tournamentId + '/bracket'}>
-                        Faza pucharowa
+            <>
+                <MainContainerStyled>
+                    <MainContainerContentStyled>
+                        <ListItemLinkStyled to={'/tournaments/' + props.tournamentId + '/bracket'}>
+                            Faza pucharowa
                 </ListItemLinkStyled>
-                </MainContainerContentStyled>
-                {auth ?
-                <ButtoErrorStyled
-                    startIcon={<DeleteIcon />}
-                    onClick={() => {
-                        props.deleteBracketFromTournament(props.tournamentId)
-                    }}
-                >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
-                : null}
-            </MainContainerStyled>
+                    </MainContainerContentStyled>
+                    {auth ?
+                        <ButtoErrorStyled
+                            startIcon={<DeleteIcon />}
+                            onClick={handleDeleteTeamQuestion}
+                        >USUŃ FAZĘ PUCHAROWĄ</ButtoErrorStyled>
+                        : null}
+                </MainContainerStyled>
+                {question ? <Question question={question} onClose={handleCloseQuestion} open={Boolean(question)} /> : null}
+            </>
         )
     }
     else if (groupFinished) {

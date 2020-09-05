@@ -48,14 +48,14 @@ const SignedInMenu = (props) => {
                     <ListItemText primary="Turnieje" />
                 </MenuLinkStyled>
             </ListItemStyled>
-            <ListItemStyled button onClick={() => {
+            {/* <ListItemStyled button onClick={() => {
                 chooseMenuOption();
             }}>
                 <ListItemIcon>
                     <SportsSoccerIcon />
                 </ListItemIcon>
                 <ListItemText primary="Moje turnieje" />
-            </ListItemStyled>
+            </ListItemStyled> */}
             <ListItemStyled button onClick={() => {
                 chooseMenuOption(props.singOut);
             }}>

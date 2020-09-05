@@ -53,6 +53,7 @@ class Group extends Component {
                 return <GroupTable matches={matches} teams={teams} promotedQtt={group.promotedQtt} />
             case GroupViewConst.matches:
                 return <MatchesList matches={matches} teams={teams} tournamentId={this.tournamentId} groupId={this.groupId} />
+            default: return null;
         }
     }
 

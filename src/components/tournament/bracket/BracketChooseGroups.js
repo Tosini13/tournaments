@@ -11,7 +11,6 @@ const BracketChooseGroups = (props) => {
         <div className='bracket-choose-list'>
             {groups.map((group) => {
                 const groupPlaces = group.teams.map((team, i) => {
-                    let groupPlaceClass = 'bracket-choose-children-places';
                     let groupPlaceholder = {
                         lastRound: group.id,
                         place: i

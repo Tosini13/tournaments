@@ -42,6 +42,12 @@ class MatchDetails extends Component {
         });
     }
 
+    handleCloseQuestion = () => {
+        this.setState({
+            question: null
+        })
+    }
+    
     render() {
         const { allTeams, match, groups, matches } = this.props;
         if (match && allTeams) {
@@ -82,7 +88,7 @@ class MatchDetails extends Component {
                             }
                         }}>{modeButton}</ButtonStyled>
                     </div>
-                    {this.state.question ? <Question question={this.state.question} /> : null}
+                    {this.state.question ? <Question question={this.state.question} onClose={this.handleCloseQuestion} open={Boolean(this.state.question)} /> : null}
                 </div>
             )
         } else {
