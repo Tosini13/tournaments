@@ -116,7 +116,6 @@ class CreateBracket extends Component {
         this.props.teams.forEach(team => {
             if (roundQttIterator < roundQtt * 2) {
                 chosenItems = this.saveTeamsChoose(team.id, chosenItems);
-                console.log(roundQttIterator);
                 roundQttIterator++;
             }
         })
@@ -201,8 +200,8 @@ class CreateBracket extends Component {
                     <div className='control-panel'>
                         <div className='btns'>
                             <IconButtonStyled onClick={this.handleDecline}><ClearIconStyled /></IconButtonStyled>
-                            <IconButtonStyled onClick={() => { this.handleAccept(matches) }}><DoneIconStyled /></IconButtonStyled>
                             <ButtonStyled style={this.state.autoMode ? style.autoButton.on : null} onClick={() => { this.setState({ autoMode: !this.state.autoMode }) }}>AUTO</ButtonStyled>
+                            <IconButtonStyled onClick={() => { this.handleAccept(matches) }}><DoneIconStyled /></IconButtonStyled>
                         </div>
                     </div>
                     {this.state.autoMode ?

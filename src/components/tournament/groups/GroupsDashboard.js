@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import GroupsList from './GroupsList';
 import { connect } from 'react-redux';
 import { deleteAllGroupsFromTournament } from '../../../store/actions/GroupActions';
@@ -8,26 +8,53 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
+import Question from '../../extra/Question';
 
 
 const GroupsDashboard = (props) => {
 
-    const { groups, bracket, auth } = props;
+    const { groups, bracket, auth, deleteAllGroupsFromTournament } = props;
+
+    const [question, setQuestion] = useState(null)
+
+    const handleDeleteTeamQuestion = () => {
+        setQuestion({
+            question: `Czy na pewno chcesz usunąć fazę grupową?`,
+            answer1: {
+                answer: 'Yes',
+                feedback: () => {
+                    deleteAllGroupsFromTournament(props.tournamentId)
+                }
+            },
+            answer2: {
+                answer: 'No',
+                feedback: () => {
+                    setQuestion(null);
+                }
+            }
+        });
+    }
+
+    const handleCloseQuestion = () => {
+        setQuestion(null)
+    }
+
     if (Boolean(groups) && groups.length) {
         return (
-            <MainContainerStyled>
-                <MainContainerContentStyled>
-                    <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
-                </MainContainerContentStyled>
-                {auth ?
-                    <ButtoErrorStyled
-                        startIcon={<DeleteIcon />}
-                        onClick={() => {
-                            props.deleteAllGroupsFromTournament(props.tournamentId)
-                        }}
-                    >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
-                    : null}
-            </MainContainerStyled>
+            <>
+                <MainContainerStyled>
+                    <MainContainerContentStyled>
+                        <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
+                    </MainContainerContentStyled>
+                    {auth ?
+                        <ButtoErrorStyled
+                            startIcon={<DeleteIcon />}
+                            onClick={handleDeleteTeamQuestion}
+                        >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
+                        : null}
+                </MainContainerStyled>
+                {question ? <Question question={question} onClose={handleCloseQuestion} open={Boolean(question)} /> : null}
+            </>
         )
     } else if (auth) {
         if (bracket) {
