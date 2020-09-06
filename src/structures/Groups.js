@@ -31,6 +31,7 @@ export const createRandomGroups = (teams, groupsQtt, tournament, returnGames) =>
 const setMatchesTime = (tournament, groups) => {
     const timeUnit = parseFloat(tournament.matchTimeInBracket) + parseFloat(tournament.breakTimeInBracket);
     let timeCounter = tournament.date;
+    let timeTeamsCounter = [];
     let matchesQtt = 0;
     groups.forEach(group => {
         if (matchesQtt < group.matches.length) {
@@ -38,15 +39,24 @@ const setMatchesTime = (tournament, groups) => {
         }
     })
 
-    let matchCounter = 1;
+    let fieldCounter = 1;
     for (let i = 0; i < (matchesQtt + 1); i++) {
         for (let j = 0; j < groups.length; j++) {
             if (i < groups[j].matches.length) {
-                groups[j].matches[i].date = moment(timeCounter).format('YYYY-MM-DD HH:mm');
-                if (!(matchCounter % tournament.fields)) {
+                if (timeTeamsCounter.includes(groups[j].matches[i].home) || timeTeamsCounter.includes(groups[j].matches[i].away)) {
                     timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
+                    fieldCounter = 1;
+                    timeTeamsCounter = [];
                 }
-                matchCounter++;
+                groups[j].matches[i].date = moment(timeCounter).format('YYYY-MM-DD HH:mm');
+                timeTeamsCounter = [...timeTeamsCounter, groups[j].matches[i].home, groups[j].matches[i].away];
+                if (!(fieldCounter % tournament.fields)) {
+                    console.log('fields');
+                    timeCounter = moment(timeCounter).add(timeUnit, 'minutes');
+                    fieldCounter = 0;
+                    timeTeamsCounter = [];
+                }
+                fieldCounter++;
             } else if (i === groups[j].matches.length && i !== 0) {
                 groups[j].finishAt = moment(groups[j].matches[groups[j].matches.length - 1].date).add(timeUnit, 'minutes').format('YYYY-MM-DD HH:mm');
             }
@@ -134,49 +144,66 @@ export const createGroupsAuto = (teams, groupsQtt, tournament, returnGames) => {
 
 export const initGroupMatches = (tournament, groups, teams, returnGames) => {
     groups.forEach((group, i) => {
-        group.matches = createGroupMatches(teams.filter(team => group.teams.includes(team.id)), returnGames);
+        const matches = createGroupMatches(teams.filter(team => group.teams.includes(team.id)), 1);
+        matches.sort(compareMatches);
+        group.matches = matches;
     })
     groups = setMatchesTime(tournament, groups);
     return groups;
 }
 
-const createGroupMatches = (teams, returnGames) => {
-    let matches = [];
-    for (let i = 0; i < teams.length - 1; i++) {
-        for (let j = i + 1; j < teams.length; j++) {
-            let match;
-            match = {
-                home: teams[i].id,
-                away: teams[j].id,
-                mode: 'NOT_STARTED',
-                result: {
-                    home: 0,
-                    away: 0
-                }
-            }
-            matches.push(match);
-        }
+const compareMatches = (match1, match2) => {
+    return match1.round - match2.round;
+}
+
+const initMatch = (home, away, round) => {
+    return {
+        home,
+        away,
+        mode: 'NOT_STARTED',
+        result: {
+            home: 0,
+            away: 0
+        },
+        round
     }
-    if (returnGames) {
-        for (let i = 0; i < teams.length - 1; i++) {
-            for (let j = i + 1; j < teams.length; j++) {
-                let match;
-                match = {
-                    home: teams[i].id,
-                    away: teams[j].id,
-                    mode: 'NOT_STARTED',
-                    result: {
-                        home: 0,
-                        away: 0
-                    }
+}
+
+const createGroupMatches = (teams, round) => {
+    let matches = [];
+    const teamsQtt = teams.length;
+    if (teamsQtt > 3) {
+        const teamsQttHalf = Math.floor(teamsQtt / 2);
+        let bracket1 = teams.slice(0, teamsQttHalf);
+        let bracket2 = teams.slice(teamsQttHalf);
+        const bracket1Length = bracket1.length;
+        const bracket2Length = bracket2.length;
+        for (let i = 0; i < bracket2Length; i++) {
+            for (let j = 0; j < bracket1Length; j++) {
+                if (i % 2 === 0) {
+                    const match = initMatch(bracket1[j].id, bracket2[j].id, round);
+                    matches = [...matches, match];
+                } else {
+                    const match = initMatch(bracket2[j].id, bracket1[j].id, round);
+                    matches = [...matches, match];
                 }
-                matches.push(match);
             }
+            round++;
+            let tempTeam = bracket2.shift();
+            bracket2 = [...bracket2, tempTeam];
         }
+        const matches1 = createGroupMatches(bracket1, round);
+        const matches2 = createGroupMatches(bracket2, round);
+        matches = [...matches, ...matches1, ...matches2];
+    } else if (teamsQtt === 3) {
+        matches = [...matches, initMatch(teams[0].id, teams[1].id, round++)];
+        matches = [...matches, initMatch(teams[1].id, teams[2].id, round++)];
+        matches = [...matches, initMatch(teams[2].id, teams[0].id, round++)];
+    } else if (teamsQtt === 2) {
+        matches = [...matches, initMatch(teams[0].id, teams[1].id, round++)];
     }
     return matches;
 }
-
 
 
 // TABLE
