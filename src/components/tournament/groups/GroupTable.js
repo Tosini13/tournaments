@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import { createTable } from '../../../structures/Groups';
 import { GroupTableStyled } from '../../style/styledGroups';
 
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import GroupIcon from '@material-ui/icons/Group';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 
 class GroupTable extends Component {

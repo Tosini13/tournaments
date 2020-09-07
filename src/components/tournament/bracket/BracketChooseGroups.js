@@ -2,13 +2,13 @@ import React from 'react'
 
 import { IconButtonStyled } from '../../style/styledButtons';
 import { LessGoalIconStyled, AddGoalIconStyled } from '../../style/styledIcons';
-import { ChooseTeamStyled, ChooseTeamIconContainerStyled, ChooseTeamNameStyled } from '../../style/styledBracket';
+import { ChooseTeamStyled, ChooseTeamIconContainerStyled, ChooseTeamNameStyled, ChooseTeamContainerStyled, ChooseTeamTitleStyled } from '../../style/styledBracket';
 
 const BracketChooseGroups = (props) => {
 
     const { groups, chosenGroups } = props;
     return (
-        <div className='bracket-choose-list'>
+        <>
             {groups.map((group) => {
                 const groupPlaces = group.teams.map((team, i) => {
                     let groupPlaceholder = {
@@ -41,13 +41,13 @@ const BracketChooseGroups = (props) => {
                     )
                 })
                 return (
-                    <div key={group.id} className='bracket-choose'>
-                        <p className='bracket-choose-title'>{group.name}</p>
+                    <ChooseTeamContainerStyled key={group.id} className='bracket-choose'>
+                        <ChooseTeamTitleStyled>{group.name}</ChooseTeamTitleStyled>
                         <div className='bracket-choose-children'>{groupPlaces}</div>
-                    </div>
+                    </ChooseTeamContainerStyled>
                 )
             })}
-        </div>
+        </>
     )
 }
 

@@ -65,35 +65,28 @@ const setMatchesTime = (tournament, groups) => {
     return groups;
 }
 
+export const createPromotionGroupTeams = (groups) => {
+    groups.forEach(group => {
+        group.promoted = initPromoted(group.name, group.teams.length)
+    })
+    return groups;
+}
+
 export const createGroups = (teams, groupsQtt) => {
     if (teams.length / groupsQtt < 2) {
         return false;
     } else if (groupsQtt < 1) {
         return false;
     }
-    const teamsQtt = teams.length;
-    let restTeams = 0; //in one group!
-    let add = 0;
     let groups = [];
-    if (groupsQtt !== 1) {
-        restTeams = teamsQtt % groupsQtt;
-    }
     for (let i = 0; i < groupsQtt; i++) {
-        //check if it will be the same amount of teams or not
-        if (restTeams !== 0) {
-            add = 1;
-            restTeams--;
-        } else {
-            add = 0;
-        }
-        let teamsInGroup = Math.floor(teamsQtt / groupsQtt) + add;
         const groupName = 'Group ' + String.fromCharCode(65 + i);
         groups.push(
             {
                 name: groupName,
                 finishAt: null,
                 teams: [],
-                promoted: initPromoted(groupName, teamsInGroup),
+                promoted: [],
                 promotedQtt: 0
             }
         );

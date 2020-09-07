@@ -40,6 +40,7 @@ const mapDispatchToProps = (dispatch) => {
         changeMenu: (menu) => dispatch(changeMenu(menu))
     }
 }
+
 export default compose(firestoreConnect(props => {
     return [
         {

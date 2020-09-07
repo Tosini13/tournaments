@@ -46,7 +46,7 @@ const GroupsDashboard = (props) => {
                     <MainContainerContentStyled>
                         <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
                     </MainContainerContentStyled>
-                    {auth ?
+                    {auth && !Boolean(bracket) ?
                         <ButtonErrorStyled
                             startIcon={<DeleteIcon />}
                             onClick={handleDeleteTeamQuestion}

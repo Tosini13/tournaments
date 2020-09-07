@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
+import { firestoreConnect } from 'react-redux-firebase';
 
-import { ButtonSuccessStyled, ButtonErrorStyled, LinkStyled } from "../../style/styledButtons";
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+import { ButtonSuccessStyled, ButtonErrorStyled, LinkStyled } from "../../style/styledButtons";
 import { ListItemLinkStyled, MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 import Question from '../../extra/Question';
+import { updateGroup } from '../../../store/actions/GroupActions';
+import { deleteBracketFromTournament } from '../../../store/actions/BracketAction';
 
 const BracketDashboard = (props) => {
     const { bracket, auth, groupFinished, deleteBracketFromTournament } = props;
@@ -19,7 +23,8 @@ const BracketDashboard = (props) => {
             answer1: {
                 answer: 'Tak',
                 feedback: () => {
-                    deleteBracketFromTournament(props.tournamentId)
+                    resetPromotedTeam();
+                    deleteBracketFromTournament(props.tournamentId);
                 }
             },
             answer2: {
@@ -35,6 +40,15 @@ const BracketDashboard = (props) => {
         setQuestion(null)
     }
 
+    const resetPromotedTeam = () => {
+        props.groups.forEach(group => {
+            const groupEdited = {
+                ...group,
+                promotedQtt: 0
+            }
+            props.updateGroup(props.tournamentId, group.id, groupEdited);
+        });
+    }
 
 
 
@@ -62,7 +76,6 @@ const BracketDashboard = (props) => {
         return (
             <MainContainerStyled>
                 <MainContainerContentStyled>
-                    <p className='title'>Play-offs are not available, because group(s) are already finshed</p>
                     <p className='title'>Faza pucharowa nie jest dostępna, ponieważ faza grupowa już się skończyła!</p>
                 </MainContainerContentStyled>
             </MainContainerStyled>
@@ -89,10 +102,28 @@ const BracketDashboard = (props) => {
     }
 }
 
-const mapStateToDispatch = (dispatch) => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        deleteBracketFromTournament: (tournamentId) => dispatch(deleteBracketFromTournament(tournamentId))
+        groups: state.firestore.ordered.groups,
     }
 }
 
-export default connect(null, mapStateToDispatch)(BracketDashboard);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteBracketFromTournament: (tournamentId) => dispatch(deleteBracketFromTournament(tournamentId)),
+        updateGroup: (tournamentId, groupId, group) => dispatch(updateGroup(tournamentId, groupId, group))
+    }
+}
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect(props => {
+        return [
+            {
+                collection: 'tournaments',
+                doc: props.tournamentId,
+                subcollections: [{ collection: 'groups', orderBy: ['name', 'asc'] }],
+                storeAs: 'groups'
+            }]
+    }
+    ))(BracketDashboard);

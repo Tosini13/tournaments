@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { createGroups, createRandomGroups, initGroupMatches } from '../../../structures/Groups'
+import { createGroups, createRandomGroups, initGroupMatches, createPromotionGroupTeams } from '../../../structures/Groups'
 import GroupDetails from '../groups/GroupDetails';
 import { createGroupsToTournament } from '../../../store/actions/GroupActions'
 import ChooseTeamsToGroup from '../groups/ChooseTeamsToGroup';
@@ -27,6 +27,9 @@ class CreateGroup extends Component {
     }
 
     handleAccept = () => {
+        this.setState({
+            groups: createPromotionGroupTeams(this.state.groups)
+        })
         this.props.createGroupsToTournament(this.props.match.params.id, this.state.groups);
         this.props.history.push('/tournaments/' + this.props.match.params.id);
     }
