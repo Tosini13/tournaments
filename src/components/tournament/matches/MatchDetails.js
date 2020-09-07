@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import SportsIcon from '@material-ui/icons/Sports';
+
 import Question from '../../extra/Question';
 import MatchSummary from './MatchSummary';
 import { setBackBtn } from '../../../structures/extra';
@@ -47,7 +49,7 @@ class MatchDetails extends Component {
             question: null
         })
     }
-    
+
     render() {
         const { allTeams, match, groups, matches } = this.props;
         if (match && allTeams) {
@@ -86,7 +88,7 @@ class MatchDetails extends Component {
                             } else {
                                 this.props.handleUpdateMatchMode(match, updateMode);
                             }
-                        }}>{modeButton}</ButtonStyled>
+                        }}><SportsIcon />{modeButton}</ButtonStyled>
                     </div>
                     {this.state.question ? <Question question={this.state.question} onClose={this.handleCloseQuestion} open={Boolean(this.state.question)} /> : null}
                 </div>

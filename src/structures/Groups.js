@@ -212,6 +212,7 @@ const tableInit = (teams) => {
     teams.forEach(team => {
         let row = {
             team: team,
+            matches: 0,
             points: 0,
             goalsScored: 0,
             goalsLost: 0
@@ -287,8 +288,9 @@ export const createTable = (teams, matches) => {
                     if (match.mode === 'LIVE') {
                         row.live = true;
                     }
+                    row.matches++;
                 }
-                //team is host
+                //team is guest
                 if (match.away === row.team) {
                     //add points
                     if (match.result.home < match.result.away) {
@@ -302,6 +304,7 @@ export const createTable = (teams, matches) => {
                     if (match.mode === 'LIVE') {
                         row.live = true;
                     }
+                    row.matches++;
                 }
             }
         }
