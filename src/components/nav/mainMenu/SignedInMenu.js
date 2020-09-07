@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
+// import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import LockIcon from '@material-ui/icons/Lock';
 import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 

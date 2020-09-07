@@ -1,11 +1,54 @@
 import React, { Component } from 'react'
 import moment from 'moment';
 import { connect } from 'react-redux';
+
 import { createTournament } from '../../../store/actions/TournamentActions'
-import { TournamentCreateTextFieldStyled, TournamentCreateMatchTimeContainerStyled, TournamentCreateAddressCityStyled, TournamentCreateAddressContainerStyled, TournamentCreateAddressStreetNumberStyled, TournamentCreateAddressStreetStyled } from '../../style/styledForms';
-import { ButtonStyled } from '../../style/styledButtons';
+import CreateTournamentLocation from './CreateTournamentLocation';
+import CreateTournamentMatchesInfo from './CreateTournamentMatchesInfo';
+import CreateTournamentBasicInfo from './CreateTournamentBasicInfo';
+import CreateTournamentLogo from './CreateTournamentLogo';
+import VerticalStepper from './VerticalStepper';
+import { setBackBtn } from '../../../structures/extra';
+import { changeMenu } from '../../../store/actions/MenuActions';
+import { ButtonRowContainerStyled, ButtonStyled } from '../../style/styledButtons';
+
+const formError = {
+    attr: {
+        name: false,
+        date: true,
+        matchTimeInGroup: false,
+        breakTimeInGroup: false,
+        matchTimeInBracket: false,
+        breakTimeInBracket: false,
+        fields: false,
+        city: false,
+        street: false,
+        number: false,
+        image: false,
+        inValid: false
+    },
+    onCheckName: (name) => {
+        return (/[\S]/.test(name));
+    },
+    onCheckDate: (date) => {
+        return moment(date).isValid();
+    },
+    get isValid() {
+        Object.values(this.attr).forEach(value => {
+            if (value) return false;
+        });
+        return true;
+    }
+}
 
 class CreateTournament extends Component {
+
+    componentDidMount() {
+        setBackBtn(() => {
+            this.props.history.push('/');
+        });
+        this.props.changeMenu(null);
+    }
 
     state = {
         name: '',
@@ -20,10 +63,12 @@ class CreateTournament extends Component {
             street: '',
             number: ''
         },
-        image: null
+        image: null,
+        formError: formError,
     }
 
-    handleLocationDate = (e) => {
+    handleChangeLocation = (e) => {
+        console.log(e.target.value);
         const location = {
             ...this.state.location,
             [e.target.id]: e.target.value
@@ -34,12 +79,14 @@ class CreateTournament extends Component {
     }
 
     handleChangeDate = (date) => {
+        console.log(date);
         this.setState({
             date
         })
     }
 
     handleChange = (e) => {
+        console.log(e.target.value);
         this.setState({ [e.target.id]: e.target.value });
     }
 
@@ -50,10 +97,17 @@ class CreateTournament extends Component {
         });
     }
 
+    onRemoveImage = () => {
+        this.setState({
+            image: null
+        });
+    }
+
     handleSubmit = (e) => {
-        console.log(this.state);
         e.preventDefault();
-        if (/[\S]/.test(this.state.name)) {
+        console.log(this.state);
+        if (this.checkInputs()) {
+            console.log('ok');
             this.props.createTournament(this.state);
             this.props.history.push('/');
         } else {
@@ -61,55 +115,51 @@ class CreateTournament extends Component {
         }
     }
 
-    style = {
-        input: {
-            margin: '5px 0px'
+    checkInputs = () => {
+        let isValid = true;
+        if (!this.state.formError.onCheckName(this.state.name)) {
+            this.setState({
+                formError: {
+                    ...this.state.formError,
+                    attr: {
+                        ...this.state.formError.attr,
+                        name: true
+                    }
+                }
+            })
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    getStepContent = (step) => {
+        switch (step) {
+            case 0:
+                return (
+                    <>
+                        <CreateTournamentBasicInfo name={this.state.name} handleChange={this.handleChange} />
+                        <CreateTournamentLogo image={this.state.image} handleChangeImage={this.handleChangeImage} onRemoveImage={this.onRemoveImage} />
+                    </>
+                )
+            case 1:
+                return <CreateTournamentMatchesInfo fields={this.state.fields} matchTimeInGroup={this.state.matchTimeInGroup} breakTimeInGroup={this.state.breakTimeInGroup} matchTimeInBracket={this.state.matchTimeInBracket} breakTimeInBracket={this.state.breakTimeInBracket} handleChange={this.handleChange} />
+            case 2:
+                return <CreateTournamentLocation location={this.state.location} handleChangeLocation={this.handleChangeLocation} />
+            case 3: return (
+                <ButtonRowContainerStyled>
+                    <ButtonStyled type='submit'>Stwórz</ButtonStyled>
+                </ButtonRowContainerStyled>
+            );
+            default:
+                return 'Unknown step';
         }
     }
+
     render() {
         return (
             <form onSubmit={this.handleSubmit} id='create-tournament'>
-                <p>Create Tournament:</p>
-                <TournamentCreateTextFieldStyled style={this.style.input} id="name" label="name" value={this.state.name} onChange={this.handleChange} required />
-                <TournamentCreateTextFieldStyled style={this.style.input}
-                    id="date"
-                    label="Match date & time"
-                    type="datetime-local"
-                    defaultValue={moment(new Date()).format('YYYY-MM-DDTHH:mm')}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    onChange={this.handleChange}
-                />
-
-                <p>In group</p>
-                <TournamentCreateMatchTimeContainerStyled>
-                    <TournamentCreateTextFieldStyled style={this.style.input} name='matchTimeInGroup' id='matchTimeInGroup' label="Match time (mins)" type='number' value={this.state.matchTimeInGroup} onChange={this.handleChange} required />
-                    <TournamentCreateTextFieldStyled style={this.style.input} name='breakTimeInGroup' id='breakTimeInGroup' label="Break time (mins)" type='number' value={this.state.breakTimeInGroup} onChange={this.handleChange} required />
-                </TournamentCreateMatchTimeContainerStyled>
-                <p>In play-offs</p>
-                <TournamentCreateMatchTimeContainerStyled>
-                    <TournamentCreateTextFieldStyled style={this.style.input} name='matchTimeInBracket' id='matchTimeInBracket' label="Match time (mins)" type='number' value={this.state.matchTimeInBracket} onChange={this.handleChange} required />
-                    <TournamentCreateTextFieldStyled style={this.style.input} name='breakTimeInBracket' id='breakTimeInBracket' label="Break time (mins)" type='number' value={this.state.breakTimeInBracket} onChange={this.handleChange} required />
-                </TournamentCreateMatchTimeContainerStyled>
-
-                <TournamentCreateTextFieldStyled style={this.style.input} name='fields' id='fields' label="Fields quantity" type='number' value={this.state.fields} onChange={this.handleChange} required />
-                <TournamentCreateAddressContainerStyled>
-                    <TournamentCreateAddressCityStyled>
-                        <TournamentCreateTextFieldStyled style={this.style.input} id="city" label="Miasto" value={this.state.location.city} onChange={this.handleLocationDate} />
-                    </TournamentCreateAddressCityStyled>
-                    <TournamentCreateAddressStreetStyled>
-                        <TournamentCreateTextFieldStyled style={this.style.input} id="street" label="Ulica" value={this.state.location.street} onChange={this.handleLocationDate} />
-                    </TournamentCreateAddressStreetStyled>
-                    <TournamentCreateAddressStreetNumberStyled>
-                        <TournamentCreateTextFieldStyled style={this.style.input} id="number" label="Numer" value={this.state.location.number} onChange={this.handleLocationDate} />
-                    </TournamentCreateAddressStreetNumberStyled>
-                </TournamentCreateAddressContainerStyled>
-                <TournamentCreateTextFieldStyled style={this.style.input} name='icon' id='icon' label="Tournament's icon" type='file' onChange={this.handleChangeImage} />
-
-                <ButtonStyled type='submit'>
-                    Create
-                </ButtonStyled>
+                <VerticalStepper getStepContent={this.getStepContent} />
             </form>
         )
     }
@@ -117,6 +167,7 @@ class CreateTournament extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        changeMenu: (menu) => dispatch(changeMenu(menu)),
         createTournament: (tournament) => dispatch(createTournament(tournament))
     }
 }

@@ -59,6 +59,7 @@ const MatchSummary = (props) => {
         <MatchLink link={link} auth={auth}>
             <>
                 {match.name ? <p className='match-round'>{match.name}</p> : null}
+                {match.round ? <p className='match-round'>{match.round} kolejka</p> : null}
                 {match.date ? <p className='match-date'>{moment(match.date).format('YYYY-MM-DD HH:mm')}</p> : null}
                 <div className={matchClass}>
                     <div className='match-teams'>

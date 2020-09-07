@@ -3,7 +3,7 @@ import GroupsList from './GroupsList';
 import { connect } from 'react-redux';
 import { deleteAllGroupsFromTournament } from '../../../store/actions/GroupActions';
 
-import { ButtoErrorStyled, ButtoSuccessStyled, LinkStyled } from "../../style/styledButtons";
+import { ButtonErrorStyled, ButtonSuccessStyled, LinkStyled } from "../../style/styledButtons";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -21,13 +21,13 @@ const GroupsDashboard = (props) => {
         setQuestion({
             question: `Czy na pewno chcesz usunąć fazę grupową?`,
             answer1: {
-                answer: 'Yes',
+                answer: 'Tak',
                 feedback: () => {
                     deleteAllGroupsFromTournament(props.tournamentId)
                 }
             },
             answer2: {
-                answer: 'No',
+                answer: 'Nie',
                 feedback: () => {
                     setQuestion(null);
                 }
@@ -46,11 +46,11 @@ const GroupsDashboard = (props) => {
                     <MainContainerContentStyled>
                         <GroupsList tournamentId={props.tournamentId} groups={props.groups} />
                     </MainContainerContentStyled>
-                    {auth ?
-                        <ButtoErrorStyled
+                    {auth && !Boolean(bracket) ?
+                        <ButtonErrorStyled
                             startIcon={<DeleteIcon />}
                             onClick={handleDeleteTeamQuestion}
-                        >USUŃ FAZĘ GRUPOWĄ</ButtoErrorStyled>
+                        >USUŃ FAZĘ GRUPOWĄ</ButtonErrorStyled>
                         : null}
                 </MainContainerStyled>
                 {question ? <Question question={question} onClose={handleCloseQuestion} open={Boolean(question)} /> : null}
@@ -70,7 +70,7 @@ const GroupsDashboard = (props) => {
                     <p className='title'>Faza grupowa nie jest stworzona</p>
                 </MainContainerContentStyled>
                 <LinkStyled to={props.tournamentId + '/groups/create'}>
-                    <ButtoSuccessStyled startIcon={<AddIcon />}>Stwórz fazę grupową</ButtoSuccessStyled>
+                    <ButtonSuccessStyled startIcon={<AddIcon />}>Stwórz fazę grupową</ButtonSuccessStyled>
                 </LinkStyled>
             </MainContainerStyled>
         )

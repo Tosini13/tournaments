@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { createTable } from '../../../structures/Groups';
 import { GroupTableStyled } from '../../style/styledGroups';
 
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+
 class GroupTable extends Component {
 
     render() {
@@ -19,12 +21,12 @@ class GroupTable extends Component {
             }
             promotionCounter++;
             const team = teams.find((team, index) => team.id === row.team);
-            return <tr key={team.id} className={rowClass}><td>{team.name}</td><td>{row.points}</td><td>{row.goalsScored}</td><td>{row.goalsLost}</td></tr>
+            return <tr key={team.id} className={rowClass}><td>{promotionCounter}</td><td>{team.name}</td><td>{row.matches}</td><td>{row.points}</td><td>{row.goalsScored}</td><td>{row.goalsLost}</td></tr>
         });
         return (
             <GroupTableStyled>
                 <table>
-                    <thead><tr><th>Zespół</th><th>punkty</th><th>strzelone</th><th>stracone</th></tr></thead>
+                    <thead><tr><th><FormatListNumberedIcon /></th><th>ZESPOŁY</th><th><p>M</p></th><th><p>PKT</p></th><th><p>GZ</p></th><th>GS</th></tr></thead>
                     <tbody>
                         {this.table}
                     </tbody>

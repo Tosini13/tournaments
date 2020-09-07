@@ -20,7 +20,7 @@ import {
 import TournamentDetailsInfo from "./tournamentDetails/TournamentDetailsInfo";
 import TournamentDetailsTeams from "./tournamentDetails/TournamentDetailsTeams";
 import { TournamentViewConst, MenuConst } from "../../configureFiles/constants";
-import { ButtoErrorStyled } from "../style/styledButtons";
+import { ButtonErrorStyled } from "../style/styledButtons";
 import GroupsDashboard from "./groups/GroupsDashboard";
 import BracketDashboard from "./bracket/BracketDashboard";
 
@@ -49,14 +49,14 @@ class TournamentDetails extends Component {
             question: {
                 question: `Czy na pewno chcesz usunąć turniej ${this.props.tournament.name}?`,
                 answer1: {
-                    answer: 'Yes',
+                    answer: 'Tak',
                     feedback: () => {
                         this.props.deleteTournament(this.props.match.params.id);
                         this.props.history.push('/');
                     }
                 },
                 answer2: {
-                    answer: 'No',
+                    answer: 'Nie',
                     feedback: () => {
                         this.setState({ question: null });
                     }
@@ -115,12 +115,12 @@ class TournamentDetails extends Component {
                     <TournamentDetailsInfo tournament={tournament}>
                         {auth ?
                             <>
-                                <ButtoErrorStyled
+                                <ButtonErrorStyled
                                     onClick={this.handleDeleteTournament}
                                     startIcon={<DeleteIcon />}
                                 >
                                     USUŃ TURNIEJ
-                  </ButtoErrorStyled>
+                  </ButtonErrorStyled>
                                 {this.state.question ? <Question question={this.state.question} onClose={this.handleCloseQuestion} open={Boolean(this.state.question)} /> : null}
                             </>
                             : null}

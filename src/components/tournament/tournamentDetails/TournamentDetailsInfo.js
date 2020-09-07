@@ -21,7 +21,7 @@ const TournamentDetailsInfo = ({ tournament, children }) => {
                     <ScheduleIcon />
                     <TournamentDetailsInfoContentStyled>{moment(tournament.date).format('HH:mm')}</TournamentDetailsInfoContentStyled>
                 </TournamentDetailsInfoStyled>
-                {tournament.location ?
+                {tournament.location.localeCompare('  ') ?
                     <TournamentDetailsInfoStyled>
                         <PlaceIcon />
                         <TournamentDetailsInfoContentStyled>

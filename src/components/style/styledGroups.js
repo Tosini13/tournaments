@@ -16,6 +16,8 @@ export const GroupTableStyled = styled.div`
         border-collapse: collapse;
         td, th{
             padding: 5px 3px;
+            border: rgba(0,0,0,0.2) solid 0.1px;
+            min-width: 20px;
         }
         th{
             color: ${colors.secondary.main};
