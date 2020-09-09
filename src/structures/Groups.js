@@ -150,7 +150,7 @@ export const createGroupsAuto = (teams, groupsQtt, tournament, returnGames) => {
 
 export const initGroupMatches = (tournament, groups, teams, returnGames) => {
     groups.forEach((group, i) => {
-        const matches = createGroupMatches(group.teams, 1);
+        const matches = createGroupMatches(group.teams);
         matches.sort(compareMatches);
         group.matches = matches;
     })
@@ -175,42 +175,54 @@ const initMatch = (home, away, round) => {
     }
 }
 
-const createGroupMatches = (teams, round) => {
+const bergerAlgorithm = (teams) => {
+    const isOdd = Boolean(teams.length % 2);
+    const teamsQtt = isOdd ? teams.length + 1 : teams.length;
+    const matchesInRound = teamsQtt / 2;
+    const ghost = isOdd ? null : teams[teamsQtt - 1];
+    let roundsQtt = 1;
     let matches = [];
-    const teamsQtt = teams.length;
-    if (teamsQtt > 3) {
-        const teamsQttHalf = Math.floor(teamsQtt / 2);
-        let bracket1 = teams.slice(0, teamsQttHalf);
-        let bracket2 = teams.slice(teamsQttHalf);
-        const bracket1Length = bracket1.length;
-        const bracket2Length = bracket2.length;
-        for (let i = 0; i < bracket2Length; i++) {
-            for (let j = 0; j < bracket1Length; j++) {
-                if (i % 2 === 0) {
-                    const match = initMatch(bracket1[j], bracket2[j], round);
-                    matches = [...matches, match];
-                } else {
-                    const match = initMatch(bracket2[j], bracket1[j], round);
-                    matches = [...matches, match];
-                }
+    let hostTeams = teams.slice(0, teamsQtt / 2).reverse();
+    let awayTeams = teams.slice(teamsQtt / 2, isOdd ? teamsQtt - 2 : teamsQtt - 1);
+    while (roundsQtt < teamsQtt) {
+        let newHost = [];
+        let newAway = [];
+        for (let i = 0; i < matchesInRound; i++) {
+            let home = null;
+            let away = null;
+            if (i === 0 && roundsQtt % 2 === 0) {
+                away = hostTeams.pop();
+                home = ghost;
+                newHost.push(away);
+            } else if (i === 0 && roundsQtt % 2 === 1) {
+                home = hostTeams.pop();
+                away = ghost;
+                newHost.push(home);
+            } else {
+                home = hostTeams.pop();
+                away = awayTeams.pop();
+                newHost.push(away);
+                newAway.push(home);
             }
-            round++;
-            let tempTeam = bracket2.shift();
-            bracket2 = [...bracket2, tempTeam];
+            if (i !== 0 || ghost) {
+                const match = initMatch(home, away, roundsQtt);
+                matches.push(match);
+            }
         }
-        const matches1 = createGroupMatches(bracket1, round);
-        const matches2 = createGroupMatches(bracket2, round);
-        matches = [...matches, ...matches1, ...matches2];
-    } else if (teamsQtt === 3) {
-        matches = [...matches, initMatch(teams[0], teams[1], round++)];
-        matches = [...matches, initMatch(teams[1], teams[2], round++)];
-        matches = [...matches, initMatch(teams[2], teams[0], round++)];
-    } else if (teamsQtt === 2) {
-        matches = [...matches, initMatch(teams[0], teams[1], round++)];
+        hostTeams = newHost;
+        awayTeams = newAway;
+        roundsQtt++;
     }
     return matches;
 }
 
+const createGroupMatches = (teams) => {
+    if (teams.length > 3) {
+        return bergerAlgorithm;
+    } else {
+        console.log('for 3, 2 and 1 teams!!');
+    }
+}
 
 // TABLE
 const tableInit = (teams) => {
