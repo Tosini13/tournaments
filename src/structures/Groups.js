@@ -150,7 +150,7 @@ export const createGroupsAuto = (teams, groupsQtt, tournament, returnGames) => {
 
 export const initGroupMatches = (tournament, groups, teams, returnGames) => {
     groups.forEach((group, i) => {
-        const matches = createGroupMatches(group.teams);
+        const matches = createGroupMatches(group.teams, returnGames);
         matches.sort(compareMatches);
         group.matches = matches;
     })
@@ -179,7 +179,7 @@ const bergerAlgorithm = (teams) => {
     const isOdd = Boolean(teams.length % 2);
     const teamsQtt = isOdd ? teams.length + 1 : teams.length;
     const matchesInRound = teamsQtt / 2;
-    const ghost = isOdd ? null : teams[teamsQtt - 1];
+    const ghost = isOdd ? teams[teamsQtt - 2] : teams[teamsQtt - 1];
     let roundsQtt = 1;
     let matches = [];
     let hostTeams = teams.slice(0, teamsQtt / 2).reverse();
@@ -204,7 +204,7 @@ const bergerAlgorithm = (teams) => {
                 newHost.push(away);
                 newAway.push(home);
             }
-            if (i !== 0 || ghost) {
+            if (home && away) {
                 const match = initMatch(home, away, roundsQtt);
                 matches.push(match);
             }
@@ -216,11 +216,29 @@ const bergerAlgorithm = (teams) => {
     return matches;
 }
 
-const createGroupMatches = (teams) => {
+const createGroupMatches = (teams, returnGames) => {
     if (teams.length > 3) {
-        return bergerAlgorithm;
+        return bergerAlgorithm(teams);
+    } else if (teams.length === 3) {
+        let matches = []
+        matches.push(initMatch(teams[0], teams[1], 1));
+        matches.push(initMatch(teams[1], teams[2], 2));
+        matches.push(initMatch(teams[2], teams[0], 3));
+        if (returnGames) {
+            matches.push(initMatch(teams[1], teams[0], 4));
+            matches.push(initMatch(teams[2], teams[1], 5));
+            matches.push(initMatch(teams[0], teams[2], 6));
+        }
+        return matches;
+    } else if (teams.length === 2) {
+        let matches = [];
+        matches.push(initMatch(teams[0], teams[1], 1));
+        if (returnGames) {
+            matches.push(initMatch(teams[0], teams[1], 1));
+        }
+        return matches;
     } else {
-        console.log('for 3, 2 and 1 teams!!');
+        return []
     }
 }
 
