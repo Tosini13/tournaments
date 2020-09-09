@@ -1,9 +1,9 @@
 import moment from 'moment'
 const max_teams_amount = 64;
 const roundName = {
-    1: "Final",
-    2: "Semi-final",
-    4: "Quater-final",
+    1: "Finał",
+    2: "Półfinał",
+    4: "Ćwierćfinał",
     8: "1/16",
     16: "1/32",
     32: "1/64"
@@ -96,10 +96,10 @@ export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament
                     away: 0,
                 },
                 promoted: [{
-                    name: roundMatchName + ' winner'
+                    name: roundMatchName + ' - wygrany'
                 },
                 {
-                    name: roundMatchName + ' looser' //promoted to next round
+                    name: roundMatchName + ' - przegrany' //promoted to next round
                 }],
                 placeholder: {
                     home: (getChosenTeams && getChosenTeams.length) ? null

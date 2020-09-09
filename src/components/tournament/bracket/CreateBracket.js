@@ -206,7 +206,7 @@ class CreateBracket extends Component {
                     </div>
                     {this.state.autoMode ?
                         <FormControl style={style.select}>
-                            <InputLabel id="demo-simple-select-label">Choose Rounds Quantity</InputLabel>
+                            <InputLabel id="demo-simple-select-label">Wybierz ilość meczy:</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"

@@ -18,7 +18,7 @@ function initPromoted(groupName, teamsQtt) {
     let promoted = [];
     for (let i = 0; i < teamsQtt; i++) {
         promoted[i] = {
-            name: groupName + ' - ' + (i + 1) + ' place'
+            name: groupName + ' - ' + (i + 1) + ' miejsce'
         }
     }
     return promoted;
