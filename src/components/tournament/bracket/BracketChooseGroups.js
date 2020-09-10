@@ -25,7 +25,7 @@ const BracketChooseGroups = (props) => {
                         <ChooseTeamStyled key={i} isChosen={isChosen} onClick={() => {
                             props.handleChooseGroup(groupPlaceholder, group)
                         }}>
-                            <ChooseTeamNameStyled>{(i + 1) + ' place'}</ChooseTeamNameStyled>
+                            <ChooseTeamNameStyled>{(i + 1) + ' miejsce'}</ChooseTeamNameStyled>
                             <ChooseTeamIconContainerStyled>
                                 {isChosen ?
                                     <IconButtonStyled>

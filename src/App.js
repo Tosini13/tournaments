@@ -9,7 +9,7 @@ import CreateTournament from './components/tournament/create/CreateTournament';
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import Group from './components/tournament/groups/Group';
-import CreateGroups from './components/tournament/create/CreateGroups'
+import CreateGroups from './components/tournament/groups/CreateGroups'
 import MatchGroup from './components/tournament/matches/MatchGroup';
 import CreateBracket from './components/tournament/bracket/CreateBracket';
 import BracketDetails from './components/tournament/bracket/BracketDetails';
