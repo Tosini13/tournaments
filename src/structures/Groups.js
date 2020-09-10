@@ -175,7 +175,7 @@ const initMatch = (home, away, round) => {
     }
 }
 
-const bergerAlgorithm = (teams) => {
+const bergerAlgorithm = (teams, returnGames) => {
     const isOdd = Boolean(teams.length % 2);
     const teamsQtt = isOdd ? teams.length + 1 : teams.length;
     const matchesInRound = teamsQtt / 2;
@@ -213,12 +213,20 @@ const bergerAlgorithm = (teams) => {
         awayTeams = newAway;
         roundsQtt++;
     }
+    if (returnGames) {
+        roundsQtt--;
+        let returnMatches = [];
+        matches.forEach(match => {
+            returnMatches.push(initMatch(match.away, match.home, match.round + roundsQtt));
+        })
+        matches = [...matches, ...returnMatches];
+    }
     return matches;
 }
 
 const createGroupMatches = (teams, returnGames) => {
     if (teams.length > 3) {
-        return bergerAlgorithm(teams);
+        return bergerAlgorithm(teams, returnGames);
     } else if (teams.length === 3) {
         let matches = []
         matches.push(initMatch(teams[0], teams[1], 1));

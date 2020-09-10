@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { colors } from '../../configureFiles/configStyle'
 
 import TextField from '@material-ui/core/TextField';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 export const AuthFormStyled = styled.form`
     display: flex;
@@ -145,4 +145,10 @@ export const TournamentCreateAddressStreetNumberStyled = styled(TournamentDivIni
 export const TextFiledStyled = styled(TextField)`
     margin-bottom: 10px;
     width: 100%;
+`
+
+export const SwitchContainerStyled = styled(FormControlLabel)`
+    color: ${colors.secondary.main};
+    width: fit-content;
+    margin: auto;
 `

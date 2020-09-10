@@ -10,6 +10,7 @@ import { IconButtonStyled, ButtonStyled } from '../../style/styledButtons';
 import { ClearIconStyled, DoneIconStyled, AddGoalIconStyled, LessGoalIconStyled, RandomIconStyled } from '../../style/styledIcons';
 import { changeMenu } from '../../../store/actions/MenuActions';
 import { setBackBtn } from '../../../structures/extra';
+import ToggleReturnGames from './create/ToggleReturnGames';
 
 class CreateGroup extends Component {
 
@@ -22,6 +23,7 @@ class CreateGroup extends Component {
         chooseTeams: null,
         groupQtt: 0,
         groups: null,
+        returnMatches: false
     }
 
     handleDecline = () => {
@@ -37,7 +39,7 @@ class CreateGroup extends Component {
     }
 
     handleDraw = (teams) => {
-        let groups = createRandomGroups(teams, this.state.groupQtt, this.props.tournament, false);
+        let groups = createRandomGroups(teams, this.state.groupQtt, this.props.tournament, this.state.returnMatches);
         if (groups) {
             this.setState({
                 groups,
@@ -90,12 +92,26 @@ class CreateGroup extends Component {
     }
 
     handleInitGroupMatches = () => {
-        const groups = initGroupMatches(this.props.tournament, this.state.groups, this.props.teams, false);
+        const groups = initGroupMatches(this.props.tournament, this.state.groups, this.props.teams, this.state.returnMatches);
         this.setState({
             groups
         })
     }
 
+    handleChangeReturnMatches = () => {
+        if (this.state.groupQtt > 0) {
+            const groups = initGroupMatches(this.props.tournament, this.state.groups, this.props.teams, !this.state.returnMatches);
+            this.setState({
+                returnMatches: !this.state.returnMatches,
+                groups
+            })
+        } else {
+            this.setState({
+                returnMatches: !this.state.returnMatches
+            })
+        }
+
+    }
 
     render() {
         const { teams, tournament } = this.props;
@@ -117,6 +133,9 @@ class CreateGroup extends Component {
                             <IconButtonStyled onClick={() => { this.handleDraw(teams) }}>
                                 <RandomIconStyled />
                             </IconButtonStyled>
+                        </div>
+                        <div>
+                            <ToggleReturnGames checked={this.state.returnMatches} setChecked={this.handleChangeReturnMatches} />
                         </div>
                     </div>
                     <div className='group-list'>
