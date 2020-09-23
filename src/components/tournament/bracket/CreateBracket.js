@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 import BracketChooseTeams from './BracketChooseTeams';
 import { createBracketMatches, getFirstMatchTimeInBracket } from '../../../structures/Bracket';
@@ -17,12 +13,11 @@ import { IconButtonStyled, ButtonStyled } from '../../style/styledButtons';
 import { ClearIconStyled, DoneIconStyled } from '../../style/styledIcons';
 import { changeMenu } from '../../../store/actions/MenuActions';
 import { setBackBtn } from '../../../structures/extra';
+import { Bracket } from '../../../structures/models/bracket';
+import PlayOffsBracket from './PlayOffsBracket';
+import CreateBracketBracketMenu from './CreateBracketBracketMenu';
 
 const style = {
-    select: {
-        width: '100%',
-        margin: '15px 0px',
-    },
     autoButton: {
         on: {
             backgroundColor: 'darkgoldenrod',
@@ -47,6 +42,8 @@ class CreateBracket extends Component {
         groupsPromotedQtt: [],
         autoMode: false,
         roundQtt: '',
+        placeMatchesQtt: 1,
+        bracket: null
     }
 
     handleDecline = () => {
@@ -79,6 +76,15 @@ class CreateBracket extends Component {
             chosenItems: newState.chosenItems,
             groupsPromotedQtt: newState.groupsPromotedQtt
         })
+    }
+
+    handlePlaceMatchesQttChange = (event) => {
+        const placeMatchesQtt = event.target.value;
+        if (placeMatchesQtt > 0 && placeMatchesQtt % 2 === 1) {
+            this.setState({
+                placeMatchesQtt
+            })
+        }
     }
 
     handleSelectChange = (event) => {
@@ -186,14 +192,29 @@ class CreateBracket extends Component {
         };
     }
 
+    createNewBracket = (chosenTeams) => {
+        console.log(chosenTeams);
+        const lastRound = chosenTeams.length - 1;
+        if (lastRound > 0) {
+            const bracket = new Bracket(lastRound, this.state.placeMatchesQtt);
+            bracket.initBracketWithMatches(chosenTeams);
+            console.log(bracket.placeMatches[1]);
+            return bracket;
+        }
+        return null;
+    }
+
     render() {
         const { teams, groups, tournament } = this.props;
         if (teams && groups && tournament) {
             let matches = null;
+            let bracket = null;
             if (groups && groups.length) {
-                matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, getFirstMatchTimeInBracket(groups), false);
+                // matches = createBracketMatches(teams, [], this.state.chosenItems, tournament, getFirstMatchTimeInBracket(groups), false);
+                bracket = this.createNewBracket(this.state.chosenItems);
             } else {
-                matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, tournament.date, false);
+                // matches = createBracketMatches(teams, this.state.chosenItems, [], tournament, tournament.date, false);
+                bracket = this.createNewBracket(this.state.chosenItems);
             }
             return (
                 <div className='bracket'>
@@ -205,20 +226,7 @@ class CreateBracket extends Component {
                         </div>
                     </div>
                     {this.state.autoMode ?
-                        <FormControl style={style.select}>
-                            <InputLabel id="demo-simple-select-label">Wybierz ilość meczy:</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={this.state.roundQtt}
-                                onChange={this.handleSelectChange}
-                            >
-                                <MenuItem value={1}>Finał</MenuItem>
-                                <MenuItem value={2}>Finał, Półfinały</MenuItem>
-                                <MenuItem value={4}>Finał, Półfinały, Ćwierćfinały</MenuItem>
-                                <MenuItem value={8}>Finał, Półfinały, Ćwierćfinały, 1/16</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <CreateBracketBracketMenu roundQtt={this.state.roundQtt} handleSelectChange={this.handleSelectChange} placeMatchesQtt={this.state.placeMatchesQtt} handlePlaceMatchesQttChange={this.handlePlaceMatchesQttChange} />
                         :
                         null
                     }
@@ -227,7 +235,7 @@ class CreateBracket extends Component {
                         :
                         <BracketChooseTeams teams={teams} chosenTeams={this.state.chosenItems} handleChooseTeam={this.handleChooseTeam} />
                     }
-                    <MatchesList teams={teams} matches={matches} groups={groups} />
+                    {bracket ? <PlayOffsBracket bracket={bracket} teams={teams} /> : null}
                 </div>
             )
         } else {

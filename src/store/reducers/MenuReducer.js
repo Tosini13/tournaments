@@ -1,4 +1,4 @@
-import { DashboardViewConst, MenuConst } from "../../configureFiles/constants";
+import { DashboardViewConst, MenuConst } from "../../const/constants";
 
 const initState = {
     menu: MenuConst.main,

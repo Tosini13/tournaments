@@ -11,7 +11,7 @@ import { setBackBtn } from '../../../structures/extra';
 import { MainContainerStyled, MainContainerContentStyled } from '../../style/styledLayouts';
 import { ButtonInfoStyled, ButtonSuccessStyled } from '../../style/styledButtons';
 import { changeMenu, changeMenuView } from '../../../store/actions/MenuActions';
-import { MenuConst, GroupViewConst } from '../../../configureFiles/constants';
+import { MenuConst, GroupViewConst } from '../../../const/constants';
 
 class Group extends Component {
 

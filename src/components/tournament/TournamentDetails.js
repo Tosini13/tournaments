@@ -19,7 +19,7 @@ import {
 } from '../style/styledTournament'
 import TournamentDetailsInfo from "./tournamentDetails/TournamentDetailsInfo";
 import TournamentDetailsTeams from "./tournamentDetails/TournamentDetailsTeams";
-import { TournamentViewConst, MenuConst } from "../../configureFiles/constants";
+import { TournamentViewConst, MenuConst } from "../../const/constants";
 import { ButtonErrorStyled } from "../style/styledButtons";
 import GroupsDashboard from "./groups/GroupsDashboard";
 import BracketDashboard from "./bracket/BracketDashboard";

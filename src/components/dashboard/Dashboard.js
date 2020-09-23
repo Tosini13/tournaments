@@ -9,7 +9,7 @@ import moment from 'moment';
 import { changeMenu, changeMenuView } from '../../store/actions/MenuActions'
 
 import List from '@material-ui/core/List';
-import { MenuConst, DashboardViewConst } from "../../configureFiles/constants";
+import { MenuConst, DashboardViewConst } from "../../const/constants";
 
 class Dashboard extends Component {
     componentDidMount() {

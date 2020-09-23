@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { MenuStyled, MenuElementStyled } from '../../style/styleNav'
-import { menuStringConst } from "../../../configureFiles/constants";
+import { menuStringConst } from "../../../const/constants";
 
 class MenuContent extends Component {
 

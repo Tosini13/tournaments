@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 import MenuContent from './MenuContent';
-import { MenuConst, DashboardViewConst, TournamentViewConst, GroupViewConst } from "../../../configureFiles/constants";
+import { MenuConst, DashboardViewConst, TournamentViewConst, GroupViewConst } from "../../../const/constants";
 import { changeMenuView } from '../../../store/actions/MenuActions';
 
 const Menu = (props) => {
