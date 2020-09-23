@@ -77,9 +77,11 @@ export const createBracketMatches = (teams, chosenTeams, groupsTeams, tournament
     let matches = [];
     while (roundQtt >= 1) {
         const round = roundName[roundQtt];
+        console.log(round);
         lastRoundMatches = currentRoundMatches;
         currentRoundMatches = [];
         //DRAW lastRoundMatches if checked
+        lastRoundMatches.forEach(match => console.log(match))
         let matchCounter = 0;
         for (let i = 0; i < roundQtt; i++) {
             let roundMatchName = roundQtt === 1 ? round : round + ' ' + (i + 1);

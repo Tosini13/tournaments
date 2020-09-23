@@ -19,6 +19,7 @@ const SplashScreen = (props) => {
         alignItems: 'center',
         padding: '15px 0px',
         fontSize: '20px',
+        textAlign: 'center'
     }
     return (
         <div className='splash-screen' style={styleScreen}>
@@ -26,7 +27,7 @@ const SplashScreen = (props) => {
                 <p>
                     <i className='icon-trophy' style={{ fontSize: '100px' }}></i>
                 </p>
-                <p>Tournaments v1.11</p>
+                <p>Tournaments v1.12</p>
             </div>
         </div>
     )

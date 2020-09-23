@@ -46,7 +46,7 @@ class CreateBracket extends Component {
         step: 'CHOOSE_TEAMS',
         groupsPromotedQtt: [],
         autoMode: false,
-        roundQtt: 0,
+        roundQtt: '',
     }
 
     handleDecline = () => {
